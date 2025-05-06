@@ -1,3 +1,11 @@
 @tailwind base;  
 @tailwind components;  
 @tailwind utilities;
+
+/* Kakao InfoWindow 외곽 기본 테두리 제거 */
+div[class*="infoWindow"],
+div[class*="wrap"],
+div[style*="border: 1px solid"] {
+  border: none !important;
+  box-shadow: none !important;
+}

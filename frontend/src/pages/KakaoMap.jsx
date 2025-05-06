@@ -80,6 +80,98 @@ console.log("KAKAO KEY!");
           image: markerImage,
           map: map,
         });
+
+      //수거함 마커 및 팝업 추가
+      // ✅ 임의의 수거함 위치 예시
+      const bins = [
+        { lat: 37.378, lng: 126.645, name: "한양대학교 대운동장",  time: "18:00~20:00",
+          distance: "2km",
+          point: "500p"},
+        { lat: 37.380, lng: 126.656, name: "수거함 B" },
+      ];
+
+      bins.forEach((bin) => {
+        const binPosition = new window.kakao.maps.LatLng(bin.lat, bin.lng);
+
+        // ✅ 수거함 마커 생성
+        // const binMarker = new window.kakao.maps.Marker({
+        //   position: binPosition,
+        //   map,
+        //   image: new window.kakao.maps.MarkerImage(
+        //     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
+        //     new window.kakao.maps.Size(40, 40),
+        //     { offset: new window.kakao.maps.Point(20, 40) }
+        //   ),
+        // });
+
+        const trashBinImage = new window.kakao.maps.MarkerImage(
+          "/trashbin.png", // 🔥 상대 경로로 지정
+          new window.kakao.maps.Size(40, 40),
+          { offset: new window.kakao.maps.Point(20, 40) }
+        );
+        
+        const trashMarker = new window.kakao.maps.Marker({
+          //position: new window.kakao.maps.LatLng(37.5575, 127.0459), // 수거함 위치
+          position: binPosition,
+          image: trashBinImage,
+          map: map,
+        });
+
+        // ✅ hover 시 InfoWindow 스타일 (말풍선)
+        const content = `
+        <div style="
+          position: relative;
+          background: white;
+          padding: 10px 14px;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+          font-size: 13px;
+          line-height: 1.6;
+        ">
+          <div style="font-weight: bold; margin-bottom: 5px;">${bin.name}</div>
+          <div>운영시간: ${bin.time || "-"}</div>
+          <div>현재 위치로부터의 거리: ${bin.distance || "-"}</div>
+          <div>예상 지급 포인트: ${bin.point || "-"}</div>
+          <div style="
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 10px solid white;
+          "></div>
+        </div>
+      `;
+    
+      const infoWindow = new window.kakao.maps.InfoWindow({
+        content: content,
+        removable: false
+      });
+
+        // ✅ click 시 하단 팝업 (고정)
+        const detailPopup = new window.kakao.maps.CustomOverlay({
+          content: `<div style="position:absolute; bottom:0; left:0; width:100%; background:#fff; padding:10px; border-top:1px solid #ccc; font-size:14px;">${bin.name} 상세 정보</div>`,
+          position: binPosition,
+          yAnchor: 1,
+          zIndex: 3,
+        });
+
+        window.kakao.maps.event.addListener(trashMarker, "mouseover", () => {
+          infoWindow.open(map, trashMarker);
+        });
+
+        window.kakao.maps.event.addListener(trashMarker, "mouseout", () => {
+          infoWindow.close();
+        });
+
+        window.kakao.maps.event.addListener(trashMarker, "click", () => {
+          detailPopup.setMap(map);
+        });
+      });
+
       }
     
     }, []);
