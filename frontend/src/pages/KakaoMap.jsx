@@ -27,6 +27,27 @@ console.log("KAKAO KEY!");
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
         console.log("현재 위치:", lat, lng);
+        //백엔드에 보낼 JSON 데이터
+        const locationDate = {
+          latitude: lat,
+          longitude: lng,
+        }
+
+        fetch("http://localhost:8080/api/location", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(locationDate),
+        })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("서버 응답:", data);
+        })
+        .catch((error) =>
+          console.error("서버 요청 실패:", error));
+
+
         initMap(lat, lng);
       }
   
