@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function KakaoMap() {
 console.log("KAKAO KEY!");
+const [selectedBin, setSelectedBin] = useState(null);
   useEffect(() => {
     //console.log("KAKAO KEY", import.meta.env.VITE_KAKAO_MAP_KEY);
     // 스크립트가 이미 있으면 중복 로딩 방지
@@ -168,7 +169,8 @@ console.log("KAKAO KEY!");
         });
 
         window.kakao.maps.event.addListener(trashMarker, "click", () => {
-          detailPopup.setMap(map);
+          setSelectedBin(bin); // 클릭된 마커 정보로 팝업 표시
+          detailPopup.setMap(null); // 기존 하단 popup은 비활성화
         });
       });
 
@@ -177,7 +179,32 @@ console.log("KAKAO KEY!");
     }, []);
   
     return (
+      <>
       <div id="map" className="w-full h-screen"></div>
+      {selectedBin && (
+        <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50">
+          <div className="flex justify-between items-center px-4 pt-4">
+            <div className="font-bold text-lg">{selectedBin.name}</div>
+            <button onClick={() => setSelectedBin(null)} className="text-xl">×</button>
+          </div>
+          <div className="px-4 pb-4">
+            <p className="text-sm text-gray-500">서울특별시 성동구</p>
+            <p className="mt-2">운영시간: {selectedBin.time || '-'}</p>
+            <p>현재 위치로부터 {selectedBin.distance || '-'}</p>
+            <p>예상지급포인트: {selectedBin.point || '-'}</p>
+          </div>
+          <div className="px-4 pb-4">
+            <img
+              src={selectedBin.imageUrl || '/default.jpg'}
+              alt="장소 이미지"
+              className="w-full rounded-lg object-cover h-40"
+            />
+            <button className="mt-4 w-full bg-green-200 text-black rounded-xl py-2 text-sm">
+              종이팩 버리러 가기
+            </button>
+          </div>
+        </div>
+      )}</>
     );
   }
   
