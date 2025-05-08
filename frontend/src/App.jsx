@@ -1,9 +1,10 @@
 
-import { BrowserRouter,Routes,Route} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Splash from './pages/splash';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import KakaoMap from './pages/KakaoMap';
+import Sol from './pages/sol';  // sol
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/map" element={<KakaoMap />} />
+        <Route path="/sol" element={<Sol />} />
       </Routes>
     </BrowserRouter>
   )
