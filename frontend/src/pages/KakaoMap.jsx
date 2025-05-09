@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 function KakaoMap() {
-console.log("KAKAO KEY!");
-const [selectedBin, setSelectedBin] = useState(null);
+  console.log("KAKAO KEY!");
+  const [selectedBin, setSelectedBin] = useState(null);
   useEffect(() => {
     //console.log("KAKAO KEY", import.meta.env.VITE_KAKAO_MAP_KEY);
     // 스크립트가 이미 있으면 중복 로딩 방지
@@ -17,30 +17,31 @@ const [selectedBin, setSelectedBin] = useState(null);
     }
 
     function loadMap() {
-      if (navigator.geolocation){
-        navigator.geolocation.getCurrentPosition(successHandler, errorHandler);}
-        else {
-          alert("Geolocation을 지원하지 않는 브라우저입니다.");
-          initMap(37.5154, 126.9074); // 영등포역 위도, 경도 기본값
-        }
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
       }
-      function successHandler(position) {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-        console.log("현재 위치:", lat, lng);
-        //백엔드에 보낼 JSON 데이터
-        const locationDate = {
-          latitude: lat,
-          longitude: lng,
-        }
+      else {
+        alert("Geolocation을 지원하지 않는 브라우저입니다.");
+        initMap(37.5154, 126.9074); // 영등포역 위도, 경도 기본값
+      }
+    }
+    function successHandler(position) {
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+      console.log("현재 위치:", lat, lng);
+      //백엔드에 보낼 JSON 데이터
+      const locationDate = {
+        latitude: lat,
+        longitude: lng,
+      }
 
-        fetch("http://localhost:8080/api/location", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(locationDate),
-        })
+      fetch("http://localhost:8080/api/location", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(locationDate),
+      })
         .then((res) => res.json())
         .then((data) => {
           console.log("서버 응답:", data);
@@ -49,45 +50,47 @@ const [selectedBin, setSelectedBin] = useState(null);
           console.error("서버 요청 실패:", error));
 
 
-        initMap(lat, lng);
-      }
-  
-      function errorHandler(error) {
-        console.error(error);
-        alert("위치 정보를 가져올 수 없습니다. 기본 위치로 이동합니다.");
-        initMap(37.5665, 126.9780); // 실패하면 서울 시청
-      }
-  
-      function initMap(lat, lng) {
-        const container = document.getElementById("map");
-        const options = {
-          center: new window.kakao.maps.LatLng(lat, lng),
-          level: 3,
-        };
-        const map = new window.kakao.maps.Map(container, options);
+      initMap(lat, lng);
+    }
 
-        // 🔥 내 위치에 빨간 점 마커 추가
-        const markerPosition = new window.kakao.maps.LatLng(lat, lng);
-        const markerImage = new window.kakao.maps.MarkerImage(
-          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
-          new window.kakao.maps.Size(40, 40),     // 사이즈 (살짝 줄였어 보기 좋게)
-          {
-            offset: new window.kakao.maps.Point(20, 40),   // 마커 기준점 위치
-          }
-        );
-      
-        const marker = new window.kakao.maps.Marker({
-          position: markerPosition,
-          image: markerImage,
-          map: map,
-        });
+    function errorHandler(error) {
+      console.error(error);
+      alert("위치 정보를 가져올 수 없습니다. 기본 위치로 이동합니다.");
+      initMap(37.5665, 126.9780); // 실패하면 서울 시청
+    }
+
+    function initMap(lat, lng) {
+      const container = document.getElementById("map");
+      const options = {
+        center: new window.kakao.maps.LatLng(lat, lng),
+        level: 3,
+      };
+      const map = new window.kakao.maps.Map(container, options);
+
+      // 🔥 내 위치에 빨간 점 마커 추가
+      const markerPosition = new window.kakao.maps.LatLng(lat, lng);
+      const markerImage = new window.kakao.maps.MarkerImage(
+        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
+        new window.kakao.maps.Size(40, 40),     // 사이즈 (살짝 줄였어 보기 좋게)
+        {
+          offset: new window.kakao.maps.Point(20, 40),   // 마커 기준점 위치
+        }
+      );
+
+      const marker = new window.kakao.maps.Marker({
+        position: markerPosition,
+        image: markerImage,
+        map: map,
+      });
 
       //수거함 마커 및 팝업 추가
       // ✅ 임의의 수거함 위치 예시
       const bins = [
-        { lat: 37.614, lng: 127.064, name: "한양대학교 대운동장",  time: "18:00~20:00",
+        {
+          lat: 37.378, lng: 126.645, name: "한양대학교 대운동장", time: "18:00~20:00",
           distance: "2km",
-          point: "500p"},
+          point: "500p"
+        },
         { lat: 37.380, lng: 126.656, name: "수거함 B" },
       ];
 
@@ -110,7 +113,7 @@ const [selectedBin, setSelectedBin] = useState(null);
           new window.kakao.maps.Size(40, 40),
           { offset: new window.kakao.maps.Point(20, 40) }
         );
-        
+
         const trashMarker = new window.kakao.maps.Marker({
           //position: new window.kakao.maps.LatLng(37.5575, 127.0459), // 수거함 위치
           position: binPosition,
@@ -146,11 +149,11 @@ const [selectedBin, setSelectedBin] = useState(null);
           "></div>
         </div>
       `;
-    
-      const infoWindow = new window.kakao.maps.InfoWindow({
-        content: content,
-        removable: false
-      });
+
+        const infoWindow = new window.kakao.maps.InfoWindow({
+          content: content,
+          removable: false
+        });
 
         // ✅ click 시 하단 팝업 (고정)
         const detailPopup = new window.kakao.maps.CustomOverlay({
@@ -174,12 +177,12 @@ const [selectedBin, setSelectedBin] = useState(null);
         });
       });
 
-      }
-    
-    }, []);
-  
-    return (
-      <>
+    }
+
+  }, []);
+
+  return (
+    <>
       <div id="map" className="w-full h-screen"></div>
       {selectedBin && (
         <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50">
@@ -205,7 +208,7 @@ const [selectedBin, setSelectedBin] = useState(null);
           </div>
         </div>
       )}</>
-    );
-  }
-  
-  export default KakaoMap;
+  );
+}
+
+export default KakaoMap;
