@@ -85,7 +85,7 @@ const [selectedBin, setSelectedBin] = useState(null);
       //수거함 마커 및 팝업 추가
       // ✅ 임의의 수거함 위치 예시
       const bins = [
-        { lat: 37.378, lng: 126.645, name: "한양대학교 대운동장",  time: "18:00~20:00",
+        { lat: 37.614, lng: 127.064, name: "한양대학교 대운동장",  time: "18:00~20:00",
           distance: "2km",
           point: "500p"},
         { lat: 37.380, lng: 126.656, name: "수거함 B" },
