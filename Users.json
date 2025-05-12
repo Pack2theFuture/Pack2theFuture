@@ -1,0 +1,28 @@
+[
+    {
+        "model": "api.Users",
+        "pk": "2021075323",
+        "fields": {
+            "username": "zzangsol",
+            "password": "2021075323",
+            "phone": "01011112222",
+            "email": "sol@gmail.com",
+            "total_collect_amount": 50,
+            "total_carbon_reduction": 100,
+            "points": "500"
+        }
+    },
+    {
+        "model": "api.Users",
+        "pk": "2018010437",
+        "fields": {
+            "username": "hyo",
+            "password": "2018010437",
+            "phone": "01022223333",
+            "email": "hyo@gmail.com",
+            "total_collect_amount": 510,
+            "total_carbon_reduction": 1200,
+            "points": "5200"
+        }
+    }
+]

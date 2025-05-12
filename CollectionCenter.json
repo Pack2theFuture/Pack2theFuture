@@ -3,11 +3,11 @@
         "model": "api.CollectionCenter",
         "pk": 1,
         "fields": {
-            "centerId": 223,
-            "name": "1번센터",
-            "latitude": 127.0001,
-            "longitude": 38.001,
-            "address": "1번센터 주소",
+            "center_id": 1,
+            "name": "왕십리역",
+            "latitude": 37.5651636287,
+            "longitude": 127.01883333,
+            "address": "왕십리역 주소",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
             "phone": "01011112222"
@@ -17,11 +17,11 @@
         "model": "api.CollectionCenter",
         "pk": 2,
         "fields": {
-            "centerId": 224,
-            "name": "2번센터",
-            "latitude": 127.0002,
-            "longitude": 38.002,
-            "address": "2번센터 주소",
+            "center_id": 2,
+            "name": "한양대역",
+            "latitude": 37.5594,
+            "longitude": 127.0249,
+            "address": "한양대역 주소",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
             "phone": "01022222222"
