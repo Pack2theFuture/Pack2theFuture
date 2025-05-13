@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { BrowserMultiFormatReader } from "@zxing/browser";
+import { BrowserMultiFormatReader } from "@zxing/library";
 
 function BarcodeScanner({ onDetected, onClose }) {
   const videoRef = useRef(null);
@@ -31,7 +31,9 @@ function BarcodeScanner({ onDetected, onClose }) {
   }, [onDetected]);
 
   const handleClose = () => {
+    console.log("X 버튼 클릭");
     codeReaderRef.current?.reset();
+    //reset : @zxing/browser 를 @zxing/library로 바꾸니 해결.
     setSuccessMessage("");
     onClose();
   };

@@ -206,7 +206,7 @@ function KakaoMap() {
                 onDetected={(code) => {
                   console.log("스캔된 바코드:", code);
                   // 서버 전송 또는 검증 로직
-                  setScanning(false);
+                  //setScanning(false);
                 }}
                 onClose={() => setScanning(false)}
               />
