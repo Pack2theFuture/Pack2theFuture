@@ -3,7 +3,6 @@ import { BrowserMultiFormatReader } from "@zxing/library";
 
 function BarcodeScanner({ onDetected, onClose }) {
   const videoRef = useRef(null);
-  const controlsRef = useRef(null);
   const codeReaderRef = useRef(null);
   const [successMessage, setSuccessMessage] = useState("");
 
@@ -11,32 +10,28 @@ function BarcodeScanner({ onDetected, onClose }) {
     const codeReader = new BrowserMultiFormatReader();
     codeReaderRef.current = codeReader;
 
-    codeReader.decodeFromVideoDevice(null, videoRef.current, (result, err) => {
-      if (result) {
+    // ✅ 한 번만 인식하면 자동 종료됨
+    codeReader.decodeOnceFromVideoDevice(undefined, videoRef.current)
+      .then((result) => {
         const text = result.getText();
         console.log("바코드 인식:", text);
-        onDetected(text);
         setSuccessMessage("✅ 종이팩 인증에 성공했습니다.");
-        controlsRef.current?.stop();
-      }
-    }).then((controls) => {
-      controlsRef.current = controls;
-    }).catch((err) => {
-      console.error("카메라 접근 오류:", err);
-    });
 
+        // 1.5초 후 모달 닫고 결과 전달
+        setTimeout(() => {
+          onDetected(text);
+          onClose();
+        }, 1500);
+      })
+      .catch((err) => {
+        console.error("바코드 인식 오류:", err);
+      });
+
+    // 컴포넌트 unmount 시 카메라 종료
     return () => {
-      controlsRef.current?.stop();
+      codeReader.reset();
     };
-  }, [onDetected]);
-
-  const handleClose = () => {
-    console.log("X 버튼 클릭");
-    codeReaderRef.current?.reset();
-    //reset : @zxing/browser 를 @zxing/library로 바꾸니 해결.
-    setSuccessMessage("");
-    onClose();
-  };
+  }, [onDetected, onClose]);
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 z-50 flex flex-col items-center justify-center">
@@ -48,7 +43,6 @@ function BarcodeScanner({ onDetected, onClose }) {
           muted
           playsInline
         />
-
         {/* 녹색 테두리 */}
         <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
           <div className="absolute w-6 h-6 border-4 border-green-400 rounded-tl-xl" />
@@ -58,17 +52,12 @@ function BarcodeScanner({ onDetected, onClose }) {
         </div>
       </div>
 
-      {/* 안내 및 결과 텍스트 */}
-      {successMessage ? (
-        <p className="text-green-400 text-sm mt-4">{successMessage}</p>
-      ) : (
-        <p className="text-white text-sm mt-4">
-          바코드를 녹색 테두리 안에 위치시켜 주세요.
-        </p>
-      )}
+      <p className={`mt-4 text-sm ${successMessage ? "text-green-400" : "text-white"}`}>
+        {successMessage || "바코드를 녹색 테두리 안에 위치시켜 주세요."}
+      </p>
 
       <button
-        onClick={handleClose}
+        onClick={onClose}
         className="mt-4 px-4 py-2 bg-white text-black rounded"
       >
         X
