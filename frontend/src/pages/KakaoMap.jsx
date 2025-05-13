@@ -4,6 +4,7 @@ import BarcodeScanner from "./BarcodeScanner";
 function KakaoMap() {
   const [selectedBin, setSelectedBin] = useState(null);
   const [scanning, setScanning] = useState(false);
+  const [scannedCode, setScannedCode] = useState(null);
 
   useEffect(() => {
     function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
@@ -196,17 +197,23 @@ function KakaoMap() {
               alt="장소 이미지"
               className="w-full rounded-lg object-cover h-40"
             />
-            {!scanning && (
-              <button onClick={() => setScanning(true)} className="mt-4 w-full bg-green-200 text-black rounded-xl py-2 text-sm">
-                종이팩 버리러 가기
-              </button>
-            )}
+{!scanning && (
+  <button
+    onClick={() => setScanning(true)}
+    className={`mt-4 w-full ${
+      scannedCode ? "bg-green-500 text-white" : "bg-green-200 text-black"
+    } rounded-xl py-2 text-sm`}
+  >
+    {scannedCode ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
+  </button>
+)}
             {scanning && (
               <BarcodeScanner
                 onDetected={(code) => {
                   console.log("스캔된 바코드:", code);
                   // 서버 전송 또는 검증 로직
                   //setScanning(false);
+                  setScannedCode(code);
                 }}
                 onClose={() => setScanning(false)}
               />
