@@ -61,7 +61,7 @@ function BarcodeScanner({ onDetected, onClose }) {
         <p className="text-green-400 text-sm mt-4">{successMessage}</p>
       ) : (
         <p className="text-white text-sm mt-4">
-          바코드를 녹색 테두리 안에 위치시켜 주세요
+          바코드를 녹색 테두리 안에 위치시켜 주세요.
         </p>
       )}
 
