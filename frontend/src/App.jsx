@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Splash from './pages/splash';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 import KakaoMap from './pages/KakaoMap';
 import Sol from './pages/sol';  // sol
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Splash />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/map" element={<KakaoMap />} />
         <Route path="/sol" element={<Sol />} />
       </Routes>
