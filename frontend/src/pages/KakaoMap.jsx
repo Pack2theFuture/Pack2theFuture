@@ -10,6 +10,18 @@ function KakaoMap() {
   const [polyline, setPolyline] = useState(null);
   const watchIdRef = useRef(null);
 
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) *
+      Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -79,8 +91,15 @@ function KakaoMap() {
             point: "500p",
           },
         ];
+        const updatedBins = bins.map(bin => {
+          const distance = getDistanceFromLatLonInKm(lat,lng,bin.lat,bin.lng)
+          return{
+            ...bin,
+            distance: `${distance.toFixed(2)} km`,
+          }
+        })
 
-        bins.forEach(bin => {
+        updatedBins.forEach(bin => {
           const binPosition = new window.kakao.maps.LatLng(bin.lat, bin.lng);
           const trashBinImage = new window.kakao.maps.MarkerImage(
             "/trashbin.png",
@@ -95,7 +114,34 @@ function KakaoMap() {
           });
 
           const infoWindow = new window.kakao.maps.InfoWindow({
-  content: `<div style="padding:5px;font-size:12px;">${bin.name}<br/>운영시간: ${bin.time}<br/>거리: ${bin.distance}<br/>예상 지급 포인트: ${bin.point}</div>`,
+  content: `<div style="
+      position: relative;
+      background: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      font-size: 13px;
+      line-height: 1.6;
+      width: max-content;
+      max-width: 250px;
+    ">
+      <div style="font-weight: bold; margin-bottom: 6px;">${bin.name}</div>
+      <div>운영시간: ${bin.time}</div>
+      <div>거리: ${bin.distance}</div>
+      <div>예상 지급 포인트: ${bin.point}</div>
+            <!-- 말풍선 꼬리 부분 -->
+      <div style="
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid white;
+      "></div>
+      </div>`,
   removable: false,
 });
 
@@ -210,7 +256,7 @@ function KakaoMap() {
           <div className="px-4 pb-4">
             <p className="text-sm text-gray-500">서울특별시 성동구</p>
             <p className="mt-2">운영시간: {selectedBin.time || "-"}</p>
-            <p>현재 위치로부터의 거리 : 2km</p>
+            <p>현재 위치로부터의 거리 : {selectedBin.distance || "-"}</p>
             <p>예상지급포인트: {selectedBin.point || "-"}</p>
           </div>
           <div className="px-4 pb-4">
