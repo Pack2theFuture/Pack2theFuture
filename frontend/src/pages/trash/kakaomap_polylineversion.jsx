@@ -10,7 +10,6 @@ function KakaoMap() {
   const [polyline, setPolyline] = useState(null);
   const watchIdRef = useRef(null);
 
-
   useEffect(() => {
     const script = document.createElement("script");
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_KEY}&autoload=false`;
@@ -93,20 +92,6 @@ function KakaoMap() {
             image: trashBinImage,
             map: mapInstance,
           });
-
-          const infoWindow = new window.kakao.maps.InfoWindow({
-  content: `<div style="padding:5px;font-size:12px;">${bin.name}<br/>운영시간: ${bin.time}<br/>거리: ${bin.distance}<br/>예상 지급 포인트: ${bin.point}</div>`,
-  removable: false,
-});
-
-          window.kakao.maps.event.addListener(trashMarker, "mouseover", () => {
-          console.log("mouseover", bin);
-            infoWindow.open(mapInstance, trashMarker);
-});
-
-          window.kakao.maps.event.addListener(trashMarker, "mouseout", () => {
-          infoWindow.close();
-});
 
           window.kakao.maps.event.addListener(trashMarker, "click", () => {
             setSelectedBin(bin);
@@ -210,7 +195,6 @@ function KakaoMap() {
           <div className="px-4 pb-4">
             <p className="text-sm text-gray-500">서울특별시 성동구</p>
             <p className="mt-2">운영시간: {selectedBin.time || "-"}</p>
-            <p>현재 위치로부터의 거리 : 2km</p>
             <p>예상지급포인트: {selectedBin.point || "-"}</p>
           </div>
           <div className="px-4 pb-4">
@@ -223,15 +207,14 @@ function KakaoMap() {
               <button
                 onClick={() => {
                   console.log("버튼 클릭됨",{scannedCode, selectedBin});
-                if (scannedCode) {
-                  console.log("handleRoute 호출됨!");
-                  setScanning(false); // ✅ 바코드 스캐너 닫기
-                  handleRoute(); // ✅ 경로 표시만
-                  setSelectedBin(null);  // ✅ 팝업 닫기
-                } else {
-                  setScanning(true); // ✅ 바코드 스캐너 열기
-                }
-          }}
+    if (scannedCode) {
+      console.log("~~🚀 handleRoute 호출됨!");
+      setScanning(false); // ✅ 바코드 스캐너 닫기
+      handleRoute(); // ✅ 경로 표시만
+    } else {
+      setScanning(true); // ✅ 바코드 스캐너 열기
+    }
+  }}
                 className={`mt-4 w-full ${
                   scannedCode ? "bg-green-500 text-white" : "bg-green-200 text-black"
                 } rounded-xl py-2 text-sm`}
@@ -243,7 +226,6 @@ function KakaoMap() {
               <BarcodeScanner
                 onDetected={code => {
                   console.log("스캔된 바코드:", code);
-                  console.log("setScanning(false) 호출됨!");
                   setScanning(false);
                   setScannedCode(code);
                 }}
