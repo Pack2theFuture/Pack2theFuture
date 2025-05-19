@@ -11,10 +11,7 @@ function KakaoMap() {
   const [insideCircle, setInsideCircle] = useState(false);
   const watchIdRef = useRef(null);
   const circleRef = useRef(null);
-  const [bins, setBins] = useState([]);
-  const [scannedMap, setScannedMap] = useState({});
-  const isScanned = selectedBin ? scannedMap[selectedBin.id] || false : false;
-  
+
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -76,85 +73,85 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
         setUserMarker(marker);
 
         // 수거함 마커 추가 (예시)
-        // const bins = [
-        //   {
-        //     id: 1,
-        //     lat: 37.568,
-        //     lng: 127.043,
-        //     name: "어바웃엠협동조합",
-        //     time: "?",
-        //     point: "500p",
-        //   },
-        //   {
-        //     id: 2,
-        //     lat: 37.574,
-        //     lng: 127.048,
-        //     name: "공방 꽃피는 삼월에",
-        //     time: "10:30 ~ 20:00",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 3,
-        //     lat: 37.551,
-        //     lng: 127.026,
-        //     name: "한살림 금호매장",
-        //     time: "10:00 ~ 20:00",
-        //     point: "500p",
-        //   },
-        //   {
-        //     id: 4,
-        //     lat: 37.561,
-        //     lng: 127.045,
-        //     name: "사근동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 5,
-        //     lat: 37.558,
-        //     lng: 127.036,
-        //     name: "행당 제1동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 6,
-        //     lat: 37.561,
-        //     lng: 127.031,
-        //     name: "왕십리 제2동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //   {id: 7,
-        //     lat: 37.558,
-        //     lng: 127.036,
-        //     name: "행당 제2동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //     {id: 8,
-        //     lat: 37.562,
-        //     lng: 127.036,
-        //     name: "성동구청",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //   {
-        //     id: 9,
-        //     lat: 37.559,
-        //     lng: 127.034,
-        //     name: "성동구립도서관",
-        //     time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 10,
-        //     lat: 37.555,
-        //     lng: 127.046,
-        //     name: "한양대 제2공학관",
-        //     time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
-        //     point: "500p",
-        //   },
+        const bins = [
+          {
+            id: 1,
+            lat: 37.568,
+            lng: 127.043,
+            name: "어바웃엠협동조합",
+            time: "?",
+            point: "500p",
+          },
+          {
+            id: 2,
+            lat: 37.574,
+            lng: 127.048,
+            name: "공방 꽃피는 삼월에",
+            time: "10:30 ~ 20:00",
+            point: "500p",
+          },
+                    {
+            id: 3,
+            lat: 37.551,
+            lng: 127.026,
+            name: "한살림 금호매장",
+            time: "10:00 ~ 20:00",
+            point: "500p",
+          },
+          {
+            id: 4,
+            lat: 37.561,
+            lng: 127.045,
+            name: "사근동 주민센터",
+            time: "24시간",
+            point: "500p",
+          },
+                    {
+            id: 5,
+            lat: 37.558,
+            lng: 127.036,
+            name: "행당 제1동 주민센터",
+            time: "24시간",
+            point: "500p",
+          },
+                    {
+            id: 6,
+            lat: 37.561,
+            lng: 127.031,
+            name: "왕십리 제2동 주민센터",
+            time: "24시간",
+            point: "500p",
+          },
+          {id: 7,
+            lat: 37.558,
+            lng: 127.036,
+            name: "행당 제2동 주민센터",
+            time: "24시간",
+            point: "500p",
+          },
+            {id: 8,
+            lat: 37.562,
+            lng: 127.036,
+            name: "성동구청",
+            time: "24시간",
+            point: "500p",
+          },
+          {
+            id: 9,
+            lat: 37.559,
+            lng: 127.034,
+            name: "성동구립도서관",
+            time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
+            point: "500p",
+          },
+                    {
+            id: 10,
+            lat: 37.555,
+            lng: 127.046,
+            name: "한양대 제2공학관",
+            time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
+            point: "500p",
+          },
           // {
           //   id: 10,
           //   lat: 37.561,
@@ -179,14 +176,14 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
           //   time: "24시간",
           //   point: "500p",
           // },
-          // {
-          //   id: 13,
-          //   lat: 37.377,
-          //   lng: 126.648,
-          //   name: "APT",
-          //   time: "09:00 ~ 18:00",
-          //   point: "500p",
-          // },
+          {
+            id: 11,
+            lat: 37.377,
+            lng: 126.648,
+            name: "APT",
+            time: "09:00 ~ 18:00",
+            point: "500p",
+          },
           // {
           //   id: 14,
           //   lat: 37.378,
@@ -195,44 +192,14 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
           //   time: "09:00 ~ 18:00",
           //   point: "500p",
           // }
-        //];
-
-      // 1. 서버에 현재 위치 POST 요청해서 bins 데이터 받아오기
-      const locationData = {
-        latitude: lat,
-        longitude: lng,
-      };
-
-      fetch("http://localhost:8000/api/location/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(locationData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("✅ 전체 응답 객체:", data);
-    console.log("✅ data.data:", data.data);
-    console.log("✅ data.data[0]:", data.data?.[0]);
-    console.log("✅ data.data[0] JSON:", JSON.stringify(data.data?.[0], null, 2));
-          const nearbyBins = data.data.filter((bin) => {
-    const distance = getDistanceFromLatLonInKm(lat, lng, bin.latitude, bin.longitude);
-    return distance <= 2; // 2km 이하만 통과
-  });
-    
-    const updatedBins = nearbyBins.map((bin) => { 
-          const distance = getDistanceFromLatLonInKm(lat,lng,bin.latitude, bin.longitude);
+        ];
+        const updatedBins = bins.map(bin => {
+          const distance = getDistanceFromLatLonInKm(lat,lng,bin.lat,bin.lng)
           return{
             ...bin,
-            lat:bin.latitude,
-            lng:bin.longitude,
             distance: `${distance.toFixed(2)} km`,
-            point: `500p`,
           }
-        });
-        setBins(updatedBins);
-        console.log("✅ updatedBins:", updatedBins);
+        })
 
         updatedBins.forEach(bin => {
           const binPosition = new window.kakao.maps.LatLng(bin.lat, bin.lng);
@@ -261,7 +228,7 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
       max-width: 250px;
     ">
       <div style="font-weight: bold; margin-bottom: 6px;">${bin.name}</div>
-      <div>운영시간: ${bin.opening_hour}</div>
+      <div>운영시간: ${bin.time}</div>
       <div>거리: ${bin.distance}</div>
       <div>예상 지급 포인트: ${bin.point}</div>
             <!-- 말풍선 꼬리 부분 -->
@@ -290,7 +257,7 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 });
 
           window.kakao.maps.event.addListener(trashMarker, "click", () => {
-            setSelectedBin({ ...bin, scanned: false });
+            setSelectedBin(bin);
             if (circleRef.current) circleRef.current.setMap(null);
             const circle = new window.kakao.maps.Circle({
               center: binPosition,
@@ -305,14 +272,11 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
             circleRef.current = circle;
           });
         });
-      })
-      .catch(error => {
-        console.error("🚫 수거함 데이터 요청 실패:", error);
-    });
-  });
-}else{
+      });
+    } else {
       alert("Geolocation을 지원하지 않는 브라우저입니다.");
-    }};
+    }
+  };
 
   const handleRoute = async () => {
     console.log("handleRoute 시작됨!");
@@ -406,27 +370,25 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
     <>
       <div id="map" className="w-full h-screen"></div>
       {selectedBin && (
-        <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[40vh] overflow-y-auto">
+        <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50">
           <div className="flex justify-between items-center px-4 pt-4">
             <div className="font-bold text-lg">{selectedBin.name}</div>
             <button onClick={() => setSelectedBin(null)} className="text-xl">
               ×
             </button>
           </div>
-          <div className="px-4 pb-4 flex items-start gap-4">
-            {/* 왼쪽 : 텍스트 정보 */}
-            <div className="flex-1">
+          <div className="px-4 pb-4">
             <p className="text-sm text-gray-500">서울특별시 성동구</p>
-            <p className="mt-2">운영시간: {selectedBin.opening_hour || "-"}</p>
+            <p className="mt-2">운영시간: {selectedBin.time || "-"}</p>
             <p>현재 위치로부터의 거리 : {selectedBin.distance || "-"}</p>
             <p>예상지급포인트: {selectedBin.point || "-"}</p>
-            </div>
+          </div>
+          <div className="px-4 pb-4">
             <img
               src={selectedBin.imageUrl || "/default.jpg"}
               alt="장소 이미지"
-              className="w-32 h-24 rounded-lg object-cover"
+              className="w-full rounded-lg object-cover h-40"
             />
-            </div>
             {!scanning && (
               <button
                 onClick={() => {
@@ -441,29 +403,25 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
                 }
           }}
                 className={`mt-4 w-full ${
-                  isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
+                  insideCircle ? "bg-blue-500 text-white" : scannedCode ? "bg-green-500 text-white" : "bg-green-200 text-black"
                 } rounded-xl py-2 text-sm`}
               >
-                {isScanned && insideCircle ? "도착하기" : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
+                {insideCircle ? "도착하기" : scannedCode ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
               </button>
             )}
             {scanning && (
               <BarcodeScanner
-                onDetected={(code) => {
+                onDetected={code => {
                   console.log("스캔된 바코드:", code);
                   console.log("setScanning(false) 호출됨!");
                   setScanning(false);
                   setScannedCode(code);
-                  setScannedMap((prev) => ({
-      ...prev,
-      [selectedBin.id]: true, // ✅ 해당 수거함만 스캔 완료 표시
-    }));
                 }}
                 onClose={() => setScanning(false)}
               />
             )}
           </div>
-
+        </div>
       )}
     </>
   );
