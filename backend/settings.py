@@ -43,6 +43,16 @@ MIDDLEWARE = [
 
 CORS_ALLOW_ALL_ORIGINS = True 
 
+#session
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173", 
+]
+
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = False
+#session
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [

@@ -4,6 +4,8 @@ import json, math
 
 from .models import CollectionCenter, CollectionHistory, Users
 
+
+# MAP API
 @csrf_exempt  
 def user_location(request):
     if request.method == "POST":
@@ -61,8 +63,6 @@ def select_location(request, centerId):
         except CollectionCenter.DoesNotExist:
             return JsonResponse({"status": "error", "message": "JSON 파싱 실패"}, status=400)
 
-
-
 @csrf_exempt       
 def user_depart(request):
     if request.method == "POST":
@@ -91,9 +91,6 @@ def user_depart(request):
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
             # return JsonResponse({"message": "오류 return"}, status=400)
-    
-    
-    
     
 @csrf_exempt
 def user_arrive(request):
@@ -131,10 +128,85 @@ def user_arrive(request):
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=400)
         
-      
 def euclidean_distance(lat1, lon1, lat2, lon2):
     lat1, lon1, lat2, lon2 = map(float, (lat1, lon1, lat2, lon2))
     delta_lat = lat2 - lat1
     delta_lon = lon2 - lon1
     distance = math.sqrt(delta_lat**2 + delta_lon**2) * 111000  # 미터 단위 변환
     return distance
+
+
+
+# SIGN UP
+@csrf_exempt
+def signup(request):
+    if request.method == "POST":
+        print("signup1")
+        try:
+            data = json.loads(request.body)
+            email = data.get("email")
+            password = data.get("password")
+
+            # 이메일 중복 체크
+            if Users.objects.filter(email=email).exists():
+                return JsonResponse({"message": "이미 존재하는 이메일입니다."}, status=400)
+
+            # 유저 생성
+            new_user = Users.objects.create(
+                id=email,  # 기본키로 이메일을 사용한다고 가정
+                username=email.split("@")[0],
+                password=password,
+                email=email,
+                phone="00000000000",  # 기본값 처리 (또는 프론트에서 추가)
+                total_collect_amount=0,
+                total_carbon_reduction=0,
+                points=0
+            )
+            print("signup2")
+            return JsonResponse({"message": "회원가입이 완료되었습니다."}, status=201)
+        except Exception as e:
+            print("signup3")
+            return JsonResponse({"message": str(e)}, status=500)
+
+    return JsonResponse({"message": "허용되지 않은 메서드입니다."}, status=405)
+
+
+@csrf_exempt
+def login_view(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            id = data.get("username")
+            password = data.get("password")
+
+            user = Users.objects.filter(id=id, password=password).first()
+
+            if user:
+                request.session['user_id'] = user.pk  # 세션 저장
+                return JsonResponse({"message": "로그인 성공", "user_id": user.pk}, status=200)
+            else:
+                return JsonResponse({"message": "아이디 또는 비밀번호가 올바르지 않습니다."}, status=401)
+
+        except Exception as e:
+            return JsonResponse({"message": str(e)}, status=500)
+
+    return JsonResponse({"message": "허용되지 않은 메서드입니다."}, status=405)
+
+
+# def mypage_view(request):
+#     user_id = request.session.get('user_id')
+
+#     if not user_id:
+#         return JsonResponse({"message": "로그인이 필요합니다."}, status=401)
+
+#     user = Users.objects.get(pk=user_id)
+#     return JsonResponse({
+#         "username": user.username,
+#         "email": user.email,
+#         # 필요한 항목 더 추가 가능
+#     })
+
+
+def logout_view(request):
+    request.session.flush()
+    return JsonResponse({"message": "로그아웃 완료"})

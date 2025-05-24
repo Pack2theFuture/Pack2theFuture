@@ -6,4 +6,9 @@ urlpatterns = [
     path("collections/<int:centerId>/", views.select_location),
     path("depart/", views.user_depart),
     path("arrive/", views.user_arrive),
+    
+    path("signup/", views.signup),
+    path("login/", views.login_view),
+    path("mypage/", views.mypage_view),
+    
 ]
