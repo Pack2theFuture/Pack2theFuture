@@ -14,8 +14,7 @@ function KakaoMap() {
   const [bins, setBins] = useState([]);
   const [scannedMap, setScannedMap] = useState({});
   const isScanned = selectedBin ? scannedMap[selectedBin.id] || false : false;
-  const markerImageRef = useRef(null);
-  
+
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -28,6 +27,63 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
+const drawRouteToBin = async (bin) => {
+  if (!map) return;
+
+  navigator.geolocation.getCurrentPosition(async (position) => {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+
+    const response = await fetch(
+      `https://apis-navi.kakaomobility.com/v1/directions?origin=${lng},${lat}&destination=${bin.lng},${bin.lat}&priority=DISTANCE`,
+      {
+        headers: {
+          Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
+        },
+      }
+    );
+
+    if (!response.ok) {
+      const text = await response.text();
+      console.error("🚫 경로 API 요청 실패:", response.status, text);
+      return;
+    }
+
+    const data = await response.json();
+    if (data.routes && data.routes.length > 0) {
+      const path = [];
+      data.routes[0].sections.forEach((section) => {
+        section.roads.forEach((road) => {
+          for (let i = 0; i < road.vertexes.length; i += 2) {
+            path.push(
+              new window.kakao.maps.LatLng(
+                road.vertexes[i + 1],
+                road.vertexes[i]
+              )
+            );
+          }
+        });
+      });
+
+      if (polyline) {
+        polyline.setMap(null);
+      }
+
+      const newPolyline = new window.kakao.maps.Polyline({
+        path,
+        strokeWeight: 5,
+        strokeColor: "#00aaff",
+        strokeOpacity: 0.7,
+        strokeStyle: "solid",
+      });
+
+      newPolyline.setMap(map);
+      setPolyline(newPolyline);
+    }
+  });
+};
+
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -68,7 +124,6 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   new window.kakao.maps.Size(40, 40),
   { offset: new window.kakao.maps.Point(20, 40) }
 );
-markerImageRef.current = markerImage2;
 
         const marker = new window.kakao.maps.Marker({
           position: markerPosition,
@@ -204,6 +259,7 @@ markerImageRef.current = markerImage2;
         latitude: lat,
         longitude: lng,
       };
+      
 
       fetch("http://localhost:8000/api/location/", {
         method: "POST",
@@ -220,7 +276,7 @@ markerImageRef.current = markerImage2;
     console.log("✅ data.data[0] JSON:", JSON.stringify(data.data?.[0], null, 2));
           const nearbyBins = data.data.filter((bin) => {
     const distance = getDistanceFromLatLonInKm(lat, lng, bin.latitude, bin.longitude);
-    return distance <= 2; // 2km 이하만 통과
+    return distance <= 5; // 5km 이하만 통과
   });
     
     const updatedBins = nearbyBins.map((bin) => { 
@@ -293,6 +349,8 @@ markerImageRef.current = markerImage2;
 
           window.kakao.maps.event.addListener(trashMarker, "click", () => {
             setSelectedBin({ ...bin, scanned: false });
+            drawRouteToBin(bin);
+            
             if (circleRef.current) circleRef.current.setMap(null);
             const circle = new window.kakao.maps.Circle({
               center: binPosition,
@@ -315,66 +373,71 @@ markerImageRef.current = markerImage2;
 }else{
       alert("Geolocation을 지원하지 않는 브라우저입니다.");
     }};
+const handleRoute = () => {
+  if (selectedBin) {
+    drawRouteToBin(selectedBin);
+  }
+};
 
-  const handleRoute = async () => {
-    console.log("handleRoute 시작됨!");
-    if (!selectedBin || !map) return;
+//   const handleRoute = async () => {
+//     console.log("handleRoute 시작됨!");
+//     if (!selectedBin || !map) return;
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async position => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+//     if (navigator.geolocation) {
+//       navigator.geolocation.getCurrentPosition(async position => {
+//         const lat = position.coords.latitude;
+//         const lng = position.coords.longitude;
 
-        const response = await fetch(
-          `https://apis-navi.kakaomobility.com/v1/directions?origin=${lng},${lat}&destination=${selectedBin.lng},${selectedBin.lat}&priority=TIME`,
-          {
-            headers: {
-              Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
-            },
-          }
-        );
-//** 요청실패 체크 로직 추가*/
-        if (!response.ok) {
-  const text = await response.text();
-  console.error("🚫 경로 API 요청 실패:", response.status, text);
-  return;
-}
+//         const response = await fetch(
+//           `https://apis-navi.kakaomobility.com/v1/directions?origin=${lng},${lat}&destination=${selectedBin.lng},${selectedBin.lat}&priority=DISTANCE`,
+//           {
+//             headers: {
+//               Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
+//             },
+//           }
+//         );
+// //** 요청실패 체크 로직 추가*/
+//         if (!response.ok) {
+//   const text = await response.text();
+//   console.error("🚫 경로 API 요청 실패:", response.status, text);
+//   return;
+// }
 
-        const data = await response.json();
-        if (data.routes && data.routes.length > 0) {
-          console.log("🔍 sections", data.routes[0].sections);
-          const path = [];
-          data.routes[0].sections.forEach(section => {
-            section.roads.forEach(road => {
-              for (let i = 0; i < road.vertexes.length; i += 2) {
-                path.push(
-                  new window.kakao.maps.LatLng(
-                    road.vertexes[i + 1],
-                    road.vertexes[i]
-                  )
-                );
-              }
-            });
-          });
+//         const data = await response.json();
+//         if (data.routes && data.routes.length > 0) {
+//           console.log("🔍 sections", data.routes[0].sections);
+//           const path = [];
+//           data.routes[0].sections.forEach(section => {
+//             section.roads.forEach(road => {
+//               for (let i = 0; i < road.vertexes.length; i += 2) {
+//                 path.push(
+//                   new window.kakao.maps.LatLng(
+//                     road.vertexes[i + 1],
+//                     road.vertexes[i]
+//                   )
+//                 );
+//               }
+//             });
+//           });
 
-          if (polyline) {
-            polyline.setMap(null);
-          }
+//           if (polyline) {
+//             polyline.setMap(null);
+//           }
 
-          const newPolyline = new window.kakao.maps.Polyline({
-            path,
-            strokeWeight: 5,
-            strokeColor: "#00aaff",
-            strokeOpacity: 0.7,
-            strokeStyle: "solid",
-          });
+//           const newPolyline = new window.kakao.maps.Polyline({
+//             path,
+//             strokeWeight: 5,
+//             strokeColor: "#00aaff",
+//             strokeOpacity: 0.7,
+//             strokeStyle: "solid",
+//           });
 
-          newPolyline.setMap(map);
-          setPolyline(newPolyline);
-        }
-      });
-    }
-  };
+//           newPolyline.setMap(map);
+//           setPolyline(newPolyline);
+//         }
+//       });
+//     }
+//   };
 
 
   useEffect(() => {
@@ -407,7 +470,7 @@ markerImageRef.current = markerImage2;
   return (
     <>
       <div id="map" className="w-full h-screen"></div>
-      {selectedBin && (
+      {selectedBin && (!insideCircle || !isScanned) && (
         <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[40vh] overflow-y-auto">
           <div className="flex justify-between items-center px-4 pt-4">
             <div className="font-bold text-lg">{selectedBin.name}</div>
@@ -429,30 +492,44 @@ markerImageRef.current = markerImage2;
               className="w-32 h-24 rounded-lg object-cover"
             />
             </div>
-            {!scanning && (
-              <button
-                onClick={() => {
-                  console.log("버튼 클릭됨",{scannedCode, selectedBin});
-                if (scannedCode) {
-                  console.log("handleRoute 호출됨!");
-                  setScanning(false); // ✅ 바코드 스캐너 닫기
-                    // ✅ 캐릭터 마커 이미지로 변경
-  if (userMarker && markerImageRef.current) {
-    userMarker.setImage(markerImageRef.current);
-  }
-                  //handleRoute(); // ✅ 경로 표시만
-                  setSelectedBin(null);  // ✅ 팝업 닫기
-                } else {
-                  setScanning(true); // ✅ 바코드 스캐너 열기
-                }
-          }}
-                className={`mt-4 w-full ${
-                  isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
-                } rounded-xl py-2 text-sm`}
-              >
-                {isScanned && insideCircle ? "도착하기" : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
-              </button>
-            )}
+            {/* ✅ 도착 상태일 땐 단독 버튼 (모달 밖) */}
+{selectedBin && isScanned && insideCircle && (
+  <button
+    onClick={() => {
+      console.log("도착하기 버튼 클릭됨");
+      // 도착 처리 로직
+      alert("도착이 확인되었습니다!");
+      setSelectedBin(null); // 팝업 닫기
+      setScannedCode(null); // 스캔 상태 초기화
+    }}
+    className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-blue-500 text-white px-6 py-3 rounded-xl z-50 shadow-lg"
+  >
+    도착하기
+  </button>
+)}
+{/* ✅ 도착 전: 모달 내부 버튼 */}
+{!scanning && (!isScanned || !insideCircle) && (
+  <button
+    onClick={() => {
+      console.log("버튼 클릭됨", { scannedCode, selectedBin });
+      if (scannedCode) {
+        console.log("handleRoute 호출됨!");
+        setScanning(false);
+        handleRoute();
+        setSelectedBin(null);
+      } else {
+        setScanning(true);
+      }
+    }}
+    className={`mt-4 w-full ${
+      isScanned
+        ? "bg-green-500 text-white"
+        : "bg-green-200 text-black"
+    } rounded-xl py-2 text-sm`}
+  >
+    {isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
+  </button>
+)}
             {scanning && (
               <BarcodeScanner
                 onDetected={(code) => {
