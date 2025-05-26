@@ -210,3 +210,9 @@ def login_view(request):
 def logout_view(request):
     request.session.flush()
     return JsonResponse({"message": "로그아웃 완료"})
+
+# api/views.py
+from django.http import JsonResponse
+
+def mypage_view(request):
+    return JsonResponse({"message": "마이페이지입니다."})
