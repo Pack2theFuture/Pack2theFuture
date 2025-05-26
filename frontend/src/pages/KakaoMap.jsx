@@ -425,7 +425,7 @@ useEffect(() => {
       {
         enableHighAccuracy: true,
         maximumAge: 1000,
-        timeout: 10000
+        timeout: 5000
       }
     );
   }
