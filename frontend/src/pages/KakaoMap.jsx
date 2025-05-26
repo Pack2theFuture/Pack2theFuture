@@ -222,7 +222,7 @@ markerImageRef.current = markerImage2;
         longitude: lng,
       };
 
-      fetch("http://localhost:8000/api/location/", {
+      fetch("https://backend-do9t.onrender.com/api/location/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -476,7 +476,7 @@ useEffect(() => {
             <p>예상지급포인트: {selectedBin.point || "-"}</p>
             </div>
             <img
-              src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
+              src={`https://backend-do9t.onrender.com${selectedBin.imageUrl}` || "/default.jpg"}
               alt="장소 이미지"
               className="w-32 h-24 rounded-lg object-cover"
             />

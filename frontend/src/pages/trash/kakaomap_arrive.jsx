@@ -124,7 +124,7 @@ function KakaoMap() {
       return;
     }
 
-    const response = await fetch("http://localhost:8080/api/confirm-arrival", {
+    const response = await fetch("https://backend-do9t.onrender.com/api/confirm-arrival", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
