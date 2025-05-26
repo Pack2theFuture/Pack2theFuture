@@ -16,6 +16,7 @@ function KakaoMap() {
   const isScanned = selectedBin ? scannedMap[selectedBin.id] || false : false;
   const markerImageRef = useRef(null);
   const [lastScannedBin, setLastScannedBin] = useState(null);
+  const [liveDistance, setLiveDistance] = useState(null);
   
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -403,6 +404,15 @@ useEffect(() => {
           );
           console.log("📏 현재 수거함까지 거리 (m):", dist * 1000);
           setInsideCircle(dist * 1000 <= 100);
+
+          setLiveDistance(dist.toFixed(2) + " km"); // ✅ 실시간 거리 업데이
+          if (dist * 1000 <= 100) {
+            console.log("✅ 반경 안에 있음!");
+            setInsideCircle(true);
+          } else {
+            console.log("❌ 반경 밖에 있음!");
+            setInsideCircle(false);
+          }
         }
       },
       (error) => {
@@ -445,7 +455,7 @@ useEffect(() => {
             <div className="flex-1">
             <p className="text-sm text-gray-500">서울특별시 성동구</p>
             <p className="mt-2">운영시간: {selectedBin.opening_hour || "-"}</p>
-            <p>현재 위치로부터의 거리 : {selectedBin.distance || "-"}</p>
+            <p>현재 위치로부터의 거리 : {liveDistance || selectedBin.distance || "-"}</p>
             <p>예상지급포인트: {selectedBin.point || "-"}</p>
             </div>
             <img
