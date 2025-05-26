@@ -130,10 +130,24 @@
         "pk": 10,
         "fields": {
             "center_id": 10,
-            "name": "한양대학교 제 2공학관",
-            "latitude": 37.556,
-            "longitude": 127.046,
-            "address": "한양대학교 제2공학관",
+            "name": "한양대학교 노천극장",
+            "latitude": 37.555,
+            "longitude": 127.045,
+            "address": "한양대학교 노천극장",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444"
+        }
+    },
+            {
+        "model": "api.CollectionCenter",
+        "pk": 11,
+        "fields": {
+            "center_id": 11,
+            "name": "한양대학교 본관",
+            "latitude": 37.557,
+            "longitude": 127.045,
+            "address": "한양대학교 본관",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
             "phone": "01044444444"
