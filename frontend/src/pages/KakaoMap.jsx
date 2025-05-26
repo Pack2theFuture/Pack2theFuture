@@ -2,6 +2,16 @@ import { useEffect, useState, useRef } from "react";
 import BarcodeScanner from "./BarcodeScanner";
 
 function KakaoMap() {
+  const getPointFromDistance = (distanceStr) => {
+  if (!distanceStr) return null;
+  const match = distanceStr.match(/([\d.]+)\s*km/);
+  if (match) {
+    const km = parseFloat(match[1]);
+    return Math.round(km * 1000); // m → 포인트
+  }
+  return null;
+};
+
   const [selectedBin, setSelectedBin] = useState(null);
   const [scanning, setScanning] = useState(false);
   const [scannedCode, setScannedCode] = useState(null);
@@ -19,6 +29,7 @@ function KakaoMap() {
   const [liveDistance, setLiveDistance] = useState(null);
   const [isOnTheWay, setIsOnTheWay] = useState(false);
   const defaultMarkerImageRef = useRef(null);
+  const [rewarded, setRewarded] = useState(false);
   
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -472,6 +483,22 @@ useEffect(() => {
               <button
                 onClick={() => {
                   console.log("버튼 클릭됨",{scannedCode, selectedBin});
+
+                        if (isScanned && insideCircle && !rewarded) {
+        // ✅ 도착 처리
+        alert("도착이 확인되었습니다!");
+        setRewarded(true);
+        setIsOnTheWay(false);
+        setSelectedBin(null);
+        setScannedCode(null);
+
+        // ✅ 마커 원상복구
+        if (userMarker && defaultMarkerImageRef.current) {
+          userMarker.setImage(defaultMarkerImageRef.current);
+        }
+        return;
+      }
+
                 if (scannedCode) {
                   console.log("handleRoute 호출됨!");
                   setScanning(false); // ✅ 바코드 스캐너 닫기
@@ -489,10 +516,12 @@ useEffect(() => {
                 }
           }}
                 className={`mt-4 w-full ${
+                  rewarded ? "bg-purple-500 text-white" :
                   isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
                 } rounded-xl py-2 text-sm`}
               >
-                {isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
+                {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!`
+      : isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
               </button>
             )}
             {scanning && (
