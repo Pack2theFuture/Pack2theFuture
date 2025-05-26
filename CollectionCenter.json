@@ -5,9 +5,9 @@
         "fields": {
             "center_id": 1,
             "name": "왕십리역",
-            "latitude": 37.5651636287,
-            "longitude": 127.01883333,
-            "address": "왕십리역 주소",
+            "latitude": 37.565,
+            "longitude": 127.018,
+            "address": "왕십리역 주소다잉~~",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
             "phone": "01011112222"
@@ -19,12 +19,54 @@
         "fields": {
             "center_id": 2,
             "name": "한양대역",
-            "latitude": 37.5594,
-            "longitude": 127.0249,
+            "latitude": 37.559,
+            "longitude": 127.024,
             "address": "한양대역 주소",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
             "phone": "01022222222"
+        }
+    },  
+    {
+        "model": "api.CollectionCenter",
+        "pk": 3,
+        "fields": {
+            "center_id": 3,
+            "name": "웰카운티어린이공원",
+            "latitude": 37.378,
+            "longitude": 126.649,
+            "address": "웰카주소",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01033333333"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 4,
+        "fields": {
+            "center_id": 4,
+            "name": "홈플러스 송도점",
+            "latitude": 37.381,
+            "longitude": 126.656,
+            "address": "홈플러스 송도점",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 5,
+        "fields": {
+            "center_id": 5,
+            "name": "한양대학교 제 1의학관",
+            "latitude": 37.558,
+            "longitude": 127.042,
+            "address": "한양대역 주소",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444"
         }
     }
 ]

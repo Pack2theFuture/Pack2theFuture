@@ -13,3 +13,4 @@ build/
 # 환경 설정
 .env
 .env.local
+venv/
