@@ -15,6 +15,7 @@ function KakaoMap() {
   const [scannedMap, setScannedMap] = useState({});
   const isScanned = selectedBin ? scannedMap[selectedBin.id] || false : false;
   const markerImageRef = useRef(null);
+  //const [lastScannedBin, setLastScannedBin] = useState(null);
   
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;

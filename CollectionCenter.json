@@ -54,5 +54,19 @@
             "closing_hour": "18:30",
             "phone": "01044444444"
         }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 5,
+        "fields": {
+            "center_id": 5,
+            "name": "한양대역",
+            "latitude": 37.555,
+            "longitude": 127.043,
+            "address": "한양대역 주소",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444"
+        }
     }
 ]
