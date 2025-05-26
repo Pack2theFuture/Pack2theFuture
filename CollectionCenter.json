@@ -130,10 +130,10 @@
         "pk": 10,
         "fields": {
             "center_id": 10,
-            "name": "한양대학교 제 1의학관",
-            "latitude": 37.558,
-            "longitude": 127.042,
-            "address": "한양대역 주소",
+            "name": "한양대학교 제 2공학관",
+            "latitude": 37.556,
+            "longitude": 127.046,
+            "address": "한양대학교 제2공학관",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
             "phone": "01044444444"
