@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white text-black font-sans pb-20">
       {/* 공지 배너 */}
@@ -25,10 +28,16 @@ const Main = () => {
 
       {/* 버튼 2개 */}
       <section className="grid grid-cols-2 gap-4 mt-6 mx-4">
-        <div className="bg-[#D4E6C3] p-4 rounded-xl flex flex-col items-center shadow">
+        {/* 버리러 가기 → /map으로 이동 */}
+        <div
+          className="bg-[#D4E6C3] p-4 rounded-xl flex flex-col items-center shadow cursor-pointer"
+          onClick={() => navigate("/map")}
+        >
           <div className="text-3xl">🗺️</div>
           <p className="mt-2 font-medium text-sm">버리러 가기</p>
         </div>
+
+        {/* 이용 가이드 (클릭 기능 없음) */}
         <div className="bg-[#D4E6C3] p-4 rounded-xl flex flex-col items-center shadow">
           <div className="text-3xl">📓</div>
           <p className="mt-2 font-medium text-sm">이용 가이드</p>
