@@ -17,6 +17,8 @@ function KakaoMap() {
   const markerImageRef = useRef(null);
   const [lastScannedBin, setLastScannedBin] = useState(null);
   const [liveDistance, setLiveDistance] = useState(null);
+  const [isOnTheWay, setIsOnTheWay] = useState(false);
+  const defaultMarkerImageRef = useRef(null);
   
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -64,6 +66,8 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
           new window.kakao.maps.Size(40, 40),
           { offset: new window.kakao.maps.Point(20, 40) }
         );
+        //'도착하기' 클릭 시 빨간 마커 원상 복구
+        defaultMarkerImageRef.current = markerImage;
 
         const markerImage2 = new window.kakao.maps.MarkerImage(
   "/character.png",
@@ -472,6 +476,9 @@ useEffect(() => {
                   console.log("handleRoute 호출됨!");
                   setScanning(false); // ✅ 바코드 스캐너 닫기
                     // ✅ 캐릭터 마커 이미지로 변경
+                    setIsOnTheWay(true); // 상태를 '가는 중'으로 변경
+
+                    //마커를 캐릭터로 변경
   if (userMarker && markerImageRef.current) {
     userMarker.setImage(markerImageRef.current);
   }
@@ -485,7 +492,7 @@ useEffect(() => {
                   isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
                 } rounded-xl py-2 text-sm`}
               >
-                {isScanned && insideCircle ? "도착하기" : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
+                {isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
               </button>
             )}
             {scanning && (
