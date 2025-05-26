@@ -21,6 +21,7 @@ class Users(models.Model):
     total_carbon_reduction = models.FloatField(default=0.0)
     points = models.FloatField(default=0.0)
     
+    
 class CollectionHistory(models.Model):
     history_id = models.AutoField(primary_key=True)
     user_id = models.CharField(max_length=20)

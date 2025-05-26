@@ -6,10 +6,31 @@ export default function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    // 로그인 로직 (예시)
-    navigate('/home'); // 로그인 성공 시 home으로 이동
+
+    try {
+      const res = await fetch("http://localhost:8000/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.status === 200) {
+        alert(data.message);
+        localStorage.setItem("user_id", data.user_id);
+        navigate("/home");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("로그인 요청 중 오류:", error);
+      alert("서버 오류가 발생했습니다.");
+    }
   };
 
   return (

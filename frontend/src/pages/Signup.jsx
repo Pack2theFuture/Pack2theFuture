@@ -7,7 +7,7 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     if (!email.includes('@')) {
@@ -17,11 +17,32 @@ export default function Signup() {
 
     setError('');
 
-    // 🔻 실제 회원가입 API 요청이 들어갈 자리
-    // 예시: await axios.post('/api/signup', { email, password });
+    try {
+      const res = await fetch("http://localhost:8000/api/signup/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          username: email.split('@')[0],  // 예: sol@gmail.com → sol
+        }),
+      });
 
-    // 🔺 지금은 프론트 시연용이라 성공으로 가정
-    navigate('/login'); // 회원가입 성공 시 로그인 페이지로 이동
+      const data = await res.json();
+
+      if (res.status === 201) {
+        alert("회원가입 성공!");
+        navigate('/login'); // 회원가입 성공 시 로그인 페이지로 이동
+      } else {
+        alert(data.message || "회원가입 실패");
+      }
+
+    } catch (error) {
+      console.error("회원가입 중 에러:", error);
+      alert("서버 오류가 발생했습니다.");
+    }
   };
 
   return (
