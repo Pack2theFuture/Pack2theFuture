@@ -15,7 +15,7 @@ function KakaoMap() {
   const [scannedMap, setScannedMap] = useState({});
   const isScanned = selectedBin ? scannedMap[selectedBin.id] || false : false;
   const markerImageRef = useRef(null);
-  //const [lastScannedBin, setLastScannedBin] = useState(null);
+  const [lastScannedBin, setLastScannedBin] = useState(null);
   
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -417,6 +417,18 @@ useEffect(() => {
   }
 }, [map, userMarker, selectedBin]);
 
+useEffect(() => {
+  if (
+    selectedBin === null &&
+    lastScannedBin &&
+    scannedMap[lastScannedBin.id] === true &&
+    insideCircle
+  ) {
+    console.log("✅ 반경 진입으로 모달 다시 열림!");
+    setSelectedBin(lastScannedBin);
+  }
+}, [insideCircle, selectedBin, lastScannedBin, scannedMap]);
+
   return (
     <>
       <div id="map" className="w-full h-screen"></div>
@@ -477,6 +489,7 @@ useEffect(() => {
       ...prev,
       [selectedBin.id]: true, // ✅ 해당 수거함만 스캔 완료 표시
     }));
+    setLastScannedBin(selectedBin); // ✅ 마지막 스캔된 수거함 저장
                 }}
                 onClose={() => setScanning(false)}
               />

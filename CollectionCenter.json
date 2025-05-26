@@ -61,8 +61,8 @@
         "fields": {
             "center_id": 5,
             "name": "한양대역 2번 출구",
-            "latitude": 37.556,
-            "longitude": 127.044,
+            "latitude": 37.555,
+            "longitude": 127.043,
             "address": "한양대역 주소",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
