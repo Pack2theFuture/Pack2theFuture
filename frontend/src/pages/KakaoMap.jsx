@@ -378,32 +378,44 @@ markerImageRef.current = markerImage2;
   };
 
 
-  useEffect(() => {
-    if (map) {
-      if (watchIdRef.current) {
-        navigator.geolocation.clearWatch(watchIdRef.current);
-      }
-
-      watchIdRef.current = navigator.geolocation.watchPosition(position => {
+useEffect(() => {
+  if (map) {
+    if (watchIdRef.current) {
+      navigator.geolocation.clearWatch(watchIdRef.current);
+    }
+    console.log("🛰 watchPosition 등록 조건:", map, userMarker, selectedBin);
+    watchIdRef.current = navigator.geolocation.watchPosition(
+      (position) => {
         const lat = position.coords.latitude;
         const lng = position.coords.longitude;
+        console.log("📍 위치 업데이트 감지:", lat, lng); // ✅ 로그 위치
+
         const newPosition = new window.kakao.maps.LatLng(lat, lng);
         if (userMarker) {
           userMarker.setPosition(newPosition);
         }
         if (selectedBin && circleRef.current) {
-  const dist = getDistanceFromLatLonInKm(
-    lat,
-    lng,
-    selectedBin.lat,
-    selectedBin.lng
-  );
-  console.log("📏 현재 수거함까지 거리 (m):", dist * 1000);
-  setInsideCircle(dist * 1000 <= 100); // ✅ 100m 반경 이내일 때 true
-}
-      });
-    }
-  }, [map, userMarker, selectedBin]);
+          const dist = getDistanceFromLatLonInKm(
+            lat,
+            lng,
+            selectedBin.lat,
+            selectedBin.lng
+          );
+          console.log("📏 현재 수거함까지 거리 (m):", dist * 1000);
+          setInsideCircle(dist * 1000 <= 100);
+        }
+      },
+      (error) => {
+        console.error("🚫 위치 추적 에러:", error);
+      },
+      {
+        enableHighAccuracy: true,
+        maximumAge: 1000,
+        timeout: 10000
+      }
+    );
+  }
+}, [map, userMarker, selectedBin]);
 
   return (
     <>
