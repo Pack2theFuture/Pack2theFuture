@@ -222,7 +222,7 @@ markerImageRef.current = markerImage2;
         longitude: lng,
       };
 
-      fetch("http://backend-do9t.onrender.com/api/location/", {
+      fetch("http://localhost:8000/api/location/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -242,12 +242,14 @@ markerImageRef.current = markerImage2;
     
     const updatedBins = nearbyBins.map((bin) => { 
           const distance = getDistanceFromLatLonInKm(lat,lng,bin.latitude, bin.longitude);
+          const distanceStr = `${distance.toFixed(2)} km`;
+          const point = getPointFromDistance(distanceStr);
           return{
             ...bin,
             lat:bin.latitude,
             lng:bin.longitude,
-            distance: `${distance.toFixed(2)} km`,
-            point: `500p`,
+            distance: distanceStr,
+            point: `${point}p`,
           }
         });
         setBins(updatedBins);
@@ -280,7 +282,7 @@ markerImageRef.current = markerImage2;
       max-width: 250px;
     ">
       <div style="font-weight: bold; margin-bottom: 6px;">${bin.name}</div>
-      <div>운영시간: ${bin.opening_hour}</div>
+      <div>운영시간: ${bin.opening_hour} ~ ${bin.closing_hour}</div>
       <div>거리: ${bin.distance}</div>
       <div>예상 지급 포인트: ${bin.point}</div>
             <!-- 말풍선 꼬리 부분 -->
@@ -468,13 +470,13 @@ useEffect(() => {
           <div className="px-4 pb-4 flex items-start gap-4">
             {/* 왼쪽 : 텍스트 정보 */}
             <div className="flex-1">
-            <p className="text-sm text-gray-500">서울특별시 성동구</p>
-            <p className="mt-2">운영시간: {selectedBin.opening_hour || "-"}</p>
+            {/* <p className="text-sm text-gray-500">서울특별시 성동구</p> */}
+            <p className="mt-2">운영시간: {selectedBin.opening_hour || "-"} ~ {selectedBin.closing_hour || "-"}</p>
             <p>현재 위치로부터의 거리 : {liveDistance || selectedBin.distance || "-"}</p>
             <p>예상지급포인트: {selectedBin.point || "-"}</p>
             </div>
             <img
-              src={selectedBin.imageUrl || "/default.jpg"}
+              src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
               alt="장소 이미지"
               className="w-32 h-24 rounded-lg object-cover"
             />

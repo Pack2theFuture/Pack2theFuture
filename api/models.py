@@ -10,6 +10,7 @@ class CollectionCenter (models.Model):
     opening_hour = models.CharField(max_length=10)
     closing_hour = models.CharField(max_length=10)
     phone = models.CharField(max_length=20)
+    imageUrl = models.URLField(blank=True, null=True, default="")
     
 class Users(models.Model):
     id = models.CharField(primary_key=True, max_length=50)

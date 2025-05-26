@@ -24,7 +24,8 @@
             "address": "주소 미정",
             "opening_hour": "정보 없음",
             "closing_hour": "정보 없음",
-            "phone": "01000000000"
+            "phone": "01000000000",
+            "imageUrl": "/media/Gongbang.png"
         }
     },
     {
@@ -38,7 +39,8 @@
             "address": "주소 미정",
             "opening_hour": "오전 10시",
             "closing_hour": "평일 20시 주말 17시",
-            "phone": "01000000000"
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
         }
     },
     {
@@ -66,7 +68,8 @@
             "address": "주소 미정",
             "opening_hour": "24시간",
             "closing_hour": "24시간",
-            "phone": "01000000000"
+            "phone": "01000000000",
+            "imageUrl": "/media/Hangdang1.png"
         }
     },
     {
@@ -80,7 +83,8 @@
             "address": "주소 미정",
             "opening_hour": "24시간",
             "closing_hour": "24시간",
-            "phone": "01000000000"
+            "phone": "01000000000",
+            "imageUrl": "/media/Wang2.png"
         }
     },
     {
@@ -94,7 +98,8 @@
             "address": "주소 미정",
             "opening_hour": "24시간",
             "closing_hour": "24시간",
-            "phone": "01000000000"
+            "phone": "01000000000",
+            "imageUrl": "/media/Gongbang.png"
         }
     },
     {
@@ -108,7 +113,8 @@
             "address": "주소 미정",
             "opening_hour": "24시간",
             "closing_hour": "24시간",
-            "phone": "01000000000"
+            "phone": "01000000000",
+            "imageUrl": "/media/Seongdong.png"
         }
     },
     {
@@ -122,7 +128,8 @@
             "address": "주소 미정",
             "opening_hour": "월요일, 공휴일: 9시 / 화~일: 7시",
             "closing_hour": "월,공휴일: 18시 / 화~일: 22시",
-            "phone": "01000000000"
+            "phone": "01000000000",
+            "imageUrl": "/media/SeongdongLibrary.png"
         }
     },
         {
@@ -152,5 +159,19 @@
             "closing_hour": "18:30",
             "phone": "01044444444"
         }
-    }
+    },
+                {
+        "model": "api.CollectionCenter",
+        "pk": 12,
+        "fields": {
+            "center_id": 12,
+            "name": "GS송도웰카점",
+            "latitude": 37.378,
+            "longitude": 126.649,
+            "address": "GS송도웰카점",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/Gongbang.png"
+    }}
 ]
