@@ -261,7 +261,7 @@ const drawRouteToBin = async (bin) => {
       };
       
 
-      fetch("http://backend-do9t.onrender.com/api/location/", {
+      fetch("http://localhost:8000/api/location/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -28,6 +28,7 @@ def user_location(request):
                     "opening_hour": c.opening_hour,
                     "closing_hour": c.closing_hour,
                     "phone": c.phone,
+                    "imageUrl": c.imageUrl,
                 }
                 for c in centers
             ]

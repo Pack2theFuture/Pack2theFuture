@@ -12,7 +12,7 @@ function Sol() {
         };
 
         // Django로 POST 요청 보내기
-        fetch("http://backend-do9t.onrender.com/api/location/", {
+        fetch("http://localhost:8000/api/location/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -31,7 +31,7 @@ function Sol() {
 
         // 선택한 거점 id 보내기 
         const id = 1;
-        fetch(`http://backend-do9t.onrender.com/api/collections/${id}/`, {
+        fetch(`http://localhost:8000/api/collections/${id}/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -60,7 +60,7 @@ function Sol() {
             start_longitute: start_longitute
         };
 
-        fetch("http://backend-do9t.onrender.com/api/depart/", {
+        fetch("http://localhost:8000/api/depart/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -85,7 +85,7 @@ function Sol() {
         };
 
 
-        fetch("http://backend-do9t.onrender.com/api/arrive/", {
+        fetch("http://localhost:8000/api/arrive/", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
