@@ -1,11 +1,12 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Splash from './pages/splash';
+import Splash from './pages/Splash';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import KakaoMap from './pages/KakaoMap';
 import Sol from './pages/sol';  // sol
+import Mypage from './pages/Mypage';  // sol
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/map" element={<KakaoMap />} />
         <Route path="/sol" element={<Sol />} />
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   )
