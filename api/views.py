@@ -211,6 +211,7 @@ def mypage_view(request):
 @csrf_exempt  # 프론트에서 CSRF 토큰을 안 쓰는 경우
 # @require_GET
 def user_info(request):
+    print("here we go")
     user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
