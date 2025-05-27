@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-
 const EcoTrackingApp = () => {
     const [userData, setUserData] = useState({
         name: '홍길동',
@@ -70,15 +69,9 @@ const EcoTrackingApp = () => {
         <div className="max-w-sm mx-auto bg-gray-100 min-h-screen">
             {/* Header */}
             <div className="flex justify-between items-center p-4 bg-white border-b">
-                <Home
-                    className="w-6 h-6 cursor-pointer hover:text-blue-500 transition-colors"
-                    onClick={() => alert('홈으로 이동합니다.')}
-                />
+
                 <h1 className="text-lg font-semibold text-gray-800">마이페이지</h1>
-                <Settings
-                    className="w-6 h-6 cursor-pointer hover:text-blue-500 transition-colors"
-                    onClick={() => alert('설정 페이지로 이동합니다.')}
-                />
+
             </div>
 
             {/* Profile Section */}
@@ -89,7 +82,7 @@ const EcoTrackingApp = () => {
                             👤
                         </div>
                         <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-gray-600 rounded-full flex items-center justify-center">
-                            <Trophy className="w-3 h-3 text-white" />
+
                         </div>
                     </div>
                     <div>
@@ -141,7 +134,7 @@ const EcoTrackingApp = () => {
             <div className="bg-white mx-5 p-5 rounded-lg shadow-sm">
                 <div className="flex justify-between items-center">
                     <div className="flex items-center gap-3">
-                        <Flame className="w-5 h-5 text-orange-500" />
+
                         <span className="text-gray-800">내 포인트</span>
                     </div>
                     <span className="text-lg font-semibold text-gray-800">{userData.points}p</span>
@@ -155,7 +148,7 @@ const EcoTrackingApp = () => {
                     onClick={() => navigateTo('collection')}
                 >
                     <div className="flex items-center gap-4">
-                        <Package className="w-5 h-5 text-gray-600" />
+
                         <span className="text-gray-800">수거내역</span>
                     </div>
                     <span className="text-gray-400">{'>'}</span>
@@ -166,7 +159,7 @@ const EcoTrackingApp = () => {
                     onClick={() => navigateTo('barcode')}
                 >
                     <div className="flex items-center gap-4">
-                        <Smartphone className="w-5 h-5 text-gray-600" />
+
                         <span className="text-gray-800">바코드 내역</span>
                         <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                     </div>
@@ -178,7 +171,7 @@ const EcoTrackingApp = () => {
                     onClick={() => navigateTo('customer-center')}
                 >
                     <div className="flex items-center gap-4">
-                        <Headphones className="w-5 h-5 text-gray-600" />
+
                         <span className="text-gray-800">고객센터</span>
                     </div>
                     <span className="text-gray-400">{'>'}</span>
