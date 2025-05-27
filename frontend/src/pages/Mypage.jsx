@@ -5,7 +5,7 @@ const EcoTrackingApp = () => {
     const [treeAnimation, setTreeAnimation] = useState('');
 
     useEffect(() => {
-        fetch('/api/user-info/', {
+        fetch('https://pack2thefuture-vshf.onrender.com/api/user-info/', {
             credentials: 'include' // 세션 쿠키 포함
         })
             .then(response => {
