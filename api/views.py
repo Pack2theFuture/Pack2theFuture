@@ -1,6 +1,9 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json, math
+# from django.views.decorators.http import require_GET
+
+
 
 from .models import CollectionCenter, CollectionHistory, Users
 
@@ -194,20 +197,6 @@ def login_view(request):
     return JsonResponse({"message": "허용되지 않은 메서드입니다."}, status=405)
 
 
-# def mypage_view(request):
-#     user_id = request.session.get('user_id')
-
-#     if not user_id:
-#         return JsonResponse({"message": "로그인이 필요합니다."}, status=401)
-
-#     user = Users.objects.get(pk=user_id)
-#     return JsonResponse({
-#         "username": user.username,
-#         "email": user.email,
-#         # 필요한 항목 더 추가 가능
-#     })
-
-
 def logout_view(request):
     request.session.flush()
     return JsonResponse({"message": "로그아웃 완료"})
@@ -217,3 +206,26 @@ from django.http import JsonResponse
 
 def mypage_view(request):
     return JsonResponse({"message": "마이페이지입니다."})
+
+
+@csrf_exempt  # 프론트에서 CSRF 토큰을 안 쓰는 경우
+# @require_GET
+def user_info(request):
+    user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
+    if not user_id:
+        return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
+
+    try:
+        user = Users.objects.get(id=user_id)
+        data = {
+            'id': user.id,
+            'username': user.username,
+            'phone': user.phone,
+            'email': user.email,
+            'total_collect_amount': user.total_collect_amount,
+            'total_carbon_reduction': user.total_carbon_reduction,
+            'points': user.points,
+        }
+        return JsonResponse(data)
+    except Users.DoesNotExist:
+        return JsonResponse({'error': '사용자 정보를 찾을 수 없습니다.'}, status=404)
