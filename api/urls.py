@@ -10,6 +10,7 @@ urlpatterns = [
     path("signup/", views.signup),
     path("login/", views.login_view),
     
+    print("here we go url router")
     path("mypage/", views.user_info),
     path("user-info/", views.user_info),
     
