@@ -10,15 +10,19 @@ const EcoTrackingApp = () => {
         })
             .then(response => {
                 if (!response.ok) {
+                    console.log("사용자 정보를 불러오는 데 실패했습니다.");
                     throw new Error('사용자 정보를 불러오는 데 실패했습니다.');
                 }
                 return response.json();
             })
             .then(data => {
+                console.log("setUserData(data);");
+                console.log("data : ", data)
                 setUserData(data);
             })
             .catch(error => {
                 console.error('Error:', error);
+                console.log('Error:', error);
             });
     }, []);
 
