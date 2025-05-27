@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, Settings, Trophy, Flame, Package, Smartphone, Headphones } from 'lucide-react';
+
 
 const EcoTrackingApp = () => {
     const [userData, setUserData] = useState({
