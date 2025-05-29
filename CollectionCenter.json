@@ -240,9 +240,24 @@
         "pk": 17,
         "fields": {
             "center_id": 17,
-            "name": "흥인지문 공원",
+            "name": "동묘앞 역",
             "latitude": 37.5735,
             "longitude": 127.0147,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 18,
+        "fields": {
+            "center_id": 18,
+            "name": "흥인지문 공원",
+            "latitude": 37.571796,
+            "longitude": 127.008803,
             "address": "주소 미정",
             "opening_hour": "오전 10시",
             "closing_hour": "평일 20시 주말 17시",

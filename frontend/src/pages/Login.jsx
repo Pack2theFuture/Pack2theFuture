@@ -25,8 +25,8 @@ export default function Login() {
       if (res.status === 200) {
         alert(data.message);
         localStorage.setItem("user_id", data.user_id);
-        //navigate("/home");
-        navigate("/mypage");
+        navigate("/home");
+        // navigate("/mypage");
       } else {
         alert(data.message);
       }
