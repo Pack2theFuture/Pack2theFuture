@@ -1,5 +1,5 @@
 [
-{
+    {
         "model": "api.CollectionCenter",
         "pk": 1,
         "fields": {
@@ -132,7 +132,7 @@
             "imageUrl": "/media/SeongdongLibrary.png"
         }
     },
-        {
+    {
         "model": "api.CollectionCenter",
         "pk": 10,
         "fields": {
@@ -146,7 +146,7 @@
             "phone": "01044444444"
         }
     },
-            {
+    {
         "model": "api.CollectionCenter",
         "pk": 11,
         "fields": {
@@ -160,7 +160,7 @@
             "phone": "01044444444"
         }
     },
-                {
+    {
         "model": "api.CollectionCenter",
         "pk": 12,
         "fields": {
@@ -173,5 +173,66 @@
             "closing_hour": "18:30",
             "phone": "01044444444",
             "imageUrl": "/media/Gongbang.png"
-    }}
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 13,
+        "fields": {
+            "center_id": 13,
+            "name": "여의도동 주민센터(동사무소)",
+            "latitude": 37.519797,
+            "longitude": 126.922893,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 14,
+        "fields": {
+            "center_id": 14,
+            "name": "미래에셋증권 여의도빌딩",
+            "latitude": 37.5335,
+            "longitude": 126.9267,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 15,
+        "fields": {
+            "center_id": 15,
+            "name": "신당역",
+            "latitude": 37.565972,
+            "longitude": 127.01782,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 16,
+        "fields": {
+            "center_id": 16,
+            "name": "신당동 주민센터",
+            "latitude": 37.56432,
+            "longitude": 127.0123,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    }
 ]

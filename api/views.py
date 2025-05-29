@@ -11,6 +11,7 @@ from .models import CollectionCenter, CollectionHistory, Users
 # MAP API
 @csrf_exempt  
 def user_location(request):
+    # user 근처 2km 내의 쓰레기통만 보여줌
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -42,6 +43,7 @@ def user_location(request):
 
 @csrf_exempt  
 def select_location(request, centerId):
+    # 사용자 선택 거점 보여줌 -> 사실 필요없을지도
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -69,6 +71,7 @@ def select_location(request, centerId):
 
 @csrf_exempt       
 def user_depart(request):
+    # 사용자가 출발 버튼 누를 시 상태 저장
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -98,6 +101,7 @@ def user_depart(request):
     
 @csrf_exempt
 def user_arrive(request):
+    # 사용자가 도착시 버튼 누르면 작동
     if request.method == "POST":
         try:
             data = json.loads(request.body)
