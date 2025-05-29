@@ -1,7 +1,7 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json, math
-# from django.views.decorators.http import require_GET
+#from django.views.decorators.http import require_GET
 
 
 
@@ -186,7 +186,10 @@ def login_view(request):
             user = Users.objects.filter(id=id, password=password).first()
 
             if user:
-                request.session['user_id'] = user.pk  # 세션 저장
+                request.session['user_id'] = user.id
+                request.session.save()
+            
+
                 return JsonResponse({"message": "로그인 성공", "user_id": user.pk}, status=200)
             else:
                 return JsonResponse({"message": "아이디 또는 비밀번호가 올바르지 않습니다."}, status=401)
@@ -209,10 +212,17 @@ def mypage_view(request):
 
 
 @csrf_exempt  # 프론트에서 CSRF 토큰을 안 쓰는 경우
-# @require_GET
+#@require_GET
 def user_info(request):
-    print("here we go")
+    
+    
+
     user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
+    
+    # print("세션 키:", request.session.session_key)
+    # print("세션 전체 내용:", dict(request.session.items()))
+    # print("user id : ", request.session.get('user_id'))
+
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
 
