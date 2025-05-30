@@ -1,6 +1,9 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 import json, math
+#from django.views.decorators.http import require_GET
+
+
 
 from .models import CollectionCenter, CollectionHistory, Users
 
@@ -8,6 +11,7 @@ from .models import CollectionCenter, CollectionHistory, Users
 # MAP API
 @csrf_exempt  
 def user_location(request):
+    # user 근처 2km 내의 쓰레기통만 보여줌
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -28,6 +32,7 @@ def user_location(request):
                     "opening_hour": c.opening_hour,
                     "closing_hour": c.closing_hour,
                     "phone": c.phone,
+                    "imageUrl": c.imageUrl,
                 }
                 for c in centers
             ]
@@ -38,6 +43,7 @@ def user_location(request):
 
 @csrf_exempt  
 def select_location(request, centerId):
+    # 사용자 선택 거점 보여줌 -> 사실 필요없을지도
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -65,6 +71,7 @@ def select_location(request, centerId):
 
 @csrf_exempt       
 def user_depart(request):
+    # 사용자가 출발 버튼 누를 시 상태 저장
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -94,6 +101,7 @@ def user_depart(request):
     
 @csrf_exempt
 def user_arrive(request):
+    # 사용자가 도착시 버튼 누르면 작동
     if request.method == "POST":
         try:
             data = json.loads(request.body)
@@ -182,7 +190,10 @@ def login_view(request):
             user = Users.objects.filter(id=id, password=password).first()
 
             if user:
-                request.session['user_id'] = user.pk  # 세션 저장
+                request.session['user_id'] = user.id
+                request.session.save()
+            
+
                 return JsonResponse({"message": "로그인 성공", "user_id": user.pk}, status=200)
             else:
                 return JsonResponse({"message": "아이디 또는 비밀번호가 올바르지 않습니다."}, status=401)
@@ -191,20 +202,6 @@ def login_view(request):
             return JsonResponse({"message": str(e)}, status=500)
 
     return JsonResponse({"message": "허용되지 않은 메서드입니다."}, status=405)
-
-
-# def mypage_view(request):
-#     user_id = request.session.get('user_id')
-
-#     if not user_id:
-#         return JsonResponse({"message": "로그인이 필요합니다."}, status=401)
-
-#     user = Users.objects.get(pk=user_id)
-#     return JsonResponse({
-#         "username": user.username,
-#         "email": user.email,
-#         # 필요한 항목 더 추가 가능
-#     })
 
 
 def logout_view(request):
@@ -216,3 +213,34 @@ from django.http import JsonResponse
 
 def mypage_view(request):
     return JsonResponse({"message": "마이페이지입니다."})
+
+
+@csrf_exempt  # 프론트에서 CSRF 토큰을 안 쓰는 경우
+#@require_GET
+def user_info(request):
+    
+    
+
+    user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
+    
+    # print("세션 키:", request.session.session_key)
+    # print("세션 전체 내용:", dict(request.session.items()))
+    # print("user id : ", request.session.get('user_id'))
+
+    if not user_id:
+        return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
+
+    try:
+        user = Users.objects.get(id=user_id)
+        data = {
+            'id': user.id,
+            'username': user.username,
+            'phone': user.phone,
+            'email': user.email,
+            'total_collect_amount': user.total_collect_amount,
+            'total_carbon_reduction': user.total_carbon_reduction,
+            'points': user.points,
+        }
+        return JsonResponse(data)
+    except Users.DoesNotExist:
+        return JsonResponse({'error': '사용자 정보를 찾을 수 없습니다.'}, status=404)

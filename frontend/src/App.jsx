@@ -18,6 +18,7 @@ function App() {
         <Route path="/signup" element={<Signup />} /> {/* ✅ 너가 추가 */}
         <Route path="/map" element={<KakaoMap />} />
         <Route path="/sol" element={<Sol />} />
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
   );
