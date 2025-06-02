@@ -35,6 +35,7 @@ function Footer() {
         <span>마이페이지</span>
       </button>
     </div>
+
   );
 }
 

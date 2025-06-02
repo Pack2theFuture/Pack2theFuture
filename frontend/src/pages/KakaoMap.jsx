@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import BarcodeScanner from "./BarcodeScanner";
+//import Footer from "../components/Footer";
 
 function KakaoMap() {
   const getPointFromDistance = (distanceStr) => {
@@ -30,6 +31,7 @@ function KakaoMap() {
   const [isOnTheWay, setIsOnTheWay] = useState(false);
   const defaultMarkerImageRef = useRef(null);
   const [rewarded, setRewarded] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -43,6 +45,51 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
+// 출발 API 호출 함수
+// const handleDepart = async (centerId, collection_amount, start_latitude, start_longitude) => {
+//   try {
+//     //const response = await fetch("http://localhost:8000/api/depart/", {
+//     const response = await fetch("https://backend-do9t.onrender.com/api/depart/", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         center_id: centerId,
+//         collection_amount,
+//         start_latitude,
+//         start_longitute: start_longitude,  // 백엔드 오타 맞추기
+//       }),
+//     });
+//     const data = await response.json();
+//     console.log("🚀 출발 요청 완료:", data);
+//   } catch (error) {
+//     console.error("🚨 출발 요청 실패:", error);
+//   }
+// };
+
+// 도착 API 호출 함수
+const handleArrive = async (centerId, user_latitude, user_longitude) => {
+  const collection_amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
+  const reward_point =  getPointFromDistance(liveDistance || selectedBin?.distance)
+  try {
+    const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
+    //const response = await fetch("http://localhost:8000/api/arrive/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        center_id: centerId,
+        collection_amount,
+        user_latitude,
+        user_longitude,
+        reward_point, // 포인트 계산
+      }),
+    });
+    const data = await response.json();
+    console.log("📍 도착 요청 완료:", data);
+  } catch (error) {
+    console.error("🚨 도착 요청 실패:", error);
+  }
+};
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -128,92 +175,6 @@ markerImageRef.current = markerImage2;
         //     time: "24시간",
         //     point: "500p",
         //   },
-        //             {
-        //     id: 5,
-        //     lat: 37.558,
-        //     lng: 127.036,
-        //     name: "행당 제1동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 6,
-        //     lat: 37.561,
-        //     lng: 127.031,
-        //     name: "왕십리 제2동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //   {id: 7,
-        //     lat: 37.558,
-        //     lng: 127.036,
-        //     name: "행당 제2동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //     {id: 8,
-        //     lat: 37.562,
-        //     lng: 127.036,
-        //     name: "성동구청",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //   {
-        //     id: 9,
-        //     lat: 37.559,
-        //     lng: 127.034,
-        //     name: "성동구립도서관",
-        //     time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 10,
-        //     lat: 37.555,
-        //     lng: 127.046,
-        //     name: "한양대 제2공학관",
-        //     time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
-        //     point: "500p",
-        //   },
-          // {
-          //   id: 10,
-          //   lat: 37.561,
-          //   lng: 127.045,
-          //   name: "사근동주민센터",
-          //   time: "평일 09:00 ~ 18:00",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 11,
-          //   lat: 37.558,
-          //   lng: 127.036,
-          //   name: "행당 제1동 주민센터",
-          //   time: "평일 09:00 ~ 18:00",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 12,
-          //   lat: 37.561,
-          //   lng: 127.031,
-          //   name: "왕십리 제 2동 주민센터",
-          //   time: "24시간",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 13,
-          //   lat: 37.377,
-          //   lng: 126.648,
-          //   name: "APT",
-          //   time: "09:00 ~ 18:00",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 14,
-          //   lat: 37.378,
-          //   lng: 126.649,
-          //   name: "송도어린이공원",
-          //   time: "09:00 ~ 18:00",
-          //   point: "500p",
-          // }
         //];
 
       // 1. 서버에 현재 위치 POST 요청해서 bins 데이터 받아오기
@@ -221,8 +182,8 @@ markerImageRef.current = markerImage2;
         latitude: lat,
         longitude: lng,
       };
-
       fetch("https://backend-do9t.onrender.com/api/location/", {
+      //fetch("http://localhost:8000/api/location/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -458,16 +419,28 @@ useEffect(() => {
 
   return (
     <>
-      <div id="map" className="w-full h-screen"></div>
+    <div className="relative h-screen pb-20">
+      {showOverlay && (
+  <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999]">
+    <div className="flex flex-col items-center">
+      <img src="/coin.png" alt="코인 적립" className="w-24 h-24 mb-4" />
+      <p className="text-white text-xl font-bold">종이팩 버리기 완료!</p>
+      <p className="text-white text-lg mt-1">
+        {getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!
+      </p>
+    </div>
+  </div>
+)}
+      <div id="map" className="w-full h-screen z-0"></div>
       {selectedBin && (
-        <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[40vh] overflow-y-auto">
+        <div className="absolute bottom-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[45vh] overflow-y-auto pb-4">
           <div className="flex justify-between items-center px-4 pt-4">
             <div className="font-bold text-lg">{selectedBin.name}</div>
             <button onClick={() => setSelectedBin(null)} className="text-xl">
               ×
             </button>
           </div>
-          <div className="px-4 pb-4 flex items-start gap-4">
+            <div className="px-4 pt-2 flex items-start gap-4">
             {/* 왼쪽 : 텍스트 정보 */}
             <div className="flex-1">
             {/* <p className="text-sm text-gray-500">서울특별시 성동구</p> */}
@@ -477,6 +450,7 @@ useEffect(() => {
             </div>
             <img
               src={`https://backend-do9t.onrender.com${selectedBin.imageUrl}` || "/default.jpg"}
+              //src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
               alt="장소 이미지"
               className="w-32 h-24 rounded-lg object-cover"
             />
@@ -487,7 +461,15 @@ useEffect(() => {
                   console.log("버튼 클릭됨",{scannedCode, selectedBin});
 
                         if (isScanned && insideCircle && !rewarded) {
-        // ✅ 도착 처리
+         navigator.geolocation.getCurrentPosition((pos) => {
+    const { latitude, longitude } = pos.coords;
+    handleArrive(selectedBin.id, latitude, longitude); // 도착 API 호출
+  });
+          // ✅ 오버레이 띄우기
+  setShowOverlay(true);
+  setTimeout(() => setShowOverlay(false), 3000); // 3초 후 숨김
+
+                          // ✅ 도착 처리
         alert("도착이 확인되었습니다!");
         setRewarded(true);
         setIsOnTheWay(false);
@@ -503,6 +485,11 @@ useEffect(() => {
 
                 if (scannedCode) {
                   console.log("handleRoute 호출됨!");
+                    navigator.geolocation.getCurrentPosition((pos) => {
+    const { latitude, longitude } = pos.coords;
+    const amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
+    //handleDepart(selectedBin.id, amount, latitude, longitude); // 출발 API 호출
+  });
                   setScanning(false); // ✅ 바코드 스캐너 닫기
                     // ✅ 캐릭터 마커 이미지로 변경
                     setIsOnTheWay(true); // 상태를 '가는 중'으로 변경
@@ -518,9 +505,9 @@ useEffect(() => {
                 }
           }}
                 className={`mt-4 w-full ${
-                  rewarded ? "bg-purple-500 text-white" :
+                  rewarded ? "bg-emerald-700 text-white" :
                   isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
-                } rounded-xl py-2 text-sm`}
+                } rounded-xl py-2 text-sm mb-[36px]`}
               >
                 {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!`
       : isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
@@ -545,6 +532,7 @@ useEffect(() => {
           </div>
 
       )}
+      </div>
     </>
   );
 }
