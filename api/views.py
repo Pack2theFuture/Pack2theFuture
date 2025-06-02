@@ -115,35 +115,35 @@ def user_arrive(request):
 
 
 
-# @csrf_exempt       
-# def user_depart(request):
-#     # 사용자가 출발 버튼 누를 시 상태 저장
-#     if request.method == "POST":
-#         try:
-#             data = json.loads(request.body)
-#             # center_id = CollectionCenter.objects.get(pk=1)
-#             center_id = data.get("center_id")
-#             collection_amount = data.get("collection_amount")
-#             start_latitude = data.get("start_latitude")
-#             start_longitute = data.get("start_longitute")
+@csrf_exempt       
+def user_depart(request):
+    # 사용자가 출발 버튼 누를 시 상태 저장
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            # center_id = CollectionCenter.objects.get(pk=1)
+            center_id = data.get("center_id")
+            collection_amount = data.get("collection_amount")
+            start_latitude = data.get("start_latitude")
+            start_longitute = data.get("start_longitute")
             
-#             # center_id= CollectionCenter.objects.get(pk=center_id)
+            # center_id= CollectionCenter.objects.get(pk=center_id)
             
-#             # CollectionHistory DB 생성
-#             CollectionHistory.objects.create(
-#                 user_id = "2021075323",
-#                 status = "진행 중",
-#                 center_id = center_id,
-#                 start_latitude = start_latitude,
-#                 start_longitude = start_longitute,
-#                 collection_amount = collection_amount,
-#             )
+            # CollectionHistory DB 생성
+            CollectionHistory.objects.create(
+                user_id = "2021075323",
+                status = "진행 중",
+                center_id = center_id,
+                start_latitude = start_latitude,
+                start_longitude = start_longitute,
+                collection_amount = collection_amount,
+            )
             
-#             return JsonResponse({"message": "출발 가보자고", "status": "success"})
+            return JsonResponse({"message": "출발 가보자고", "status": "success"})
         
-#         except Exception as e:
-#             return JsonResponse({"error": str(e)}, status=400)
-#             # return JsonResponse({"message": "오류 return"}, status=400)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=400)
+            # return JsonResponse({"message": "오류 return"}, status=400)
     
 # @csrf_exempt
 # def user_arrive(request):
