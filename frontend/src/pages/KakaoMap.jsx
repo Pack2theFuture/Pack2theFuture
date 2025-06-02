@@ -31,6 +31,7 @@ function KakaoMap() {
   const [isOnTheWay, setIsOnTheWay] = useState(false);
   const defaultMarkerImageRef = useRef(null);
   const [rewarded, setRewarded] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
   
 function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const R = 6371;
@@ -48,6 +49,7 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 // 출발 API 호출 함수
 const handleDepart = async (centerId, collection_amount, start_latitude, start_longitude) => {
   try {
+    //const response = await fetch("http://localhost:8000/api/depart/", {
     const response = await fetch("https://backend-do9t.onrender.com/api/depart/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -67,13 +69,16 @@ const handleDepart = async (centerId, collection_amount, start_latitude, start_l
 
 // 도착 API 호출 함수
 const handleArrive = async (user_latitude, user_longitude) => {
+  const reward_point =  getPointFromDistance(liveDistance || selectedBin?.distance)
   try {
     const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
+    //const response = await fetch("http://localhost:8000/api/arrive/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user_latitude,
         user_longitude,
+        reward_point, // 포인트 계산
       }),
     });
     const data = await response.json();
@@ -174,8 +179,8 @@ markerImageRef.current = markerImage2;
         latitude: lat,
         longitude: lng,
       };
-
       fetch("https://backend-do9t.onrender.com/api/location/", {
+      //fetch("http://localhost:8000/api/location/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -412,6 +417,17 @@ useEffect(() => {
   return (
     <>
     <div className="relative h-screen pb-20">
+      {showOverlay && (
+  <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999]">
+    <div className="flex flex-col items-center">
+      <img src="/coin.png" alt="코인 적립" className="w-24 h-24 mb-4" />
+      <p className="text-white text-xl font-bold">종이팩 버리기 완료!</p>
+      <p className="text-white text-lg mt-1">
+        {getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!
+      </p>
+    </div>
+  </div>
+)}
       <div id="map" className="w-full h-screen z-0"></div>
       {selectedBin && (
         <div className="absolute bottom-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[45vh] overflow-y-auto pb-4">
@@ -431,6 +447,7 @@ useEffect(() => {
             </div>
             <img
               src={`https://backend-do9t.onrender.com${selectedBin.imageUrl}` || "/default.jpg"}
+              //src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
               alt="장소 이미지"
               className="w-32 h-24 rounded-lg object-cover"
             />
@@ -445,7 +462,10 @@ useEffect(() => {
     const { latitude, longitude } = pos.coords;
     handleArrive(latitude, longitude); // 도착 API 호출
   });
-        
+          // ✅ 오버레이 띄우기
+  setShowOverlay(true);
+  setTimeout(() => setShowOverlay(false), 3000); // 3초 후 숨김
+
                           // ✅ 도착 처리
         alert("도착이 확인되었습니다!");
         setRewarded(true);
@@ -482,11 +502,11 @@ useEffect(() => {
                 }
           }}
                 className={`mt-4 w-full ${
-                  rewarded ? "bg-purple-500 text-white" :
+                  rewarded ? "bg-emerald-700 text-white" :
                   isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
                 } rounded-xl py-2 text-sm mb-[36px]`}
               >
-                {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립! 확인하러 가기`
+                {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!`
       : isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
               </button>
             )}

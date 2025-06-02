@@ -6,7 +6,7 @@ import user_profile from "../assets/user_profile.png"
 function Footer() {
   const navigate = useNavigate();
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-white border-t flex justify-around py-2 z-50">
+    <div className="fixed bottom-0 left-0 w-full bg-white border-t flex justify-around py-1 z-50">
   <button onClick = {()=> navigate('/map')}className="flex flex-col items-center text-sm text-gray-500">
     <img src={box} className="w-6 h-6" />
     <span>수거</span>
