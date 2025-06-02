@@ -73,9 +73,11 @@ def select_location(request, centerId):
 @csrf_exempt       
 def user_arrive(request):
     if 'user_id' not in request.session:
+        print("로그인 안 됨")
         return JsonResponse({'error': '로그인이 필요합니다.'}, status=401)
 
     try:
+        print("db 저장 시작")
         data = json.loads(request.body)
         user_id = request.session['user_id']
 
