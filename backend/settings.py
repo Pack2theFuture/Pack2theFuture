@@ -46,16 +46,23 @@ MIDDLEWARE = [
 #session
 CORS_ALLOW_CREDENTIALS = True
 
-CORS_ALLOW_ALL_ORIGINS = True 
+CORS_ALLOW_ALL_ORIGINS = False 
 
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:10000",
-# "https://localhost:10000"
-#  
-# ]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:10000",
+    "https://pack2thefuture-vshf.onrender.com"
+ 
+]
 
+# local 
+# SESSION_COOKIE_SAMESITE = "Lax"
+# SESSION_COOKIE_SECURE = False
+
+#render
 SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
+
+SESSION_COOKIE_AGE = 1209600
 #session
 
 ROOT_URLCONF = 'backend.urls'

@@ -11,7 +11,9 @@ export default function Login() {
 
     try {
       const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
+        //const res = await fetch("http://localhost:8000/api/login/", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -24,6 +26,7 @@ export default function Login() {
         alert(data.message);
         localStorage.setItem("user_id", data.user_id);
         navigate("/home");
+        // navigate("/mypage");
       } else {
         alert(data.message);
       }
