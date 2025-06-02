@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import BarcodeScanner from "./BarcodeScanner";
+import Footer from "../components/Footer";
 
 function KakaoMap() {
   const getPointFromDistance = (distanceStr) => {
@@ -43,6 +44,44 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   return R * c;
 }
+
+// 출발 API 호출 함수
+const handleDepart = async (centerId, collection_amount, start_latitude, start_longitude) => {
+  try {
+    const response = await fetch("https://backend-do9t.onrender.com/api/depart/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        center_id: centerId,
+        collection_amount,
+        start_latitude,
+        start_longitute: start_longitude,  // 백엔드 오타 맞추기
+      }),
+    });
+    const data = await response.json();
+    console.log("🚀 출발 요청 완료:", data);
+  } catch (error) {
+    console.error("🚨 출발 요청 실패:", error);
+  }
+};
+
+// 도착 API 호출 함수
+const handleArrive = async (user_latitude, user_longitude) => {
+  try {
+    const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_latitude,
+        user_longitude,
+      }),
+    });
+    const data = await response.json();
+    console.log("📍 도착 요청 완료:", data);
+  } catch (error) {
+    console.error("🚨 도착 요청 실패:", error);
+  }
+};
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -458,16 +497,17 @@ useEffect(() => {
 
   return (
     <>
-      <div id="map" className="w-full h-screen"></div>
+    <div className="relative h-screen pb-20">
+      <div id="map" className="w-full h-screen z-0"></div>
       {selectedBin && (
-        <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[40vh] overflow-y-auto">
+        <div className="absolute bottom-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[45vh] overflow-y-auto pb-4">
           <div className="flex justify-between items-center px-4 pt-4">
             <div className="font-bold text-lg">{selectedBin.name}</div>
             <button onClick={() => setSelectedBin(null)} className="text-xl">
               ×
             </button>
           </div>
-          <div className="px-4 pb-4 flex items-start gap-4">
+            <div className="px-4 pt-2 flex items-start gap-4">
             {/* 왼쪽 : 텍스트 정보 */}
             <div className="flex-1">
             {/* <p className="text-sm text-gray-500">서울특별시 성동구</p> */}
@@ -487,7 +527,12 @@ useEffect(() => {
                   console.log("버튼 클릭됨",{scannedCode, selectedBin});
 
                         if (isScanned && insideCircle && !rewarded) {
-        // ✅ 도착 처리
+         navigator.geolocation.getCurrentPosition((pos) => {
+    const { latitude, longitude } = pos.coords;
+    handleArrive(latitude, longitude); // 도착 API 호출
+  });
+        
+                          // ✅ 도착 처리
         alert("도착이 확인되었습니다!");
         setRewarded(true);
         setIsOnTheWay(false);
@@ -503,6 +548,11 @@ useEffect(() => {
 
                 if (scannedCode) {
                   console.log("handleRoute 호출됨!");
+                    navigator.geolocation.getCurrentPosition((pos) => {
+    const { latitude, longitude } = pos.coords;
+    const amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
+    handleDepart(selectedBin.id, amount, latitude, longitude); // 출발 API 호출
+  });
                   setScanning(false); // ✅ 바코드 스캐너 닫기
                     // ✅ 캐릭터 마커 이미지로 변경
                     setIsOnTheWay(true); // 상태를 '가는 중'으로 변경
@@ -520,7 +570,7 @@ useEffect(() => {
                 className={`mt-4 w-full ${
                   rewarded ? "bg-purple-500 text-white" :
                   isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
-                } rounded-xl py-2 text-sm`}
+                } rounded-xl py-2 text-sm mb-[36px]`}
               >
                 {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!`
       : isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
@@ -545,6 +595,7 @@ useEffect(() => {
           </div>
 
       )}
+      </div>
     </>
   );
 }
