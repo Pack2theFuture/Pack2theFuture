@@ -104,6 +104,8 @@ def user_arrive(request):
             carbon_amount=carbon_amount,
             point=reward_point,
         )
+        
+        print("user arrive : ", reward_point, reward_point)
 
         return JsonResponse({'message': '기록이 저장되었습니다.', 'distance_km': distance}, status=201)
 
@@ -269,9 +271,8 @@ def user_info(request):
 
     user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
     
-    # print("세션 키:", request.session.session_key)
-    # print("세션 전체 내용:", dict(request.session.items()))
-    # print("user id : ", request.session.get('user_id'))
+    
+    print("user id : ", request.session.get('user_id'))
 
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
