@@ -7,7 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     
     // 로그인 처리 로직 (백엔드 연동 전)
@@ -15,31 +15,31 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify({ email, password }));
     navigate('/home');
 
-//     try {
-//       const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
-//         //const res = await fetch("http://localhost:8000/api/login/", {
-//         method: "POST",
-//         credentials: "include",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({ username, password }),
-//       });
+    try {
+      const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
+        //const res = await fetch("http://localhost:8000/api/login/", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-//       const data = await res.json();
+      const data = await res.json();
 
-//       if (res.status === 200) {
-//         alert(data.message);
-//         localStorage.setItem("user_id", data.user_id);
-//         navigate("/home");
-//         // navigate("/mypage");
-//       } else {
-//         alert(data.message);
-//       }
-//     } catch (error) {
-//       console.error("로그인 요청 중 오류:", error);
-//       alert("서버 오류가 발생했습니다.");
-//     }
+      if (res.status === 200) {
+        alert(data.message);
+        localStorage.setItem("user", data.user);
+        navigate("/home");
+        // navigate("/mypage");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("로그인 요청 중 오류:", error);
+      alert("서버 오류가 발생했습니다.");
+    }
   };
 
   return (
