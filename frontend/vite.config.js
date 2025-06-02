@@ -8,6 +8,4 @@ export default defineConfig({
     server: {
     port: 10000, // 원하는 포트 번호로 설정
   },
-  appType: 'spa',
-  base: '/',
 });
