@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import BarcodeScanner from "./BarcodeScanner";
-import Footer from "../components/Footer";
+//import Footer from "../components/Footer";
 
 function KakaoMap() {
   const getPointFromDistance = (distanceStr) => {
@@ -167,92 +167,6 @@ markerImageRef.current = markerImage2;
         //     time: "24시간",
         //     point: "500p",
         //   },
-        //             {
-        //     id: 5,
-        //     lat: 37.558,
-        //     lng: 127.036,
-        //     name: "행당 제1동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 6,
-        //     lat: 37.561,
-        //     lng: 127.031,
-        //     name: "왕십리 제2동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //   {id: 7,
-        //     lat: 37.558,
-        //     lng: 127.036,
-        //     name: "행당 제2동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //     {id: 8,
-        //     lat: 37.562,
-        //     lng: 127.036,
-        //     name: "성동구청",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //   {
-        //     id: 9,
-        //     lat: 37.559,
-        //     lng: 127.034,
-        //     name: "성동구립도서관",
-        //     time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 10,
-        //     lat: 37.555,
-        //     lng: 127.046,
-        //     name: "한양대 제2공학관",
-        //     time: "월요일, 공휴일: 09:00 ~ 19:00/ 화~일: 07:00~22:00",
-        //     point: "500p",
-        //   },
-          // {
-          //   id: 10,
-          //   lat: 37.561,
-          //   lng: 127.045,
-          //   name: "사근동주민센터",
-          //   time: "평일 09:00 ~ 18:00",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 11,
-          //   lat: 37.558,
-          //   lng: 127.036,
-          //   name: "행당 제1동 주민센터",
-          //   time: "평일 09:00 ~ 18:00",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 12,
-          //   lat: 37.561,
-          //   lng: 127.031,
-          //   name: "왕십리 제 2동 주민센터",
-          //   time: "24시간",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 13,
-          //   lat: 37.377,
-          //   lng: 126.648,
-          //   name: "APT",
-          //   time: "09:00 ~ 18:00",
-          //   point: "500p",
-          // },
-          // {
-          //   id: 14,
-          //   lat: 37.378,
-          //   lng: 126.649,
-          //   name: "송도어린이공원",
-          //   time: "09:00 ~ 18:00",
-          //   point: "500p",
-          // }
         //];
 
       // 1. 서버에 현재 위치 POST 요청해서 bins 데이터 받아오기
@@ -572,7 +486,7 @@ useEffect(() => {
                   isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
                 } rounded-xl py-2 text-sm mb-[36px]`}
               >
-                {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!`
+                {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립! 확인하러 가기`
       : isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
               </button>
             )}
