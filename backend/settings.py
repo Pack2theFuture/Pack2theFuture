@@ -50,7 +50,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:10000",
-# "https://pack2thefuture-vshf.onrender.com"
+# "https://localhost:10000"
 #  
 # ]
 
