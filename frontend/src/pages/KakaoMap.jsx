@@ -47,28 +47,29 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 }
 
 // 출발 API 호출 함수
-const handleDepart = async (centerId, collection_amount, start_latitude, start_longitude) => {
-  try {
-    //const response = await fetch("http://localhost:8000/api/depart/", {
-    const response = await fetch("https://backend-do9t.onrender.com/api/depart/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        center_id: centerId,
-        collection_amount,
-        start_latitude,
-        start_longitute: start_longitude,  // 백엔드 오타 맞추기
-      }),
-    });
-    const data = await response.json();
-    console.log("🚀 출발 요청 완료:", data);
-  } catch (error) {
-    console.error("🚨 출발 요청 실패:", error);
-  }
-};
+// const handleDepart = async (centerId, collection_amount, start_latitude, start_longitude) => {
+//   try {
+//     //const response = await fetch("http://localhost:8000/api/depart/", {
+//     const response = await fetch("https://backend-do9t.onrender.com/api/depart/", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({
+//         center_id: centerId,
+//         collection_amount,
+//         start_latitude,
+//         start_longitute: start_longitude,  // 백엔드 오타 맞추기
+//       }),
+//     });
+//     const data = await response.json();
+//     console.log("🚀 출발 요청 완료:", data);
+//   } catch (error) {
+//     console.error("🚨 출발 요청 실패:", error);
+//   }
+// };
 
 // 도착 API 호출 함수
-const handleArrive = async (user_latitude, user_longitude) => {
+const handleArrive = async (centerId, user_latitude, user_longitude) => {
+  const collection_amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
   const reward_point =  getPointFromDistance(liveDistance || selectedBin?.distance)
   try {
     const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
@@ -76,6 +77,8 @@ const handleArrive = async (user_latitude, user_longitude) => {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
+        center_id: centerId,
+        collection_amount,
         user_latitude,
         user_longitude,
         reward_point, // 포인트 계산
@@ -460,7 +463,7 @@ useEffect(() => {
                         if (isScanned && insideCircle && !rewarded) {
          navigator.geolocation.getCurrentPosition((pos) => {
     const { latitude, longitude } = pos.coords;
-    handleArrive(latitude, longitude); // 도착 API 호출
+    handleArrive(selectedBin.id, latitude, longitude); // 도착 API 호출
   });
           // ✅ 오버레이 띄우기
   setShowOverlay(true);
@@ -485,7 +488,7 @@ useEffect(() => {
                     navigator.geolocation.getCurrentPosition((pos) => {
     const { latitude, longitude } = pos.coords;
     const amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
-    handleDepart(selectedBin.id, amount, latitude, longitude); // 출발 API 호출
+    //handleDepart(selectedBin.id, amount, latitude, longitude); // 출발 API 호출
   });
                   setScanning(false); // ✅ 바코드 스캐너 닫기
                     // ✅ 캐릭터 마커 이미지로 변경
