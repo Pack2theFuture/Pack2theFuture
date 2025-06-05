@@ -142,42 +142,6 @@ markerImageRef.current = markerImage2;
         });
         setUserMarker(marker);
 
-        // 수거함 마커 추가 (예시)
-        // const bins = [
-        //   {
-        //     id: 1,
-        //     lat: 37.568,
-        //     lng: 127.043,
-        //     name: "어바웃엠협동조합",
-        //     time: "?",
-        //     point: "500p",
-        //   },
-        //   {
-        //     id: 2,
-        //     lat: 37.574,
-        //     lng: 127.048,
-        //     name: "공방 꽃피는 삼월에",
-        //     time: "10:30 ~ 20:00",
-        //     point: "500p",
-        //   },
-        //             {
-        //     id: 3,
-        //     lat: 37.551,
-        //     lng: 127.026,
-        //     name: "한살림 금호매장",
-        //     time: "10:00 ~ 20:00",
-        //     point: "500p",
-        //   },
-        //   {
-        //     id: 4,
-        //     lat: 37.561,
-        //     lng: 127.045,
-        //     name: "사근동 주민센터",
-        //     time: "24시간",
-        //     point: "500p",
-        //   },
-        //];
-
       // 1. 서버에 현재 위치 POST 요청해서 bins 데이터 받아오기
       const locationData = {
         latitude: lat,
