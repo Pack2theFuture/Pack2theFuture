@@ -75,6 +75,7 @@ const handleArrive = async (centerId, user_latitude, user_longitude) => {
     const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
     //const response = await fetch("http://localhost:8000/api/arrive/", {
       method: "POST",
+      credentials: 'include', // 세션 쿠키 포함
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         center_id: centerId,

@@ -143,7 +143,8 @@
             "address": "한양대학교 노천극장",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
-            "phone": "01044444444"
+            "phone": "01044444444",
+            "imageUrl": "/media/Gongbang.png"
         }
     },
     {
@@ -157,7 +158,8 @@
             "address": "한양대학교 본관",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
-            "phone": "01044444444"
+            "phone": "01044444444",
+            "imageUrl": "/media/Gongbang.png"
         }
     },
     {

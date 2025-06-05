@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Splash from './pages/Splash';  // ✅ 대소문자 일치
+
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Splash from './pages/Splash';
 import Home from './pages/Home';
 import Login from './pages/Login';
-
 import Signup from './pages/Signup';
 import Map from './pages/Map';
 import Sol from './pages/sol';  // sol
@@ -12,17 +12,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/home" />} />
+        <Route path="/" element={<Splash />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/mypage" element={<MyPage />} />
         <Route path="/login" element={<Login />} />
-
         <Route path="/signup" element={<Signup />} />
         <Route path="/map" element={<Map />} />
         <Route path="/sol" element={<Sol />} />
+        <Route path="/mypage" element={<Mypage />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
 export default App;
