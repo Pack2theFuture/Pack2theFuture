@@ -5,8 +5,9 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Map from './pages/Map';
-import Sol from './pages/sol';  // sol
-import Mypage from './pages/Mypage';  // sol
+import Sol from './pages/sol';
+import Mypage from './pages/Mypage';
+import Guide from './pages/Guide'; 
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/map" element={<Map />} />
         <Route path="/sol" element={<Sol />} />
         <Route path="/mypage" element={<Mypage />} />
+        <Route path="/guide" element={<Guide />}/>
       </Routes>
     </BrowserRouter>
   )
