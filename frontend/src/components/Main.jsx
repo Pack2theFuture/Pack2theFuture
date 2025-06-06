@@ -10,7 +10,7 @@ const Main = () => {
 <div className="bg-[#f5f4f2] mx-4 mt-4 px-4 py-2 text-sm rounded-full flex items-center justify-center shadow border border-gray-300">
   <input
     type="text"
-    placeholder="📢 오늘의 소식 | 리필리 100% 할인!! 세기의…"
+    placeholder="📢 오늘의 소식 | 리필리 10% 할인!! 세기의…"
     className="bg-[#f5f4f2] text-sm text-gray-900 placeholder-gray-500 outline-none border-none w-full text-center"
   />
 </div>
