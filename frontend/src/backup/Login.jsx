@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './Login.css';
 
 export default function Login() {
-  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
+  
+    // alert('로그인 시도');
+    // localStorage.setItem('user', JSON.stringify({ email, password }));
+    // navigate('/home');
 
     try {
         const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
@@ -37,39 +42,54 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col items-center px-6 pt-24">
-      <div className="w-full max-w-sm bg-black text-white rounded-xl p-6">
-        <h2 className="text-lg font-bold mb-4">로그인</h2>
+    <div className="min-h-screen bg-[#f2f0eb] px-6 pt-10">
+       <button onClick={() => {
+  if (window.history.length > 2) {
+    navigate(-1);
+  } else {
+    navigate('/');
+  }
+}} className="absolute top-4 right-4"
+>
+  <img src="/back.png" alt="뒤로가기" className="w-6 h-6 mb-2" />
+</button>
 
+
+      <div className="text-center text-black text-2xl font-semibold leading-snug mb-6">
+        <div>유유팩과</div>
+        <div>함께하는</div>
+        <div>미래</div>
+      </div>
+
+      <div className="max-w-sm mx-auto bg-black text-white rounded-2xl p-6">
+        <h2 className="text-center text-xl font-bold mb-4">ID로 로그인</h2>
         <form onSubmit={handleLogin} className="flex flex-col gap-3">
           <input
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="px-4 py-2 rounded bg-white text-black placeholder-gray-400 outline-none border border-gray-300"
+            className="px-4 py-2 rounded-full bg-white text-black placeholder-gray-400 outline-none border border-gray-300"
+            required
           />
-
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="px-4 py-2 rounded bg-white text-black placeholder-gray-400 outline-none border border-gray-300"
+            className="px-4 py-2 rounded-full bg-white text-black placeholder-gray-400 outline-none border border-gray-300"
+            required
           />
-
-          <button type="submit" className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded">
+          <button
+            type="submit"
+            className="mt-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+          >
             로그인
           </button>
         </form>
-
-        {/* 🔻 회원가입 버튼 */}
-        <button
-          onClick={() => navigate('/signup')}
-          className="mt-4 text-blue-300 underline hover:text-blue-500"
-        >
+        <div className="text-center text-white mt-4 cursor-pointer text-sm" onClick={() => navigate('/signup')}>
           회원가입
-        </button>
+        </div>
       </div>
     </div>
   );
