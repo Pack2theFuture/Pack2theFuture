@@ -31,8 +31,7 @@ const EcoTrackingApp = () => {
             });
     }, []);
 
-// fetch('http://localhost:8000/api/user-info/', { ... }) 생략하고
-// 아래처럼 대체
+// login 안될 때 임시 대체 코드
 // useEffect(() => {
 //     const dummyUser = {
 //         id: "홍길동",

@@ -3,34 +3,33 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    
-    
-    alert('로그인 시도');
-    localStorage.setItem('user', JSON.stringify({ email, password }));
-    navigate('/home');
+  
+    // alert('로그인 시도');
+    // localStorage.setItem('user', JSON.stringify({ email, password }));
+    // navigate('/home');
 
     try {
-      const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
+        const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
         //const res = await fetch("http://localhost:8000/api/login/", {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, password }),
       });
 
       const data = await res.json();
 
       if (res.status === 200) {
         alert(data.message);
-        localStorage.setItem("user", data.user);
+        localStorage.setItem("user_id", data.user_id);
         navigate("/home");
         // navigate("/mypage");
       } else {
@@ -67,9 +66,9 @@ export default function Login() {
         <form onSubmit={handleLogin} className="flex flex-col gap-3">
           <input
             type="text"
-            placeholder="ID"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             className="px-4 py-2 rounded-full bg-white text-black placeholder-gray-400 outline-none border border-gray-300"
             required
           />
