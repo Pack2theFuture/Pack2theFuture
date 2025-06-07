@@ -298,5 +298,20 @@
             "phone": "01000000000",
             "imageUrl": "/media/Hansanlim.png"
         }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 20,
+        "fields": {
+            "center_id": 20,
+            "name": "천주교 당고개 순교성지",
+            "latitude": 37.535787,
+            "longitude": 126.966981,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
     }
 ]
