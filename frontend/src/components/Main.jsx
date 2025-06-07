@@ -13,18 +13,12 @@ const Main = () => {
       });
       const data = await res.json();
       if (data.is_authenticated && data.user_id) {
-        console.log("로그인완")
-        navigate(`/map?user_id=${data.user_id}`);
-        console.log("로그인완")
+        navigate(`/map`);
       } else {
-        console.log("로그인노완")
         navigate("/login");
-        console.log("로그인노완")
       }
     } catch (e) {
-      console.log("로그인너완")
       navigate("/login");
-      console.log("로그인너완")
     }
   };
 

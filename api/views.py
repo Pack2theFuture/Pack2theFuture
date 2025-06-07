@@ -107,7 +107,13 @@ def user_arrive(request):
             point=reward_point,
         )
         
-        print("user arrive : ", reward_point, reward_point)
+        user = Users.objects.get(id=user_id)
+        user.total_collect_amount += collection_amount
+        user.total_carbon_reduction += carbon_amount
+        user.points += reward_point
+        user.save()
+        
+        
 
         return JsonResponse({'message': '기록이 저장되었습니다.', 'distance_km': distance}, status=201)
 
@@ -283,13 +289,7 @@ def mypage_view(request):
 @csrf_exempt  # 프론트에서 CSRF 토큰을 안 쓰는 경우
 #@require_GET
 def user_info(request):
-    
-    
-
     user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
-    
-    
-    print("user id : ", request.session.get('user_id'))
 
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
