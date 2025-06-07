@@ -4,11 +4,11 @@ import json, math
 #from django.views.decorators.http import require_GET
 
 
-
 from .models import CollectionCenter, CollectionHistory, Users
 
-
+#################################################################
 # MAP API
+#################################################################
 @csrf_exempt  
 def user_location(request):
     # user 근처 2km 내의 쓰레기통만 보여줌
@@ -194,8 +194,9 @@ def euclidean_distance(lat1, lon1, lat2, lon2):
     return distance
 
 
-
+#################################################################
 # SIGN UP
+#################################################################
 @csrf_exempt
 def signup(request):
     if request.method == "POST":
@@ -258,9 +259,25 @@ def logout_view(request):
     request.session.flush()
     return JsonResponse({"message": "로그아웃 완료"})
 
+
+# session checking 
+def session_check_view(request):
+    user_id = request.session.get("user_id")
+    if user_id:
+        return JsonResponse({"is_authenticated": True, "user_id": user_id})
+    else:
+        return JsonResponse({"is_authenticated": False})
+
+
+
+
+
 # api/views.py
 from django.http import JsonResponse
 
+#################################################################
+# MyPage
+#################################################################
 def mypage_view(request):
     return JsonResponse({"message": "마이페이지입니다."})
 
