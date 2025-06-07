@@ -115,10 +115,6 @@ def user_arrive(request):
         return JsonResponse({'error': str(e)}, status=400)
     
 
-
-
-
-
 @csrf_exempt       
 def user_depart(request):
     # 사용자가 출발 버튼 누를 시 상태 저장
