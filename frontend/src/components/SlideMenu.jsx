@@ -12,16 +12,17 @@ export default function SlideMenu({ isOpen, onClose, userInfo }) {
       });
       if (res.ok) {
         alert("로그아웃 되었습니다.");
-        onClose(); // 메뉴 닫기
-        // 필요하다면 아래 둘 중 하나 사용
-        // navigate("/login");
-        window.location.reload(); // 새로고침(로그인 상태 반영)
+        onClose();
+        window.location.reload();
       } else {
         alert("로그아웃 실패");
       }
     } catch (err) {
       alert("로그아웃 중 오류 발생");
     }
+    console.log(res.status);
+    const data = await res.json();
+    console.log(data);
   };
 
   return (

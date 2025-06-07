@@ -251,8 +251,10 @@ def login_view(request):
     return JsonResponse({"message": "허용되지 않은 메서드입니다."}, status=405)
 
 
+@csrf_exempt
 def logout_view(request):
-    request.session.flush()
+    if request.method == "POST":
+        request.session.flush()
     return JsonResponse({"message": "로그아웃 완료"})
 
 
