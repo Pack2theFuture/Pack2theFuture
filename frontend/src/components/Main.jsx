@@ -56,13 +56,18 @@ const Main = () => {
 
       <section className="grid grid-cols-2 gap-6 mt-6 mx-8 pb-10 border-b-2 border-gray-200">
         {/* 버리러 가기 → /map 이동 */}
-        <Link to="/map">
-          <img
-            src="/mapImg.png"
-            alt="map"
-            className="aspect-square w-full rounded-xl object-cover"
-          />
-        </Link>
+        <div
+          className="aspect-square w-full rounded-xl object-cover cursor-pointer overflow-hidden"
+          onClick={handleMapClick}
+          style={{
+            backgroundImage: `url('/mapImg.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          alt="map"
+        />
+
+
         {/* 이용 가이드 → /guide 이동 */}
         <Link to="/guide">
           <img
