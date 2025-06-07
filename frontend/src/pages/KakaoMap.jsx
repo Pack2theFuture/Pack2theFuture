@@ -70,6 +70,7 @@ function KakaoMap() {
 
   useEffect(() => {
     fetch("https://backend-do9t.onrender.com/api/user-info/", {
+    //fetch("http://localhost:8000/api/user-info/", {  
       method: "GET",
       credentials: "include",
     })
@@ -84,11 +85,12 @@ function KakaoMap() {
     const reward_point = getPointFromDistance(liveDistance || selectedBin?.distance)
     try {
       fetch("https://backend-do9t.onrender.com/api/session-check/", {
+      //fetch("http://localhost:8000/api/session-check/", {
         credentials: "include"
       }).then(res => res.json()).then(console.log);
 
       const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
-        //const response = await fetch("http://localhost:8000/api/arrive/", {
+      //const response = await fetch("http://localhost:8000/api/arrive/", {
         method: "POST",
         credentials: 'include',
         headers: { "Content-Type": "application/json" },
@@ -162,7 +164,7 @@ function KakaoMap() {
           latitude: lat,
           longitude: lng,
         };
-        fetch("https://backend-do9t.onrender.com/api/location/", {
+          fetch("https://backend-do9t.onrender.com/api/location/", {
           //fetch("http://localhost:8000/api/location/", {
           method: "POST",
           headers: {
@@ -414,7 +416,7 @@ function KakaoMap() {
         )}
         <div id="map" className="w-full h-screen z-0"></div>
         {selectedBin && (
-          <div className="absolute bottom-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[45vh] overflow-y-auto pb-4">
+          <div className="absolute bottom-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[45vh] overflow-y-auto">
             <div className="flex justify-between items-center px-4 pt-4">
               <div className="font-bold text-lg">{selectedBin.name}</div>
               <button onClick={() => setSelectedBin(null)} className="text-xl">
@@ -451,7 +453,6 @@ function KakaoMap() {
                     setTimeout(() => setShowOverlay(false), 3000); // 3초 후 숨김
 
                     // ✅ 도착 처리
-                    alert("도착이 확인되었습니다!");
                     setRewarded(true);
                     setIsOnTheWay(false);
                     setSelectedBin(null);
@@ -487,7 +488,7 @@ function KakaoMap() {
                 }}
                 className={`mt-4 w-full ${rewarded ? "bg-emerald-700 text-white" :
                   isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
-                  } rounded-xl py-2 text-sm mb-[36px]`}
+                  } py-2 text-sm`}
               >
                 {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!`
                   : isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}

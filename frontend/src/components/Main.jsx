@@ -8,6 +8,7 @@ const Main = () => {
   const handleMapClick = async () => {
     try {
       const res = await fetch("https://backend-do9t.onrender.com/api/session-check/", {
+      //const res = await fetch("http://localhost:8000/api/session-check/", {
         method: "GET",
         credentials: "include"
       });
@@ -94,7 +95,7 @@ const Main = () => {
       </section>
 
       {/* NFC 이미지 클릭 시 링크 */}
-      <section className="mt-10 mx-9">
+      <section className="mt-10 mb-12 mx-9">
         <h1 className="font-bold text-center text-2xl">Project 0: 인투더퓨처</h1>
         <p className="text-sm text-center text-gray-600 mt-1 mb-3">간단하게 팩투더퓨처에 들어오고 싶다면? NFC 키링 이벤트!</p>
         <div className="mt-2 rounded-xl overflow-hidden">

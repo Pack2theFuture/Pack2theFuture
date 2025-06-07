@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+
 
 const EcoTrackingApp = () => {
+    const navigate = useNavigate();
     const [userData, setUserData] = useState(null);
     const [treeAnimation, setTreeAnimation] = useState('');
 
@@ -27,6 +30,19 @@ const EcoTrackingApp = () => {
                 console.log('Error:', error);
             });
     }, []);
+
+// login 안될 때 임시 대체 코드
+// useEffect(() => {
+//     const dummyUser = {
+//         id: "홍길동",
+//         total_collect_amount: 68.5,
+//         total_carbon_reduction: 23.7,
+//         points: 1280,
+//     };
+//     setUserData(dummyUser);
+// }, []);
+
+
 
     const getTreeEmoji = () => {
         if (!userData) return '🌱';
@@ -56,6 +72,9 @@ const EcoTrackingApp = () => {
     return (
         <div className="max-w-sm mx-auto bg-gray-100 min-h-screen">
             <div className="flex justify-between items-center p-4 bg-white border-b">
+                <button onClick={() => navigate(-1)} className="absolute top-4 right-16">
+                    <img src="/back.png" alt="뒤로가기" className="w-6 h-6" />
+                </button>
                 <h1 className="text-lg font-semibold text-gray-800">마이페이지</h1>
             </div>
 

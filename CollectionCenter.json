@@ -343,5 +343,35 @@
             "phone": "01000000000",
             "imageUrl": "/media/Hansanlim.png"
         }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 24,
+        "fields": {
+            "center_id": 24,
+            "name": "해송초등학교",
+            "latitude": 37.380,
+            "longitude": 126.648,
+            "address": "해송초등학교",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
+    },
+        {
+        "model": "api.CollectionCenter",
+        "pk": 25,
+        "fields": {
+            "center_id": 25,
+            "name": "스타벅스 타임스페이스점",
+            "latitude": 37.384,
+            "longitude": 126.644,
+            "address": "스타벅스 타임스페이스점",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
     }
 ]
