@@ -80,13 +80,17 @@ function KakaoMap() {
 
   // 도착 API 호출 함수
   const handleArrive = async (centerId, user_latitude, user_longitude) => {
-    const collection_amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
+    const collection_amount = 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
     const reward_point = getPointFromDistance(liveDistance || selectedBin?.distance)
     try {
+      fetch("https://backend-do9t.onrender.com/api/session-check/", {
+        credentials: "include"
+      }).then(res => res.json()).then(console.log);
+
       const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
         //const response = await fetch("http://localhost:8000/api/arrive/", {
         method: "POST",
-        credentials: 'include', // 세션 쿠키 포함
+        credentials: 'include',
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           center_id: centerId,
