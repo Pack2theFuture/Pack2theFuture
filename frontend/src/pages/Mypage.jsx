@@ -8,8 +8,8 @@ const EcoTrackingApp = () => {
     const [treeAnimation, setTreeAnimation] = useState('');
 
     useEffect(() => {
-        fetch('https://backend-do9t.onrender.com/api/user-info/', {
-            //fetch('http://localhost:8000/api/user-info/', {
+        //fetch('https://backend-do9t.onrender.com/api/user-info/', {
+            fetch('http://localhost:8000/api/user-info/', {
             method: 'GET',
             credentials: 'include' // 세션 쿠키 포함
         })
