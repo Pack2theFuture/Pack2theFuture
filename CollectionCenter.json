@@ -268,5 +268,35 @@
             "phone": "01000000000",
             "imageUrl": "/media/Hansanlim.png"
         }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 19,
+        "fields": {
+            "center_id": 19,
+            "name": "솜길의료센터",
+            "latitude": 37.182674,
+            "longitude": 127.124555,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 20,
+        "fields": {
+            "center_id": 20,
+            "name": "투썸플레이스 화성동탄목동점",
+            "latitude": 37.183174,
+            "longitude": 127.123020,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
     }
 ]

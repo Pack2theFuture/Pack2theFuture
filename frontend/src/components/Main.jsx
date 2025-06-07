@@ -3,18 +3,36 @@ import { useNavigate, Link } from "react-router-dom";
 import Footer from "../components/Footer2";
 
 const Main = () => {
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
+
+  const handleMapClick = async () => {
+    try {
+      const res = await fetch("https://backend-do9t.onrender.com/api/session-check/", {
+        method: "GET",
+        credentials: "include"
+      });
+      const data = await res.json();
+      if (data.is_authenticated && data.user_id) {
+        navigate(`/map?user_id=${data.user_id}`);
+      } else {
+        navigate("/login");
+      }
+    } catch (e) {
+      navigate("/login");
+    }
+  };
+
 
   return (
     <div className="bg-white text-black font-sans pb-0 pt-[60px]">
       {/* 공지 배너 */}
-<div className="bg-[#f5f4f2] mx-8 mt-4 px-4 py-2 text-sm rounded-full flex items-center justify-center shadow border border-gray-300">
-  <input
-    type="text"
-    placeholder="📢 오늘의 소식 | 리필리 10% 할인!! 세기의…"
-    className="bg-[#f5f4f2] text-sm text-gray-900 placeholder-gray-500 outline-none border-none w-full text-center"
-  />
-</div>
+      <div className="bg-[#f5f4f2] mx-8 mt-4 px-4 py-2 text-sm rounded-full flex items-center justify-center shadow border border-gray-300">
+        <input
+          type="text"
+          placeholder="📢 오늘의 소식 | 리필리 10% 할인!! 세기의…"
+          className="bg-[#f5f4f2] text-sm text-gray-900 placeholder-gray-500 outline-none border-none w-full text-center"
+        />
+      </div>
 
       {/* 리필리 제품 이미지 */}
       <section className="mt-4 mx-8 relative">
@@ -32,21 +50,21 @@ const Main = () => {
 
       <section className="grid grid-cols-2 gap-6 mt-6 mx-8 pb-10 border-b-2 border-gray-200">
         {/* 버리러 가기 → /map 이동 */}
-         <Link to="/map">
-          <img 
-          src="/mapImg.png" 
-          alt="map" 
-          className="aspect-square w-full rounded-xl object-cover"
+        <Link to="/map">
+          <img
+            src="/mapImg.png"
+            alt="map"
+            className="aspect-square w-full rounded-xl object-cover"
           />
-         </Link>
+        </Link>
         {/* 이용 가이드 → /guide 이동 */}
-          <Link to="/guide">
-          <img 
-          src="/guideImg.png" 
-          alt="guide" 
-          className="aspect-square w-full rounded-xl object-cover"
+        <Link to="/guide">
+          <img
+            src="/guideImg.png"
+            alt="guide"
+            className="aspect-square w-full rounded-xl object-cover"
           />
-          </Link>
+        </Link>
       </section>
 
       {/* 멤버십 가입 버튼 → 알림
@@ -64,9 +82,9 @@ const Main = () => {
       <section className="mt-10 mx-9">
         <h1 className="font-bold text-center text-2xl mb-3">팩투더퓨처 X 리필리 콜라보 !</h1>
         <div className="mt-2 rounded-xl overflow-hidden">
-        <a href="https://refeely.com/category/%EC%A0%84%EC%B2%B4/58/" target="_blank" rel="noopener noreferrer">
-          <img src="/rice.png" alt="밥 짓자" className="rounded-xl w-full cursor-pointer" />
-        </a>
+          <a href="https://refeely.com/category/%EC%A0%84%EC%B2%B4/58/" target="_blank" rel="noopener noreferrer">
+            <img src="/rice.png" alt="밥 짓자" className="rounded-xl w-full cursor-pointer" />
+          </a>
         </div>
       </section>
 
