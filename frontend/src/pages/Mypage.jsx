@@ -70,9 +70,9 @@ const EcoTrackingApp = () => {
     }
 
     return (
-        <div className="min-h-screen flex flex-col bg-[#f7f7f9]">
+        <div className="w-full min-h-screen flex flex-col bg-[#f7f7f9]">
             {/* 상단 바 */}
-            <div className="flex justify-between items-center p-4 bg-white border-b">
+            <div className="w-full flex justify-between items-center p-4 bg-white border-b">
                 <button onClick={() => navigate(-1)} className="absolute top-4 right-16">
                     <img src="/back.png" alt="뒤로가기" className="w-6 h-6" />
                 </button>
@@ -81,9 +81,9 @@ const EcoTrackingApp = () => {
 
             {/* 마이페이지 본문 */}
             <main className="flex-1 flex flex-col items-center w-full px-0">
-                <div className="w-full max-w-md">
+                <div className="w-full">
                     {/* 유저 정보 */}
-                    <div className="bg-white p-5 flex items-center justify-between border-b">
+                    <div className="bg-white p-5 flex items-center border-b w-full">
                         <div className="flex items-center gap-4">
                             <div className="relative">
                                 <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-xl text-gray-500">
@@ -98,7 +98,7 @@ const EcoTrackingApp = () => {
                     </div>
 
                     {/* 나무 애니메이션 */}
-                    <div className="bg-green-100 p-8 text-center my-2" onDoubleClick={handleTreeClick}>
+                    <div className="bg-green-100 p-8 text-center my-2 w-full">
                         <h2 className="text-lg font-semibold text-gray-800 mb-2">푸른숲 나무</h2>
                         <p className="text-sm text-gray-600 mb-8">수거해 주신 쓰레기 순환 나무가 자라요</p>
                         <div className="flex justify-center mb-8">
@@ -120,7 +120,7 @@ const EcoTrackingApp = () => {
                     </div>
 
                     {/* 포인트 */}
-                    <div className="bg-white mx-5 p-5 rounded-lg shadow-sm">
+                    <div className="bg-white p-5 rounded-none shadow-none w-full">
                         <div className="flex justify-between items-center">
                             <div className="flex items-center gap-3">
                                 <span className="text-gray-800">내 포인트</span>
@@ -130,7 +130,7 @@ const EcoTrackingApp = () => {
                     </div>
 
                     {/* 메뉴 */}
-                    <div className="bg-white mx-5 mt-5 rounded-lg shadow-sm overflow-hidden">
+                    <div className="bg-white mt-5 rounded-none shadow-none overflow-hidden w-full">
                         <div className="flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigateTo('collection')}>
                             <div className="flex items-center gap-4">
                                 <span className="text-gray-800">수거내역</span>
@@ -156,7 +156,7 @@ const EcoTrackingApp = () => {
 
             {/* 푸터 */}
             <footer className="bg-[#e8eaed] py-8 px-4 w-full mt-auto">
-                <div className="max-w-2xl mx-auto flex flex-col items-center">
+                <div className="w-full flex flex-col items-center">
                     <div className="text-base font-medium mb-1 text-black">Team INFO</div>
                     <div className="text-sm text-gray-600 mb-4">© PACK TO THE FUTURE</div>
                     <div className="flex flex-row gap-8 text-xs text-gray-700">
