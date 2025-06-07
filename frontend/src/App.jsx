@@ -7,7 +7,8 @@ import Signup from './pages/Signup';
 import Map from './pages/Map';
 import Sol from './pages/sol';
 import Mypage from './pages/Mypage';
-import Guide from './pages/Guide'; 
+import Guide from './pages/Guide';
+import Collection from './pages/Collection';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/sol" element={<Sol />} />
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/guide" element={<Guide />}/>
+        <Route path="/collection" element={<Collection />} />
       </Routes>
     </BrowserRouter>
   )

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-gray-200 text-center text-sm text-black pt-6 pb-6 mt-12">
+    <footer className="w-full bg-gray-300 text-center text-sm text-black pt-6 pb-6">
       <div className="mb-4">
         <p className="font-medium">Team INFO</p>
         <p className="text-center text-xs mt-1 mb-5 text-gray-600">© PACK TO THE FUTURE</p>

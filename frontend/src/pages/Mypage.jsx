@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate} from "react-router-dom";
+//import GuideHeader from './Guideheader';
 
 const EcoTrackingApp = () => {
     const navigate = useNavigate();
@@ -8,8 +8,8 @@ const EcoTrackingApp = () => {
     const [treeAnimation, setTreeAnimation] = useState('');
 
     useEffect(() => {
-        //fetch('https://backend-do9t.onrender.com/api/user-info/', {
-            fetch('http://localhost:8000/api/user-info/', {
+            fetch('https://backend-do9t.onrender.com/api/user-info/', {
+            //fetch('http://localhost:8000/api/user-info/', {
             method: 'GET',
             credentials: 'include' // 세션 쿠키 포함
         })
@@ -71,13 +71,14 @@ const EcoTrackingApp = () => {
 
     return (
         <div className="w-full min-h-screen flex flex-col bg-[#f7f7f9]">
-            {/* 상단 바 */}
-            <div className="w-full flex justify-between items-center p-4 bg-white border-b">
-                <button onClick={() => navigate(-1)} className="absolute top-4 right-16">
-                    <img src="/back.png" alt="뒤로가기" className="w-6 h-6" />
-                </button>
-                <h1 className="text-lg font-semibold text-gray-800 w-full text-center">마이페이지</h1>
-            </div>
+             {/* 상단 바 */}
+             <div className="w-full flex justify-between items-center p-4 bg-white border-b">
+                 <button onClick={() => navigate(-1)} className="absolute top-4 right-16">
+                     <img src="/back.png" alt="뒤로가기" className="w-6 h-6" />
+                 </button>
+                 <h1 className="text-lg font-semibold text-gray-800 w-full text-center">마이페이지</h1>
+             </div>
+            {/* <GuideHeader Title="마이페이지" /> */}
 
             {/* 마이페이지 본문 */}
             <main className="flex-1 flex flex-col items-center w-full px-0">
@@ -121,19 +122,34 @@ const EcoTrackingApp = () => {
 
                     {/* 포인트 */}
                     <div className="bg-white p-5 rounded-none shadow-none w-full">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center gap-3">
+                        <div className="flex justify-between items-center mb-5">
+                            <div className="flex items-center gap-1">
+                                <img src="/coin.png" alt="코인" className="w-6 h-6" />
                                 <span className="text-gray-800">내 포인트</span>
                             </div>
                             <span className="text-lg font-semibold text-gray-800">{userData.points.toFixed(0)}p</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-3">
+                                {/* <span className="text-gray-800">포인트 쓰러 가기</span> */}
+                            </div>
+                            <a
+                            href="https://refeely.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex items-center gap-1"
+                            >
+                            <img src="/mall.png" alt="코인" className="w-8 h-8" />
+                            <span className="text-lg font-semibold text-gray-800"> 포인트 쓰러 가기 &nbsp; &gt; &nbsp;</span>
+                            </a>
                         </div>
                     </div>
 
                     {/* 메뉴 */}
                     <div className="bg-white mt-5 rounded-none shadow-none overflow-hidden w-full">
-                        <div className="flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigateTo('collection')}>
+                        <div className="flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigate('/collection')}>
                             <div className="flex items-center gap-4">
-                                <span className="text-gray-800">수거내역</span>
+                                <span className="text-gray-800">버리기 내역</span>
                             </div>
                             <span className="text-gray-400">{'>'}</span>
                         </div>

@@ -301,9 +301,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 20,
+        "pk": 21,
         "fields": {
-            "center_id": 20,
+            "center_id": 21,
             "name": "천주교 당고개 순교성지",
             "latitude": 37.535787,
             "longitude": 126.966981,
@@ -312,6 +312,66 @@
             "closing_hour": "평일 20시 주말 17시",
             "phone": "01000000000",
             "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 22,
+        "fields": {
+            "center_id": 22,
+            "name": "나인원 한남",
+            "latitude": 37.535786,
+            "longitude": 127.004913,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 23,
+        "fields": {
+            "center_id": 23,
+            "name": "동탄 목동초등학교",
+            "latitude": 37.189618,
+            "longitude": 127.124516,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 24,
+        "fields": {
+            "center_id": 24,
+            "name": "해송초등학교",
+            "latitude": 37.380,
+            "longitude": 126.648,
+            "address": "해송초등학교",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
+    },
+        {
+        "model": "api.CollectionCenter",
+        "pk": 25,
+        "fields": {
+            "center_id": 25,
+            "name": "스타벅스 타임스페이스점",
+            "latitude": 37.384,
+            "longitude": 126.644,
+            "address": "스타벅스 타임스페이스점",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
         }
     }
 ]

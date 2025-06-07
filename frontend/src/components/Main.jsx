@@ -7,25 +7,19 @@ const Main = () => {
 
   const handleMapClick = async () => {
     try {
-      //const res = await fetch("https://backend-do9t.onrender.com/api/session-check/", {
-      const res = await fetch("http://localhost:8000/api/session-check/", {
+      const res = await fetch("https://backend-do9t.onrender.com/api/session-check/", {
+      //const res = await fetch("http://localhost:8000/api/session-check/", {
         method: "GET",
         credentials: "include"
       });
       const data = await res.json();
       if (data.is_authenticated && data.user_id) {
-        console.log("로그인완")
-        navigate(`/map?user_id=${data.user_id}`);
-        console.log("로그인완")
+        navigate(`/map`);
       } else {
-        console.log("로그인노완")
         navigate("/login");
-        console.log("로그인노완")
       }
     } catch (e) {
-      console.log("로그인너완")
       navigate("/login");
-      console.log("로그인너완")
     }
   };
 
@@ -57,13 +51,18 @@ const Main = () => {
 
       <section className="grid grid-cols-2 gap-6 mt-6 mx-8 pb-10 border-b-2 border-gray-200">
         {/* 버리러 가기 → /map 이동 */}
-        <Link to="/map">
-          <img
-            src="/mapImg.png"
-            alt="map"
-            className="aspect-square w-full rounded-xl object-cover"
-          />
-        </Link>
+        <div
+          className="aspect-square w-full rounded-xl object-cover cursor-pointer overflow-hidden"
+          onClick={handleMapClick}
+          style={{
+            backgroundImage: `url('/mapImg.png')`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+          alt="map"
+        />
+
+
         {/* 이용 가이드 → /guide 이동 */}
         <Link to="/guide">
           <img
@@ -96,7 +95,7 @@ const Main = () => {
       </section>
 
       {/* NFC 이미지 클릭 시 링크 */}
-      <section className="mt-10 mx-9">
+      <section className="mt-10 mb-12 mx-9">
         <h1 className="font-bold text-center text-2xl">Project 0: 인투더퓨처</h1>
         <p className="text-sm text-center text-gray-600 mt-1 mb-3">간단하게 팩투더퓨처에 들어오고 싶다면? NFC 키링 이벤트!</p>
         <div className="mt-2 rounded-xl overflow-hidden">

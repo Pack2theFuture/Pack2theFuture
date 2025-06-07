@@ -2,10 +2,10 @@ import { useNavigate, Link } from "react-router-dom";
 
 function MenuItem({label, value, onClick}) {
   return (
-    <div className="items-center w-full my-5">
+    <div className="flex justify-between items-center w-full mb-3">
       <div className="font-bold text-lg whitespace-nowrap">{label}</div>
       <button
-        className="text-gray-700 w-[100%] text-base text-center whitespace-nowrap my-0"
+        className="text-gray-700 text-base text-right whitespace-nowrap"
         onClick={onClick}
       >
         {value}
@@ -57,67 +57,21 @@ export default function SlideMenu({ isOpen, onClose, userInfo }) {
           <div className="flex flex-col items-center space-y-2">
             <div className="w-20 h-20 bg-gray-200 rounded-full" />
             <div className="text-lg font-semibold">
-              {userInfo ? `${userInfo.username}님` : "ㅡ"}
+              {userInfo ? `${userInfo.username}님` : "로그인필요"}
             </div>
             {userInfo ? (
-              <Link to="/mypage" className="text-sm text-gray-600 hover:underline">
+              <Link to="/mypage" className="text-sm text-gray-500 hover:underline">
                 마이페이지
               </Link>
             ) : (
-              <Link to="/login" className="text-sm text-gray-600 hover:underline">
-                로그인 / 회원가입
+              <Link to="/login" className="text-sm text-gray-500 hover:underline">
+                로그인
               </Link>
             )}
           </div>
 
           {/* 메뉴 그룹 */}
-      <div className="space-y-3">
-        <MenuItem
-          label="About"
-          value="Pack to the Future"
-          onClick={() => {
-            navigate("/brand");
-          }}
-        />
-        <MenuItem
-          label="Notice"
-          value="이용 가이드"
-          onClick={() => {
-            navigate("/guide");
-          }}
-        />
-        <MenuItem
-          value="공지사항"
-          onClick={() => {
-            alert("준비 중인 서비스입니다.");
-          }}
-        />
-        <MenuItem
-          // label=""
-          value="자주 묻는 질문"
-          onClick={() => {
-            alert("준비 중인 서비스입니다.");
-          }}
-        />
-        <MenuItem
-          label="Store"
-          value="Re:feely Mall"
-          onClick={() => {
-            window.open("https://refeely.com", "_blank");
-            onClose();
-          }}
-        />
-        <MenuItem
-          label="Membership"
-          value="Guide"
-          onClick={() => {
-            alert("준비 중인 서비스입니다.");
-            //navigate("/membership");
-            //onClose();
-          }}
-        />
-      </div>
-          {/* <div className="flex justify-between items-center mb-2 mt-10">
+          <div className="flex justify-between items-center mb-2 mt-10">
             <div className="font-bold text-xl mb-2">About</div>
             <button
               className="text-left text-gray-700 text-base pr-20"
@@ -158,14 +112,14 @@ export default function SlideMenu({ isOpen, onClose, userInfo }) {
 
           <div>
             <div className="font-bold text-xl">Membership</div>
-          </div> */}
+          </div>
         </div>
 
         {/* 하단 로그아웃 */}
         {userInfo && (
           <div className="flex justify-center">
             <button
-              className="text-gray-500 text-base font-semibold underline hover:text-orange-700 transition"
+              className="text-gray-500 text-base font-semibold underline hover:text-red-700 transition"
               onClick={handleLogout}
             >
               로그아웃
