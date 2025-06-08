@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import GuideHeader from './Guideheader';
 import Footer from '../components/Footer2';
+import React, { useEffect } from 'react';
 
 
 const dummyData = [
@@ -23,7 +24,6 @@ const dummyData = [
 
 export default function Collection() {
   useEffect(() => {
-    // 실제 API 주소로 변경 필요
     fetch('https://backend-do9t.onrender.com/api/collection-history/', {
       method: 'GET',
       credentials: 'include'
