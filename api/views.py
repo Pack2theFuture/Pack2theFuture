@@ -151,43 +151,6 @@ def user_depart(request):
             return JsonResponse({"error": str(e)}, status=400)
             # return JsonResponse({"message": "오류 return"}, status=400)
     
-# @csrf_exempt
-# def user_arrive(request):
-#     # 사용자가 도착시 버튼 누르면 작동
-#     if request.method == "POST":
-#         try:
-#             data = json.loads(request.body)
-            
-#             # 사용자 현 위치 받기
-#             user_latitude = float(data.get("user_latitude"))
-#             user_longitude = float(data.get("user_longitude"))
-            
-#             # 고정값...
-#             user_id = "2021075323"
-#             history_id = 1
-            
-            
-#             # 사용자 위치와 설정 거점 거리 비교하기
-#             history = CollectionHistory.objects.get(pk =history_id, user_id=user_id)
-#             center = CollectionCenter.objects.get(center_id=history.center_id)
-            
-
-#            # 거리계산
-#             distance = abs(user_latitude - center.latitude) * 111000 + abs(user_longitude - center.longitude) * 88000 
-           
-#             if distance <= 50:
-#                 history.status = "완료"
-#                 history.diatance_walk = distance
-#                 history.save()
-               
-#                 return JsonResponse({"message": "도착 완료", "status": "arrived"})
-            
-#             else:
-#                 return JsonResponse({"message": "거리 부족", "status": "not_arrived"})
-           
-#         except Exception as e:
-#             return JsonResponse({"error": str(e)}, status=400)
-        
 def euclidean_distance(lat1, lon1, lat2, lon2):
     lat1, lon1, lat2, lon2 = map(float, (lat1, lon1, lat2, lon2))
     delta_lat = lat2 - lat1
@@ -286,8 +249,7 @@ def mypage_view(request):
     return JsonResponse({"message": "마이페이지입니다."})
 
 
-@csrf_exempt  # 프론트에서 CSRF 토큰을 안 쓰는 경우
-#@require_GET
+@csrf_exempt  
 def user_info(request):
     user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
 
@@ -308,4 +270,32 @@ def user_info(request):
         return JsonResponse(data)
     except Users.DoesNotExist:
         return JsonResponse({'error': '사용자 정보를 찾을 수 없습니다.'}, status=404)
+
+@csrf_exempt  
+def collection_history(request):
+    user_id = request.session.get('user_id') 
+
+    if not user_id:
+        return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
+
+    try:
+        histories = CollectionHistory.objects.filter(user_id=user_id).order_by('-date')
+        history_list = []
+        for history in histories:
+            # center_id가 int인지 str인지 상황에 따라 변환 필요
+            center = CollectionCenter.objects.filter(center_id=int(history.center_id)).first()
+            center_name = center.name if center else "한양대학교"
+            history_list.append({
+                'date': history.date,
+                'center_name': center_name,  # 추가
+                'distance_walk': history.distance_walk,
+                'collection_amount': history.collection_amount,
+                'carbon_amount': history.carbon_amount,
+                'point': history.point,
+            })
+
+        return JsonResponse({'history': history_list})
+    except Users.DoesNotExist:
+        return JsonResponse({'error': '사용자 정보를 찾을 수 없습니다.'}, status=404)
+
 

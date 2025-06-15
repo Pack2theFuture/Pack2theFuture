@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //import GuideHeader from './Guideheader';
 
 const EcoTrackingApp = () => {
@@ -8,8 +8,8 @@ const EcoTrackingApp = () => {
     const [treeAnimation, setTreeAnimation] = useState('');
 
     useEffect(() => {
-            //fetch('https://backend-do9t.onrender.com/api/user-info/', {
-            fetch('http://localhost:8000/api/user-info/', {
+            fetch('https://backend-do9t.onrender.com/api/user-info/', {
+            //fetch('http://localhost:8000/api/user-info/', {
             method: 'GET',
             credentials: 'include' // 세션 쿠키 포함
         })
@@ -71,13 +71,13 @@ const EcoTrackingApp = () => {
 
     return (
         <div className="w-full min-h-screen flex flex-col bg-[#f7f7f9]">
-             {/* 상단 바 */}
-             <div className="w-full flex justify-between items-center p-4 bg-white border-b">
-                 <button onClick={() => navigate(-1)} className="absolute top-4 right-16">
-                     <img src="/back.png" alt="뒤로가기" className="w-6 h-6" />
-                 </button>
-                 <h1 className="text-lg font-semibold text-gray-800 w-full text-center">마이페이지</h1>
-             </div>
+            {/* 상단 바 */}
+            <div className="w-full flex justify-between items-center p-4 bg-white border-b">
+                <button onClick={() => navigate(-1)} className="absolute top-4 right-16">
+                    <img src="/back.png" alt="뒤로가기" className="w-6 h-6" />
+                </button>
+                <h1 className="text-lg font-semibold text-gray-800 w-full text-center">마이페이지</h1>
+            </div>
             {/* <GuideHeader Title="마이페이지" /> */}
 
             {/* 마이페이지 본문 */}
@@ -111,11 +111,11 @@ const EcoTrackingApp = () => {
                         <div className="grid grid-cols-2 gap-5 mb-5">
                             <div className="text-center">
                                 <div className="text-sm text-gray-600 mb-1">총 적립 수거량</div>
-                                <div className="text-lg font-semibold text-gray-800">{userData.total_collect_amount.toFixed(1)} kg</div>
+                                <div className="text-lg font-semibold text-gray-800">{(userData.total_collect_amount*0.3).toFixed(1)} kg</div>
                             </div>
                             <div className="text-center">
                                 <div className="text-sm text-gray-600 mb-1">총 탄소 절감량</div>
-                                <div className="text-lg font-semibold text-gray-800">{userData.total_carbon_reduction.toFixed(1)} kg</div>
+                                <div className="text-lg font-semibold text-gray-800">{(userData.total_carbon_reduction*0.26).toFixed(2)} kg</div>
                             </div>
                         </div>
                     </div>
@@ -134,13 +134,13 @@ const EcoTrackingApp = () => {
                                 {/* <span className="text-gray-800">포인트 쓰러 가기</span> */}
                             </div>
                             <a
-                            href="https://refeely.com/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1"
+                                href="https://refeely.com/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center gap-1"
                             >
-                            <img src="/mall.png" alt="코인" className="w-8 h-8" />
-                            <span className="text-lg font-semibold text-gray-800"> 포인트 쓰러 가기 &nbsp; &gt; &nbsp;</span>
+                                <img src="/mall.png" alt="코인" className="w-8 h-8" />
+                                <span className="text-lg font-semibold text-gray-800"> 포인트 쓰러 가기 &nbsp; &gt; &nbsp;</span>
                             </a>
                         </div>
                     </div>
@@ -153,14 +153,8 @@ const EcoTrackingApp = () => {
                             </div>
                             <span className="text-gray-400">{'>'}</span>
                         </div>
-                        <div className="flex items-center justify-between p-4 border-b border-gray-100 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigateTo('barcode')}>
-                            <div className="flex items-center gap-4">
-                                <span className="text-gray-800">바코드 내역</span>
-                                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
-                            </div>
-                            <span className="text-gray-400">{'>'}</span>
-                        </div>
-                        <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigateTo('customer-center')}>
+
+                        <div className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition-colors" onClick={() => navigateTo("https://refeely.com/")}>
                             <div className="flex items-center gap-4">
                                 <span className="text-gray-800">고객센터</span>
                             </div>

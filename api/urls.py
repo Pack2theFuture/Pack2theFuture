@@ -14,4 +14,5 @@ urlpatterns = [
     path("mypage/", views.user_info),
     path("user-info/", views.user_info),
     path("session-check/", views.session_check_view),
+    path("collection-history/", views.collection_history),
 ]
