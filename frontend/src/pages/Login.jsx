@@ -15,8 +15,8 @@ export default function Login() {
     // navigate('/home');
 
     try {
-        const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
-        //const res = await fetch("http://localhost:8000/api/login/", {
+        //const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
+        const res = await fetch("http://localhost:8000/api/login/", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -56,7 +56,7 @@ export default function Login() {
 
 
       <div className="text-center text-black text-2xl font-semibold leading-snug mb-6">
-        <div>유유팩과</div>
+        <div>우유팩과</div>
         <div>함께하는</div>
         <div>미래</div>
       </div>
