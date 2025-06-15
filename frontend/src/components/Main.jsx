@@ -7,8 +7,8 @@ const Main = () => {
 
   const handleMapClick = async () => {
     try {
-      //const res = await fetch("https://backend-do9t.onrender.com/api/session-check/", {
-      const res = await fetch("http://localhost:8000/api/session-check/", {
+      const res = await fetch("https://backend-do9t.onrender.com/api/session-check/", {
+      //const res = await fetch("http://localhost:8000/api/session-check/", {
         method: "GET",
         credentials: "include"
       });
