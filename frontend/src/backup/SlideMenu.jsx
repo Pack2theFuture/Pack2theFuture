@@ -21,8 +21,8 @@ export default function SlideMenu({ isOpen, onClose, userInfo }) {
   // 로그아웃 처리 함수
   const handleLogout = async () => {
     try {
-      const res = await fetch("https://backend-do9t.onrender.com/api/logout/", {
-      //const res = await fetch("http://localhost:8000/api/logout/", {
+      //const res = await fetch("https://backend-do9t.onrender.com/api/logout/", {
+      const res = await fetch("http://localhost:8000/api/logout/", {
         method: "POST",
         credentials: "include",
       });

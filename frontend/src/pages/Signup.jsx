@@ -18,8 +18,8 @@ export default function Signup() {
     setError('');
 
     try {
-        const res = await fetch("https://backend-do9t.onrender.com/api/signup/", {
-        //const res = await fetch("http://localhost:8000/api/signup/", {
+        //const res = await fetch("https://backend-do9t.onrender.com/api/signup/", {
+        const res = await fetch("http://localhost:8000/api/signup/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
