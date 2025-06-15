@@ -74,12 +74,13 @@ def select_location(request, centerId):
 def user_arrive(request):
     if 'user_id' not in request.session:
         print("로그인 안 됨")
-        return JsonResponse({'error': '로그인이 필요합니다.'}, status=401)
+        # return JsonResponse({'error': '로그인이 필요합니다.'}, status=401)
 
     try:
         print("db 저장 시작")
         data = json.loads(request.body)
-        user_id = request.session['user_id']
+        # user_id = request.session['user_id']
+        user_id = "test@hanyang.ac.kr"
 
         user_latitude = float(data.get('user_latitude'))
         user_longitude = float(data.get('user_longitude'))
@@ -252,7 +253,8 @@ def mypage_view(request):
 
 @csrf_exempt  
 def user_info(request):
-    user_id = request.session.get('user_id') 
+    # user_id = request.session.get('user_id') 
+    user_id = "test@hanyang.ac.kr"
     
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
@@ -274,7 +276,8 @@ def user_info(request):
 
 @csrf_exempt  
 def collection_history(request):
-    user_id = request.session.get('user_id') 
+    # user_id = request.session.get('user_id') 
+    user_id = "test@hanyang.ac.kr"
 
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
