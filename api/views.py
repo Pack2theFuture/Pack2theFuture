@@ -79,8 +79,7 @@ def user_arrive(request):
     try:
         print("db 저장 시작")
         data = json.loads(request.body)
-        # user_id = request.session['user_id']
-        user_id = "test@hanyang.ac.kr"
+        user_id = request.session['user_id']
 
         user_latitude = float(data.get('user_latitude'))
         user_longitude = float(data.get('user_longitude'))
@@ -235,7 +234,7 @@ def session_check_view(request):
         return JsonResponse({"is_authenticated": True, "user_id": user_id})
     else:
         # return JsonResponse({"is_authenticated": False})
-        return JsonResponse({"is_authenticated": True, "user_id": "test@hanyang.ac.kr"}) 
+        return JsonResponse({"is_authenticated": True, "user_id": "test"}) 
 
 
 
@@ -253,8 +252,7 @@ def mypage_view(request):
 
 @csrf_exempt  
 def user_info(request):
-    # user_id = request.session.get('user_id')  # 세션에서 로그인된 사용자 ID를 가져옴
-    user_id = "test@hanyang.ac.kr"
+    user_id = request.session.get('user_id') 
     
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
@@ -276,8 +274,7 @@ def user_info(request):
 
 @csrf_exempt  
 def collection_history(request):
-    # user_id = request.session.get('user_id') 
-    user_id = "test@hanyang.ac.kr"
+    user_id = request.session.get('user_id') 
 
     if not user_id:
         return JsonResponse({'error': '로그인된 사용자가 없습니다.'}, status=401)
