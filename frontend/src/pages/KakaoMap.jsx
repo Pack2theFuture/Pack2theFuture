@@ -69,8 +69,8 @@ function KakaoMap() {
   // };
 
   useEffect(() => {
-    //fetch("https://backend-do9t.onrender.com/api/user-info/", {
-    fetch("http://localhost:8000/api/user-info/", {  
+    fetch("https://backend-do9t.onrender.com/api/user-info/", {
+    //fetch("http://localhost:8000/api/user-info/", {  
       method: "GET",
       credentials: "include",
     })
@@ -84,13 +84,13 @@ function KakaoMap() {
     const collection_amount = 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
     const reward_point = getPointFromDistance(liveDistance || selectedBin?.distance)
     try {
-      //fetch("https://backend-do9t.onrender.com/api/session-check/", {
-      fetch("http://localhost:8000/api/session-check/", {
+      fetch("https://backend-do9t.onrender.com/api/session-check/", {
+      //fetch("http://localhost:8000/api/session-check/", {
         credentials: "include"
       }).then(res => res.json()).then(console.log);
 
-      //const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
-      const response = await fetch("http://localhost:8000/api/arrive/", {
+      const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
+      //const response = await fetch("http://localhost:8000/api/arrive/", {
         method: "POST",
         credentials: 'include',
         headers: { "Content-Type": "application/json" },
@@ -164,8 +164,8 @@ function KakaoMap() {
           latitude: lat,
           longitude: lng,
         };
-          //fetch("https://backend-do9t.onrender.com/api/location/", {
-          fetch("http://localhost:8000/api/location/", {
+          fetch("https://backend-do9t.onrender.com/api/location/", {
+          //fetch("http://localhost:8000/api/location/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -432,8 +432,8 @@ function KakaoMap() {
                 <p>예상지급포인트: {selectedBin.point || "-"}</p>
               </div>
               <img
-                //src={`https://backend-do9t.onrender.com${selectedBin.imageUrl}` || "/default.jpg"}
-                src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
+                src={`https://backend-do9t.onrender.com${selectedBin.imageUrl}` || "/default.jpg"}
+                //src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
                 alt="장소 이미지"
                 className="w-32 h-24 rounded-lg object-cover"
               />
