@@ -1,4 +1,4 @@
-#!/Users/khj/Pack2theFuture/venv/bin/python3
+#!/Users/khj/Pack2theFuture_frontend/venv/bin/python3
 # When the django-admin.py deprecation ends, remove this script.
 import warnings
 

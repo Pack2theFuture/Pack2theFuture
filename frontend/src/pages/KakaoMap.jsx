@@ -1,252 +1,520 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import BarcodeScanner from "./BarcodeScanner";
+//import Footer from "../components/Footer";
 
 function KakaoMap() {
-  console.log("KAKAO KEY!");
+  const [userInfo, setUserInfo] = useState(null);
+  const getPointFromDistance = (distanceStr) => {
+    if (!distanceStr) return null;
+    const match = distanceStr.match(/([\d.]+)\s*km/);
+    if (match) {
+      const km = parseFloat(match[1]);
+      return Math.round(km * 1000); // m → 포인트
+    }
+    return null;
+  };
+
   const [selectedBin, setSelectedBin] = useState(null);
   const [scanning, setScanning] = useState(false);
+  const [scannedCode, setScannedCode] = useState(null);
+  const [map, setMap] = useState(null);
+  const [userMarker, setUserMarker] = useState(null);
+  const [polyline, setPolyline] = useState(null);
+  const [insideCircle, setInsideCircle] = useState(false);
+  const watchIdRef = useRef(null);
+  const circleRef = useRef(null);
+  const [bins, setBins] = useState([]);
+  const [scannedMap, setScannedMap] = useState({});
+  const isScanned = selectedBin ? scannedMap[selectedBin.id] || false : false;
+  const markerImageRef = useRef(null);
+  const [lastScannedBin, setLastScannedBin] = useState(null);
+  const [liveDistance, setLiveDistance] = useState(null);
+  const [isOnTheWay, setIsOnTheWay] = useState(false);
+  const defaultMarkerImageRef = useRef(null);
+  const [rewarded, setRewarded] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+
+  function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1 * Math.PI / 180) *
+      Math.cos(lat2 * Math.PI / 180) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+  }
+
+  // 출발 API 호출 함수
+  // const handleDepart = async (centerId, collection_amount, start_latitude, start_longitude) => {
+  //   try {
+  //     //const response = await fetch("http://localhost:8000/api/depart/", {
+  //     const response = await fetch("https://backend-do9t.onrender.com/api/depart/", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({
+  //         center_id: centerId,
+  //         collection_amount,
+  //         start_latitude,
+  //         start_longitute: start_longitude,  // 백엔드 오타 맞추기
+  //       }),
+  //     });
+  //     const data = await response.json();
+  //     console.log("🚀 출발 요청 완료:", data);
+  //   } catch (error) {
+  //     console.error("🚨 출발 요청 실패:", error);
+  //   }
+  // };
+
   useEffect(() => {
-    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-      const R = 6371; // 지구 반지름 (단위: km)
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-    
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-        Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-      const distance = R * c;
-      return distance; // 단위: km
-    }
+    //fetch("https://backend-do9t.onrender.com/api/user-info/", {
+    fetch("http://localhost:8000/api/user-info/", {  
+      method: "GET",
+      credentials: "include",
+    })
+      .then(res => res.json())
+      .then(data => setUserInfo(data))
+      .catch(err => setUserInfo(null));
+  }, []);
 
-    //console.log("KAKAO KEY", import.meta.env.VITE_KAKAO_MAP_KEY);
-    // 스크립트가 이미 있으면 중복 로딩 방지
-    if (window.kakao && window.kakao.maps) {
-      initMap();
-    } else {
-      const script = document.createElement("script");
-      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_KEY}&autoload=false`;
-      script.async = true;
-      script.onload = () => window.kakao.maps.load(loadMap);
-      document.head.appendChild(script);
-    }
+  // 도착 API 호출 함수
+  const handleArrive = async (centerId, user_latitude, user_longitude) => {
+    const collection_amount = 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
+    const reward_point = getPointFromDistance(liveDistance || selectedBin?.distance)
+    try {
+      //fetch("https://backend-do9t.onrender.com/api/session-check/", {
+      fetch("http://localhost:8000/api/session-check/", {
+        credentials: "include"
+      }).then(res => res.json()).then(console.log);
 
-    function loadMap() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
-      }
-      else {
-        alert("Geolocation을 지원하지 않는 브라우저입니다.");
-        initMap(37.5154, 126.9074); // 영등포역 위도, 경도 기본값
-      }
-    }
-    function successHandler(position) {
-      const lat = position.coords.latitude;
-      const lng = position.coords.longitude;
-      console.log("현재 위치:", lat, lng);
-      //백엔드에 보낼 JSON 데이터
-      const locationDate = {
-        latitude: lat,
-        longitude: lng,
-      }
-
-      fetch("http://localhost:8080/api/location", {
+      //const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
+      const response = await fetch("http://localhost:8000/api/arrive/", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(locationDate),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("서버 응답:", data);
-        })
-        .catch((error) =>
-          console.error("서버 요청 실패:", error));
-
-
-      initMap(lat, lng);
-    }
-
-    function errorHandler(error) {
-      console.error(error);
-      alert("위치 정보를 가져올 수 없습니다. 기본 위치로 이동합니다.");
-      initMap(37.566, 126.978); // 실패하면 서울 시청
-    }
-
-    function initMap(lat, lng) {
-      const container = document.getElementById("map");
-      const options = {
-        center: new window.kakao.maps.LatLng(lat, lng),
-        level: 3,
-      };
-      const map = new window.kakao.maps.Map(container, options);
-
-      // 🔥 내 위치에 빨간 점 마커 추가
-      const markerPosition = new window.kakao.maps.LatLng(lat, lng);
-      const markerImage = new window.kakao.maps.MarkerImage(
-        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
-        new window.kakao.maps.Size(40, 40),     // 사이즈 (살짝 줄였어 보기 좋게)
-        {
-          offset: new window.kakao.maps.Point(20, 40),   // 마커 기준점 위치
-        }
-      );
-
-      const marker = new window.kakao.maps.Marker({
-        position: markerPosition,
-        image: markerImage,
-        map: map,
+        credentials: 'include',
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          center_id: centerId,
+          collection_amount,
+          user_latitude,
+          user_longitude,
+          reward_point, // 포인트 계산
+        }),
       });
+      const data = await response.json();
+      console.log("📍 도착 요청 완료:", data);
+    } catch (error) {
+      console.error("🚨 도착 요청 실패:", error);
+    }
+  };
 
-      //수거함 마커 및 팝업 추가
-      // ✅ 임의의 수거함 위치 예시
-      const bins = [
-        {
-          lat: 37.562, lng: 127.038, name: "한양대학교 대운동장", time: "18:00~20:00",
-          distance: "2km",
-          point: "500p"
-        },
-        { lat: 37.380, lng: 126.656, name: "수거함 B" },
-      ];
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${import.meta.env.VITE_KAKAO_MAP_KEY}&autoload=false`;
+    script.async = true;
+    script.onload = () => window.kakao.maps.load(initMap);
+    document.head.appendChild(script);
 
-      // 현재 위치: lat, lng
-      const updatedBins = bins.map((bin) => {
-      const dist = getDistanceFromLatLonInKm(lat, lng, bin.lat, bin.lng);
-      return {
-        ...bin,
-        distance: `${dist.toFixed(2)}km`,  // 소수점 둘째 자리까지
-      };
-    });
+    return () => {
+      if (watchIdRef.current) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
+    };
+  }, []);
 
-      updatedBins.forEach((bin) => {
-        const binPosition = new window.kakao.maps.LatLng(bin.lat, bin.lng);
+  const initMap = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        const container = document.getElementById("map");
+        const options = {
+          center: new window.kakao.maps.LatLng(lat, lng),
+          level: 3,
+        };
+        const mapInstance = new window.kakao.maps.Map(container, options);
+        setMap(mapInstance);
 
-        // ✅ 수거함 마커 생성
-        // const binMarker = new window.kakao.maps.Marker({
-        //   position: binPosition,
-        //   map,
-        //   image: new window.kakao.maps.MarkerImage(
-        //     "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
-        //     new window.kakao.maps.Size(40, 40),
-        //     { offset: new window.kakao.maps.Point(20, 40) }
-        //   ),
-        // });
-
-        const trashBinImage = new window.kakao.maps.MarkerImage(
-          "/trashbin.png", // 🔥 상대 경로로 지정
+        const markerPosition = new window.kakao.maps.LatLng(lat, lng);
+        const markerImage = new window.kakao.maps.MarkerImage(
+          "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png",
           new window.kakao.maps.Size(40, 40),
           { offset: new window.kakao.maps.Point(20, 40) }
         );
+        //'도착하기' 클릭 시 빨간 마커 원상 복구
+        defaultMarkerImageRef.current = markerImage;
 
-        const trashMarker = new window.kakao.maps.Marker({
-          //position: new window.kakao.maps.LatLng(37.5575, 127.0459), // 수거함 위치
-          position: binPosition,
-          image: trashBinImage,
-          map: map,
+        const markerImage2 = new window.kakao.maps.MarkerImage(
+          "/character.png",
+          new window.kakao.maps.Size(40, 40),
+          { offset: new window.kakao.maps.Point(20, 40) }
+        );
+        markerImageRef.current = markerImage2;
+
+        const marker = new window.kakao.maps.Marker({
+          position: markerPosition,
+          image: markerImage,
+          map: mapInstance,
         });
+        setUserMarker(marker);
 
-        // ✅ hover 시 InfoWindow 스타일 (말풍선)
-        const content = `
-        <div style="
-          position: relative;
-          background: white;
-          padding: 10px 14px;
-          border-radius: 10px;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-          font-size: 13px;
-          line-height: 1.6;
-        ">
-          <div style="font-weight: bold; margin-bottom: 5px;">${bin.name}</div>
-          <div>운영시간: ${bin.time || "-"}</div>
-          <div>현재 위치로부터의 거리: ${bin.distance || "-"}</div>
-          <div>예상 지급 포인트: ${bin.point || "-"}</div>
-          <div style="
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 10px solid white;
-          "></div>
-        </div>
-      `;
+        // 1. 서버에 현재 위치 POST 요청해서 bins 데이터 받아오기
+        const locationData = {
+          latitude: lat,
+          longitude: lng,
+        };
+          //fetch("https://backend-do9t.onrender.com/api/location/", {
+          fetch("http://localhost:8000/api/location/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(locationData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            // console.log("✅ 전체 응답 객체:", data);
+            // console.log("✅ data.data:", data.data);
+            // console.log("✅ data.data[0]:", data.data?.[0]);
+            // console.log("✅ data.data[0] JSON:", JSON.stringify(data.data?.[0], null, 2));
+            const nearbyBins = data.data.filter((bin) => {
+              const distance = getDistanceFromLatLonInKm(lat, lng, bin.latitude, bin.longitude);
+              return distance <= 2; // 2km 이하만 통과
+            });
 
-        const infoWindow = new window.kakao.maps.InfoWindow({
-          content: content,
-          removable: false
-        });
+            const updatedBins = nearbyBins.map((bin) => {
+              const distance = getDistanceFromLatLonInKm(lat, lng, bin.latitude, bin.longitude);
+              const distanceStr = `${distance.toFixed(2)} km`;
+              const point = getPointFromDistance(distanceStr);
+              return {
+                ...bin,
+                lat: bin.latitude,
+                lng: bin.longitude,
+                distance: distanceStr,
+                point: `${point}p`,
+              }
+            });
+            setBins(updatedBins);
+            // console.log("✅ updatedBins:", updatedBins);
 
-        // ✅ click 시 하단 팝업 (고정)
-        const detailPopup = new window.kakao.maps.CustomOverlay({
-          content: `<div style="position:absolute; bottom:0; left:0; width:100%; background:#fff; padding:10px; border-top:1px solid #ccc; font-size:14px;">${bin.name} 상세 정보</div>`,
-          position: binPosition,
-          yAnchor: 1,
-          zIndex: 3,
-        });
+            updatedBins.forEach(bin => {
+              const binPosition = new window.kakao.maps.LatLng(bin.lat, bin.lng);
+              const trashBinImage = new window.kakao.maps.MarkerImage(
+                "/trashbin.png",
+                new window.kakao.maps.Size(40, 40),
+                { offset: new window.kakao.maps.Point(20, 40) }
+              );
 
-        window.kakao.maps.event.addListener(trashMarker, "mouseover", () => {
-          infoWindow.open(map, trashMarker);
-        });
+              const trashMarker = new window.kakao.maps.Marker({
+                position: binPosition,
+                image: trashBinImage,
+                map: mapInstance,
+              });
 
-        window.kakao.maps.event.addListener(trashMarker, "mouseout", () => {
-          infoWindow.close();
-        });
+              const infoWindow = new window.kakao.maps.InfoWindow({
+                content: `<div style="
+      position: relative;
+      background: white;
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      font-size: 13px;
+      line-height: 1.6;
+      width: max-content;
+      max-width: 250px;
+    ">
+      <div style="font-weight: bold; margin-bottom: 6px;">${bin.name}</div>
+      <div>운영시간: ${bin.opening_hour} ~ ${bin.closing_hour}</div>
+      <div>거리: ${bin.distance}</div>
+      <div>예상 지급 포인트: ${bin.point}</div>
+            <!-- 말풍선 꼬리 부분 -->
+      <div style="
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid white;
+      "></div>
+      </div>`,
+                removable: false,
+              });
 
-        window.kakao.maps.event.addListener(trashMarker, "click", () => {
-          setSelectedBin(bin); // 클릭된 마커 정보로 팝업 표시
-          detailPopup.setMap(null); // 기존 하단 popup은 비활성화
-        });
+              window.kakao.maps.event.addListener(trashMarker, "mouseover", () => {
+                // console.log("mouseover", bin);
+                infoWindow.open(mapInstance, trashMarker);
+              });
+
+              window.kakao.maps.event.addListener(trashMarker, "mouseout", () => {
+                infoWindow.close();
+              });
+
+              window.kakao.maps.event.addListener(trashMarker, "click", () => {
+                setSelectedBin({ ...bin, scanned: false });
+                if (circleRef.current) circleRef.current.setMap(null);
+                const circle = new window.kakao.maps.Circle({
+                  center: binPosition,
+                  radius: 100,
+                  strokeWeight: 1,
+                  strokeColor: '#007BFF',
+                  strokeOpacity: 0.5,
+                  fillColor: '#007BFF',
+                  fillOpacity: 0.3,
+                  map: mapInstance,
+                });
+                circleRef.current = circle;
+              });
+            });
+          })
+          .catch(error => {
+            // console.error("🚫 수거함 데이터 요청 실패:", error);
+          });
       });
-
+    } else {
+      alert("Geolocation을 지원하지 않는 브라우저입니다.");
     }
+  };
 
-  }, []);
+  const handleRoute = async () => {
+    // console.log("handleRoute 시작됨!");
+    if (!selectedBin || !map) return;
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async position => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        const response = await fetch(
+          `https://apis-navi.kakaomobility.com/v1/directions?origin=${lng},${lat}&destination=${selectedBin.lng},${selectedBin.lat}&priority=TIME`,
+          {
+            headers: {
+              Authorization: `KakaoAK ${import.meta.env.VITE_KAKAO_REST_API_KEY}`,
+            },
+          }
+        );
+        //** 요청실패 체크 로직 추가*/
+        if (!response.ok) {
+          const text = await response.text();
+          // console.error("🚫 경로 API 요청 실패:", response.status, text);
+          return;
+        }
+
+        const data = await response.json();
+        if (data.routes && data.routes.length > 0) {
+          // console.log("🔍 sections", data.routes[0].sections);
+          const path = [];
+          data.routes[0].sections.forEach(section => {
+            section.roads.forEach(road => {
+              for (let i = 0; i < road.vertexes.length; i += 2) {
+                path.push(
+                  new window.kakao.maps.LatLng(
+                    road.vertexes[i + 1],
+                    road.vertexes[i]
+                  )
+                );
+              }
+            });
+          });
+
+          if (polyline) {
+            polyline.setMap(null);
+          }
+
+          const newPolyline = new window.kakao.maps.Polyline({
+            path,
+            strokeWeight: 5,
+            strokeColor: "#00aaff",
+            strokeOpacity: 0.7,
+            strokeStyle: "solid",
+          });
+
+          newPolyline.setMap(map);
+          setPolyline(newPolyline);
+        }
+      });
+    }
+  };
+
+
+  useEffect(() => {
+    if (map) {
+      if (watchIdRef.current) {
+        navigator.geolocation.clearWatch(watchIdRef.current);
+      }
+      // console.log("🛰 watchPosition 등록 조건:", map, userMarker, selectedBin);
+      watchIdRef.current = navigator.geolocation.watchPosition(
+        (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          // console.log("📍 위치 업데이트 감지:", lat, lng); // ✅ 로그 위치
+
+          const newPosition = new window.kakao.maps.LatLng(lat, lng);
+          if (userMarker) {
+            userMarker.setPosition(newPosition);
+          }
+          if (selectedBin && circleRef.current) {
+            const dist = getDistanceFromLatLonInKm(
+              lat,
+              lng,
+              selectedBin.lat,
+              selectedBin.lng
+            );
+            // console.log("📏 현재 수거함까지 거리 (m):", dist * 1000);
+            setInsideCircle(dist * 1000 <= 100);
+
+            setLiveDistance(dist.toFixed(2) + " km"); // ✅ 실시간 거리 업데이
+            if (dist * 1000 <= 100) {
+              // console.log("✅ 반경 안에 있음!");
+              setInsideCircle(true);
+            } else {
+              // console.log("❌ 반경 밖에 있음!");
+              setInsideCircle(false);
+            }
+          }
+        },
+        (error) => {
+          // console.error("🚫 위치 추적 에러:", error);
+        },
+        {
+          enableHighAccuracy: false,
+          maximumAge: 1000,
+          timeout: 5000
+        }
+      );
+    }
+  }, [map, userMarker, selectedBin]);
+
+  useEffect(() => {
+    if (
+      selectedBin === null &&
+      lastScannedBin &&
+      scannedMap[lastScannedBin.id] === true &&
+      insideCircle
+    ) {
+      // console.log("✅ 반경 진입으로 모달 다시 열림!");
+      setSelectedBin(lastScannedBin);
+    }
+  }, [insideCircle, selectedBin, lastScannedBin, scannedMap]);
 
   return (
     <>
-      <div id="map" className="w-full h-screen"></div>
-      {selectedBin && (
-        <div className="fixed bottom-0 left-0 w-full bg-white rounded-t-2xl shadow-lg z-50">
-          <div className="flex justify-between items-center px-4 pt-4">
-            <div className="font-bold text-lg">{selectedBin.name}</div>
-            <button onClick={() => setSelectedBin(null)} className="text-xl">×</button>
+      <div className="relative h-screen pb-20">
+        {showOverlay && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999]">
+            <div className="flex flex-col items-center">
+              <img src="/coin.png" alt="코인 적립" className="w-24 h-24 mb-4" />
+              <p className="text-white text-xl font-bold">종이팩 버리기 완료!</p>
+              <p className="text-white text-lg mt-1">
+                {getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!
+              </p>
+            </div>
           </div>
-          <div className="px-4 pb-4">
-            <p className="text-sm text-gray-500">서울특별시 성동구</p>
-            <p className="mt-2">운영시간: {selectedBin.time || '-'}</p>
-            <p>현재 위치로부터 {selectedBin.distance || '-'}</p>
-            <p>예상지급포인트: {selectedBin.point || '-'}</p>
-          </div>
-          <div className="px-4 pb-4">
-            <img
-              src={selectedBin.imageUrl || '/default.jpg'}
-              alt="장소 이미지"
-              className="w-full rounded-lg object-cover h-40"
-            />
-            {selectedBin && !scanning && (
-            <button onClick={() => setScanning(true)} className="mt-4 w-full bg-green-200 text-black rounded-xl py-2 text-sm">
-              종이팩 버리러 가기
-            </button>
-            )}
-{scanning && (
-  <BarcodeScanner
-    onDetected={(code) => {
-      console.log("스캔된 바코드:", code);
-      // TODO: 종이팩인지 판별 + 서버로 전송
-      setScanning(false);
-    }}
-    onClose={() => setScanning(false)}
-  />
-)}
+        )}
+        <div id="map" className="w-full h-screen z-0"></div>
+        {selectedBin && (
+          <div className="absolute bottom-0 w-full bg-white rounded-t-2xl shadow-lg z-50 max-h-[45vh] overflow-y-auto">
+            <div className="flex justify-between items-center px-4 pt-4">
+              <div className="font-bold text-lg">{selectedBin.name}</div>
+              <button onClick={() => setSelectedBin(null)} className="text-xl">
+                ×
+              </button>
+            </div>
+            <div className="px-4 pt-2 flex items-start gap-4">
+              {/* 왼쪽 : 텍스트 정보 */}
+              <div className="flex-1">
+                {/* <p className="text-sm text-gray-500">서울특별시 성동구</p> */}
+                <p className="mt-2">운영시간: {selectedBin.opening_hour || "-"} ~ {selectedBin.closing_hour || "-"}</p>
+                <p>현재 위치로부터의 거리 : {liveDistance || selectedBin.distance || "-"}</p>
+                <p>예상지급포인트: {selectedBin.point || "-"}</p>
+              </div>
+              <img
+                //src={`https://backend-do9t.onrender.com${selectedBin.imageUrl}` || "/default.jpg"}
+                src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
+                alt="장소 이미지"
+                className="w-32 h-24 rounded-lg object-cover"
+              />
+            </div>
+            {!scanning && (
+              <button
+                onClick={() => {
+                  // console.log("버튼 클릭됨", { scannedCode, selectedBin });
 
+                  if (isScanned && insideCircle && !rewarded) {
+                    navigator.geolocation.getCurrentPosition((pos) => {
+                      const { latitude, longitude } = pos.coords;
+                      handleArrive(selectedBin.id, latitude, longitude); // 도착 API 호출
+                    });
+                    // ✅ 오버레이 띄우기
+                    setShowOverlay(true);
+                    setTimeout(() => setShowOverlay(false), 3000); // 3초 후 숨김
+
+                    // ✅ 도착 처리
+                    setRewarded(true);
+                    setIsOnTheWay(false);
+                    setSelectedBin(null);
+                    setScannedCode(null);
+
+                    // ✅ 마커 원상복구
+                    if (userMarker && defaultMarkerImageRef.current) {
+                      userMarker.setImage(defaultMarkerImageRef.current);
+                    }
+                    return;
+                  }
+
+                  if (scannedCode) {
+                    // console.log("handleRoute 호출됨!");
+                    navigator.geolocation.getCurrentPosition((pos) => {
+                      const { latitude, longitude } = pos.coords;
+                      const amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
+                      //handleDepart(selectedBin.id, amount, latitude, longitude); // 출발 API 호출
+                    });
+                    setScanning(false); // ✅ 바코드 스캐너 닫기
+                    // ✅ 캐릭터 마커 이미지로 변경
+                    setIsOnTheWay(true); // 상태를 '가는 중'으로 변경
+
+                    //마커를 캐릭터로 변경
+                    if (userMarker && markerImageRef.current) {
+                      userMarker.setImage(markerImageRef.current);
+                    }
+                    //handleRoute(); // ✅ 경로 표시만
+                    setSelectedBin(null);  // ✅ 팝업 닫기
+                  } else {
+                    setScanning(true); // ✅ 바코드 스캐너 열기
+                  }
+                }}
+                className={`mt-4 w-full ${rewarded ? "bg-emerald-700 text-white" :
+                  isScanned && insideCircle ? "bg-blue-500 text-white" : isScanned ? "bg-green-500 text-white" : "bg-green-200 text-black"
+                  } py-2 text-sm`}
+              >
+                {rewarded ? `${getPointFromDistance(liveDistance || selectedBin?.distance)}p 적립!`
+                  : isScanned && insideCircle ? "도착하기" : isOnTheWay ? "종이팩 버리러 가는 중 ..." : isScanned ? "스캔한 종이팩 버리러 가기" : "종이팩 버리러 가기"}
+              </button>
+            )}
+            {scanning && (
+              <BarcodeScanner
+                onDetected={(code) => {
+                  // console.log("스캔된 바코드:", code);
+                  // console.log("setScanning(false) 호출됨!");
+                  setScanning(false);
+                  setScannedCode(code);
+                  setScannedMap((prev) => ({
+                    ...prev,
+                    [selectedBin.id]: true, // ✅ 해당 수거함만 스캔 완료 표시
+                  }));
+                  setLastScannedBin(selectedBin); // ✅ 마지막 스캔된 수거함 저장
+                }}
+                onClose={() => setScanning(false)}
+              />
+            )}
           </div>
-        </div>
-      )}</>
+
+        )}
+      </div>
+    </>
   );
 }
 

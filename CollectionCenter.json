@@ -3,28 +3,375 @@
         "model": "api.CollectionCenter",
         "pk": 1,
         "fields": {
-            "centerId": 223,
-            "name": "1번센터",
-            "latitude": 127.0001,
-            "longitude": 38.001,
-            "address": "1번센터 주소",
-            "opening_hour": "10:30",
-            "closing_hour": "18:30",
-            "phone": "01011112222"
+            "center_id": 1,
+            "name": "어바웃엠협동조합",
+            "latitude": 37.568,
+            "longitude": 127.043,
+            "address": "주소 미정",
+            "opening_hour": "정보 없음",
+            "closing_hour": "정보 없음",
+            "phone": "01000000000",
+            "imageUrl": "/media/character.png"
         }
     },
     {
         "model": "api.CollectionCenter",
         "pk": 2,
         "fields": {
-            "centerId": 224,
-            "name": "2번센터",
-            "latitude": 127.0002,
-            "longitude": 38.002,
-            "address": "2번센터 주소",
+            "center_id": 2,
+            "name": "공방 꽃피는삼월에",
+            "latitude": 37.574,
+            "longitude": 127.048,
+            "address": "주소 미정",
+            "opening_hour": "정보 없음",
+            "closing_hour": "정보 없음",
+            "phone": "01000000000",
+            "imageUrl": "/media/Gongbang.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 3,
+        "fields": {
+            "center_id": 3,
+            "name": "한살림 금호매장",
+            "latitude": 37.551,
+            "longitude": 127.026,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 4,
+        "fields": {
+            "center_id": 4,
+            "name": "사근동 주민센터_IoT 스마트 종이팩 분리배출함",
+            "latitude": 37.561,
+            "longitude": 127.045,
+            "address": "주소 미정",
+            "opening_hour": "24시간",
+            "closing_hour": "24시간",
+            "phone": "01000000000",
+            "imageUrl": "/media/character.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 5,
+        "fields": {
+            "center_id": 5,
+            "name": "행당제1동주민센터_IoT 스마트 종이팩 분리배출함",
+            "latitude": 37.558,
+            "longitude": 127.036,
+            "address": "주소 미정",
+            "opening_hour": "24시간",
+            "closing_hour": "24시간",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hangdang1.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 6,
+        "fields": {
+            "center_id": 6,
+            "name": "왕십리제2동주민센터_IoT 스마트 종이팩 분리배출함",
+            "latitude": 37.561,
+            "longitude": 127.031,
+            "address": "주소 미정",
+            "opening_hour": "24시간",
+            "closing_hour": "24시간",
+            "phone": "01000000000",
+            "imageUrl": "/media/Wang2.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 7,
+        "fields": {
+            "center_id": 7,
+            "name": "행당제2동주민센터_IoT 스마트 종이팩 분리배출함",
+            "latitude": 37.558,
+            "longitude": 127.029,
+            "address": "주소 미정",
+            "opening_hour": "24시간",
+            "closing_hour": "24시간",
+            "phone": "01000000000",
+            "imageUrl": "/media/Gongbang.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 8,
+        "fields": {
+            "center_id": 8,
+            "name": "성동구청_IoT 스마트 종이팩 분리배출함",
+            "latitude": 37.562,
+            "longitude": 127.036,
+            "address": "주소 미정",
+            "opening_hour": "24시간",
+            "closing_hour": "24시간",
+            "phone": "01000000000",
+            "imageUrl": "/media/Seongdong.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 9,
+        "fields": {
+            "center_id": 9,
+            "name": "성동구립도서관_IoT 스마트 종이팩 분리배출함",
+            "latitude": 37.559,
+            "longitude": 127.034,
+            "address": "주소 미정",
+            "opening_hour": "월요일, 공휴일: 9시 / 화~일: 7시",
+            "closing_hour": "월,공휴일: 18시 / 화~일: 22시",
+            "phone": "01000000000",
+            "imageUrl": "/media/SeongdongLibrary.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 10,
+        "fields": {
+            "center_id": 10,
+            "name": "한양대학교 노천극장",
+            "latitude": 37.555,
+            "longitude": 127.045,
+            "address": "한양대학교 노천극장",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
-            "phone": "01022222222"
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 11,
+        "fields": {
+            "center_id": 11,
+            "name": "한양대학교 본관",
+            "latitude": 37.557,
+            "longitude": 127.045,
+            "address": "한양대학교 본관",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 12,
+        "fields": {
+            "center_id": 12,
+            "name": "GS송도웰카점",
+            "latitude": 37.378,
+            "longitude": 126.649,
+            "address": "GS송도웰카점",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 13,
+        "fields": {
+            "center_id": 13,
+            "name": "여의도동 주민센터(동사무소)",
+            "latitude": 37.519797,
+            "longitude": 126.922893,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 14,
+        "fields": {
+            "center_id": 14,
+            "name": "미래에셋증권 여의도빌딩",
+            "latitude": 37.5335,
+            "longitude": 126.9267,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 15,
+        "fields": {
+            "center_id": 15,
+            "name": "신당역",
+            "latitude": 37.565972,
+            "longitude": 127.01782,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 16,
+        "fields": {
+            "center_id": 16,
+            "name": "신당동 주민센터",
+            "latitude": 37.56432,
+            "longitude": 127.0123,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 17,
+        "fields": {
+            "center_id": 17,
+            "name": "동묘앞 역",
+            "latitude": 37.5735,
+            "longitude": 127.0147,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 18,
+        "fields": {
+            "center_id": 18,
+            "name": "흥인지문 공원",
+            "latitude": 37.571796,
+            "longitude": 127.008803,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 19,
+        "fields": {
+            "center_id": 19,
+            "name": "솜길의료센터",
+            "latitude": 37.182674,
+            "longitude": 127.124555,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 20,
+        "fields": {
+            "center_id": 20,
+            "name": "투썸플레이스 화성동탄목동점",
+            "latitude": 37.183174,
+            "longitude": 127.123020,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 21,
+        "fields": {
+            "center_id": 21,
+            "name": "천주교 당고개 순교성지",
+            "latitude": 37.535787,
+            "longitude": 126.966981,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 22,
+        "fields": {
+            "center_id": 22,
+            "name": "나인원 한남",
+            "latitude": 37.535786,
+            "longitude": 127.004913,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 23,
+        "fields": {
+            "center_id": 23,
+            "name": "동탄 목동초등학교",
+            "latitude": 37.189618,
+            "longitude": 127.124516,
+            "address": "주소 미정",
+            "opening_hour": "오전 10시",
+            "closing_hour": "평일 20시 주말 17시",
+            "phone": "01000000000",
+            "imageUrl": "/media/Hansanlim.png"
+        }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 24,
+        "fields": {
+            "center_id": 24,
+            "name": "해송초등학교",
+            "latitude": 37.380,
+            "longitude": 126.648,
+            "address": "해송초등학교",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
+    },
+        {
+        "model": "api.CollectionCenter",
+        "pk": 25,
+        "fields": {
+            "center_id": 25,
+            "name": "스타벅스 타임스페이스점",
+            "latitude": 37.384,
+            "longitude": 126.644,
+            "address": "스타벅스 타임스페이스점",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
         }
     }
 ]
