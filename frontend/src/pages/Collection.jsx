@@ -7,18 +7,18 @@ import React, { useEffect } from 'react';
 
 const dummyData = [
   {
-    date: '2025. 05. 01.',
-    location: '한양대학교 대운동장',
-    point: 500,
-    distance: '2km',
+    date: '2025. 06. 01.',
+    location: '공방 꽃피는 삼월에',
+    point: 280,
+    distance: '2.8km',
     image: '/Gongbang.png',
   },
   {
-    date: '2025. 05. 02.',
-    location: '서울숲 앞 수거함',
-    point: 300,
-    distance: '1.5km',
-    image: '/seoul_forest.png',
+    date: '2025. 05. 26.',
+    location: '성동구청_IoT스마트 종이팩 분리배출함',
+    point: 120,
+    distance: '0.12km',
+    image: '/Seongdong.png',
   },
 ];
 

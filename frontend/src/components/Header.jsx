@@ -13,8 +13,8 @@ function Header() {
 
   useEffect(() => {
     // 로그인 상태 및 유저 정보 확인 API
-    fetch("https://backend-do9t.onrender.com/api/session-check/", {
-    //fetch("http://localhost:8000/api/session-check/", {
+    //fetch("https://backend-do9t.onrender.com/api/session-check/", {
+    fetch("http://localhost:8000/api/session-check/", {
       method: "GET",
       credentials: "include"
     })

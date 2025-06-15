@@ -169,21 +169,6 @@
         "pk": 12,
         "fields": {
             "center_id": 12,
-            "name": "GS송도웰카점",
-            "latitude": 37.378,
-            "longitude": 126.649,
-            "address": "GS송도웰카점",
-            "opening_hour": "10:30",
-            "closing_hour": "18:30",
-            "phone": "01044444444",
-            "imageUrl": "/media/character.png"
-        }
-    },
-    {
-        "model": "api.CollectionCenter",
-        "pk": 13,
-        "fields": {
-            "center_id": 13,
             "name": "여의도동 주민센터(동사무소)",
             "latitude": 37.519797,
             "longitude": 126.922893,
@@ -196,39 +181,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 14,
+        "pk": 13,
         "fields": {
-            "center_id": 14,
-            "name": "미래에셋증권 여의도빌딩",
-            "latitude": 37.5335,
-            "longitude": 126.9267,
-            "address": "주소 미정",
-            "opening_hour": "오전 10시",
-            "closing_hour": "평일 20시 주말 17시",
-            "phone": "01000000000",
-            "imageUrl": "/media/Hansanlim.png"
-        }
-    },
-    {
-        "model": "api.CollectionCenter",
-        "pk": 15,
-        "fields": {
-            "center_id": 15,
-            "name": "신당역",
-            "latitude": 37.565972,
-            "longitude": 127.01782,
-            "address": "주소 미정",
-            "opening_hour": "오전 10시",
-            "closing_hour": "평일 20시 주말 17시",
-            "phone": "01000000000",
-            "imageUrl": "/media/Hansanlim.png"
-        }
-    },
-    {
-        "model": "api.CollectionCenter",
-        "pk": 16,
-        "fields": {
-            "center_id": 16,
+            "center_id": 13,
             "name": "신당동 주민센터",
             "latitude": 37.56432,
             "longitude": 127.0123,
@@ -241,9 +196,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 17,
+        "pk": 14,
         "fields": {
-            "center_id": 17,
+            "center_id": 14,
             "name": "동묘앞 역",
             "latitude": 37.5735,
             "longitude": 127.0147,
@@ -256,9 +211,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 18,
+        "pk": 15,
         "fields": {
-            "center_id": 18,
+            "center_id": 15,
             "name": "흥인지문 공원",
             "latitude": 37.571796,
             "longitude": 127.008803,
@@ -271,9 +226,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 19,
+        "pk": 16,
         "fields": {
-            "center_id": 19,
+            "center_id": 16,
             "name": "솜길의료센터",
             "latitude": 37.182674,
             "longitude": 127.124555,
@@ -286,9 +241,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 20,
+        "pk": 17,
         "fields": {
-            "center_id": 20,
+            "center_id": 17,
             "name": "투썸플레이스 화성동탄목동점",
             "latitude": 37.183174,
             "longitude": 127.123020,
@@ -301,9 +256,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 21,
+        "pk": 18,
         "fields": {
-            "center_id": 21,
+            "center_id": 18,
             "name": "천주교 당고개 순교성지",
             "latitude": 37.535787,
             "longitude": 126.966981,
@@ -316,9 +271,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 22,
+        "pk": 19,
         "fields": {
-            "center_id": 22,
+            "center_id": 19,
             "name": "나인원 한남",
             "latitude": 37.535786,
             "longitude": 127.004913,
@@ -331,9 +286,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 23,
+        "pk": 20,
         "fields": {
-            "center_id": 23,
+            "center_id": 20,
             "name": "동탄 목동초등학교",
             "latitude": 37.189618,
             "longitude": 127.124516,
@@ -346,42 +301,12 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 24,
+        "pk": 21,
         "fields": {
-            "center_id": 24,
-            "name": "해송초등학교",
-            "latitude": 37.380,
-            "longitude": 126.648,
-            "address": "해송초등학교",
-            "opening_hour": "10:30",
-            "closing_hour": "18:30",
-            "phone": "01044444444",
-            "imageUrl": "/media/character.png"
-        }
-    },
-    {
-        "model": "api.CollectionCenter",
-        "pk": 25,
-        "fields": {
-            "center_id": 25,
+            "center_id": 21,
             "name": "스타벅스 타임스페이스점",
             "latitude": 37.384,
             "longitude": 126.644,
-            "address": "스타벅스 타임스페이스점",
-            "opening_hour": "10:30",
-            "closing_hour": "18:30",
-            "phone": "01044444444",
-            "imageUrl": "/media/character.png"
-        }
-    },
-    {
-        "model": "api.CollectionCenter",
-        "pk": 26,
-        "fields": {
-            "center_id": 26,
-            "name": "메종드보네르",
-            "latitude": 36.358333,
-            "longitude": 127.387339,
             "address": "스타벅스 타임스페이스점",
             "opening_hour": "10:30",
             "closing_hour": "18:30",
