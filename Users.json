@@ -24,5 +24,19 @@
             "total_carbon_reduction": 1200,
             "points": "5200"
         }
+    },
+    {
+        "model": "api.Users",
+        "pk": "test@hanyang.ac.kr",
+        "fields": {
+            "id": "test@hanyang.ac.kr",
+            "username": "test",
+            "password": "1234",
+            "phone": "01011112222",
+            "email": "test@hanyang.ac.kr",
+            "total_collect_amount": 510,
+            "total_carbon_reduction": 1200,
+            "points": "5200"
+        }
     }
 ]
