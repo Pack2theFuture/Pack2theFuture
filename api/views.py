@@ -234,7 +234,7 @@ def session_check_view(request):
         return JsonResponse({"is_authenticated": True, "user_id": user_id})
     else:
         # return JsonResponse({"is_authenticated": False})
-        return JsonResponse({"is_authenticated": True, "user_id": "test"}) 
+        return JsonResponse({"is_authenticated": True, "user_id": "test@hanyang.ac.kr"}) 
 
 
 
