@@ -109,10 +109,9 @@ export default function SlideMenu({ isOpen, onClose, userInfo }) {
         />
         <MenuItem
           label="Membership"
-          value="Guide"
+          value="멤버십 가이드"
           onClick={() => {
-            alert("준비 중인 서비스입니다.");
-            //navigate("/membership");
+            navigate("/membership");
             //onClose();
           }}
         />

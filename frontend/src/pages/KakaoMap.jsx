@@ -157,6 +157,7 @@ function KakaoMap() {
           image: markerImage,
           map: mapInstance,
         });
+        //marker.setAnimation(window.kakao.maps.Animation.BOUNCE);
         setUserMarker(marker);
 
         // 1. 서버에 현재 위치 POST 요청해서 bins 데이터 받아오기
@@ -479,6 +480,7 @@ function KakaoMap() {
                     //마커를 캐릭터로 변경
                     if (userMarker && markerImageRef.current) {
                       userMarker.setImage(markerImageRef.current);
+                      //userMarker.setAnimation(window.kakao.maps.Animation.BOUNCE);
                     }
                     //handleRoute(); // ✅ 경로 표시만
                     setSelectedBin(null);  // ✅ 팝업 닫기

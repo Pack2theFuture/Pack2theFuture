@@ -9,6 +9,8 @@ import Sol from './pages/sol';
 import Mypage from './pages/Mypage';
 import Guide from './pages/Guide';
 import Collection from './pages/Collection';
+import Brand from './pages/Brand';
+import Membership from './pages/Membership';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/guide" element={<Guide />}/>
         <Route path="/collection" element={<Collection />} />
+        <Route path="/brand" element={<Brand/>}/>
+        <Route path="/membership" element={<Membership/>}/>
       </Routes>
     </BrowserRouter>
   )

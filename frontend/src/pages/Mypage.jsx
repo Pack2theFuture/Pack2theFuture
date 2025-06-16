@@ -44,11 +44,11 @@ const EcoTrackingApp = () => {
 
 
 
-    const getTreeEmoji = () => {
-        if (!userData) return '🌱';
-        if (userData.total_collect_amount >= 100) return '🌳';
-        if (userData.total_collect_amount >= 50) return '🌲';
-        return '🌱';
+    const getTreeContent = () => {
+        if (!userData) return {type : 'emoji', content : '🌱'};
+        if (userData.total_collect_amount >= 100) return {type: 'image', content : '/Greenkeeper.png'};
+        if (userData.total_collect_amount >= 50) return {type : 'emoji', content:'🌲'};
+        return { type: 'emoji', content: '🌱' };
     };
 
     const handleTreeClick = () => {
@@ -99,22 +99,31 @@ const EcoTrackingApp = () => {
                     </div>
 
                     {/* 나무 애니메이션 */}
-                    <div className="bg-green-100 p-8 text-center my-2 w-full">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-2">푸른숲 나무</h2>
-                        <p className="text-sm text-gray-600 mb-8">수거해 주신 쓰레기 순환 나무가 자라요</p>
+                    <div className="bg-[#acc5a2] p-8 text-center my-2 w-full">
+                        <h2 className="text-2xl font-bold text-gray-800 mb-2">Green keeper</h2>
+                        <p className="text-m text-gray-600 mb-8">수거해 주신 쓰레기 순환 나무가 자라요</p>
                         <div className="flex justify-center mb-8">
                             <div className={`text-6xl cursor-pointer hover:scale-110 transition-transform ${treeAnimation}`} style={{ animation: 'sway 3s ease-in-out infinite' }}>
-                                {getTreeEmoji()}
+                                {
+                                    (()=>{
+                                        const tree = getTreeContent();
+                                        if (tree.type ==='emoji'){
+                                            return tree.content;
+                                        } else {
+                                            return <img src={tree.content} alt="Tree" className="w-48 h-48 mx-auto"/>
+                                        }
+                                    })()
+                                }
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-5 mb-5">
                             <div className="text-center">
-                                <div className="text-sm text-gray-600 mb-1">총 적립 수거량</div>
+                                <div className="text-m font-semibold text-gray-700 mb-1">총 적립 수거량</div>
                                 <div className="text-lg font-semibold text-gray-800">{(userData.total_collect_amount*0.3).toFixed(1)} kg</div>
                             </div>
                             <div className="text-center">
-                                <div className="text-sm text-gray-600 mb-1">총 탄소 절감량</div>
+                                <div className="text-m font-semibold text-gray-700 mb-1">총 탄소 절감량</div>
                                 <div className="text-lg font-semibold text-gray-800">{(userData.total_carbon_reduction*0.26).toFixed(2)} kg</div>
                             </div>
                         </div>
@@ -181,7 +190,7 @@ const EcoTrackingApp = () => {
             <style jsx="true">{`
                 @keyframes sway {
                     0%, 100% { transform: rotate(0deg); }
-                    50% { transform: rotate(2deg); }
+                    50% { transform: rotate(5deg); }
                 }
             `}</style>
         </div>
