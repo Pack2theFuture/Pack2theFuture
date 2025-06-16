@@ -139,36 +139,6 @@
         "pk": 10,
         "fields": {
             "center_id": 10,
-            "name": "한양대학교 노천극장",
-            "latitude": 37.555,
-            "longitude": 127.045,
-            "address": "한양대학교 노천극장",
-            "opening_hour": "10:30",
-            "closing_hour": "18:30",
-            "phone": "01044444444",
-            "imageUrl": "/media/character.png"
-        }
-    },
-    {
-        "model": "api.CollectionCenter",
-        "pk": 11,
-        "fields": {
-            "center_id": 11,
-            "name": "한양대학교 본관",
-            "latitude": 37.557,
-            "longitude": 127.045,
-            "address": "한양대학교 본관",
-            "opening_hour": "10:30",
-            "closing_hour": "18:30",
-            "phone": "01044444444",
-            "imageUrl": "/media/character.png"
-        }
-    },
-    {
-        "model": "api.CollectionCenter",
-        "pk": 12,
-        "fields": {
-            "center_id": 12,
             "name": "여의도동 주민센터(동사무소)",
             "latitude": 37.519797,
             "longitude": 126.922893,
@@ -181,9 +151,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 13,
+        "pk": 11,
         "fields": {
-            "center_id": 13,
+            "center_id": 11,
             "name": "신당동 주민센터",
             "latitude": 37.56432,
             "longitude": 127.0123,
@@ -196,9 +166,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 14,
+        "pk": 12,
         "fields": {
-            "center_id": 14,
+            "center_id": 12,
             "name": "동묘앞 역",
             "latitude": 37.5735,
             "longitude": 127.0147,
@@ -211,9 +181,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 15,
+        "pk": 13,
         "fields": {
-            "center_id": 15,
+            "center_id": 13,
             "name": "흥인지문 공원",
             "latitude": 37.571796,
             "longitude": 127.008803,
@@ -226,9 +196,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 16,
+        "pk": 14,
         "fields": {
-            "center_id": 16,
+            "center_id": 14,
             "name": "솜길의료센터",
             "latitude": 37.182674,
             "longitude": 127.124555,
@@ -241,9 +211,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 17,
+        "pk": 15,
         "fields": {
-            "center_id": 17,
+            "center_id": 15,
             "name": "투썸플레이스 화성동탄목동점",
             "latitude": 37.183174,
             "longitude": 127.123020,
@@ -256,9 +226,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 18,
+        "pk": 16,
         "fields": {
-            "center_id": 18,
+            "center_id": 16,
             "name": "천주교 당고개 순교성지",
             "latitude": 37.535787,
             "longitude": 126.966981,
@@ -271,9 +241,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 19,
+        "pk": 17,
         "fields": {
-            "center_id": 19,
+            "center_id": 17,
             "name": "나인원 한남",
             "latitude": 37.535786,
             "longitude": 127.004913,
@@ -286,9 +256,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 20,
+        "pk": 18,
         "fields": {
-            "center_id": 20,
+            "center_id": 18,
             "name": "동탄 목동초등학교",
             "latitude": 37.189618,
             "longitude": 127.124516,
@@ -301,9 +271,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 21,
+        "pk": 19,
         "fields": {
-            "center_id": 21,
+            "center_id": 19,
             "name": "스타벅스 타임스페이스점",
             "latitude": 37.384,
             "longitude": 126.644,
@@ -316,9 +286,9 @@
     },
     {
         "model": "api.CollectionCenter",
-        "pk": 21,
+        "pk": 20,
         "fields": {
-            "center_id": 21,
+            "center_id": 20,
             "name": "한양대학교 정몽구 미래자동차연구센터",
             "latitude": 37.556316,
             "longitude": 127.045476,
