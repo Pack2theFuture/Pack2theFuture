@@ -313,5 +313,20 @@
             "phone": "01044444444",
             "imageUrl": "/media/character.png"
         }
+    },
+    {
+        "model": "api.CollectionCenter",
+        "pk": 21,
+        "fields": {
+            "center_id": 21,
+            "name": "한양대학교 정몽구 미래자동차연구센터",
+            "latitude": 37.556316,
+            "longitude": 127.045476,
+            "address": "한양대학교 정몽구 미래자동차연구센터",
+            "opening_hour": "10:30",
+            "closing_hour": "18:30",
+            "phone": "01044444444",
+            "imageUrl": "/media/character.png"
+        }
     }
 ]
