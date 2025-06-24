@@ -9,14 +9,10 @@ export default function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-  
-    // alert('로그인 시도');
-    // localStorage.setItem('user', JSON.stringify({ email, password }));
-    // navigate('/home');
+
 
     try {
         const res = await fetch("https://backend-do9t.onrender.com/api/login/", {
-        //const res = await fetch("http://localhost:8000/api/login/", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -31,7 +27,6 @@ export default function Login() {
         alert(data.message);
         localStorage.setItem("user_id", data.user_id);
         navigate("/home");
-        // navigate("/mypage");
       } else {
         alert(data.message);
       }
