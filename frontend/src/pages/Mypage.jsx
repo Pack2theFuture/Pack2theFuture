@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-//import GuideHeader from './Guideheader';
 
 const EcoTrackingApp = () => {
     const navigate = useNavigate();
@@ -9,7 +8,6 @@ const EcoTrackingApp = () => {
 
     useEffect(() => {
             fetch('https://backend-do9t.onrender.com/api/user-info/', {
-            //fetch('http://localhost:8000/api/user-info/', {
             method: 'GET',
             credentials: 'include' // 세션 쿠키 포함
         })
@@ -30,18 +28,6 @@ const EcoTrackingApp = () => {
                 console.log('Error:', error);
             });
     }, []);
-
-    // login 안될 때 임시 대체 코드
-    // useEffect(() => {
-    //     const dummyUser = {
-    //         id: "홍길동",
-    //         total_collect_amount: 68.5,
-    //         total_carbon_reduction: 23.7,
-    //         points: 1280,
-    //     };
-    //     setUserData(dummyUser);
-    // }, []);
-
 
 
     const getTreeContent = () => {
@@ -140,7 +126,6 @@ const EcoTrackingApp = () => {
                         </div>
                         <div className="flex justify-between items-center">
                             <div className="flex items-center gap-3">
-                                {/* <span className="text-gray-800">포인트 쓰러 가기</span> */}
                             </div>
                             <a
                                 href="https://refeely.com/"

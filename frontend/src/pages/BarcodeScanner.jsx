@@ -10,7 +10,7 @@ function BarcodeScanner({ onDetected, onClose }) {
     const codeReader = new BrowserMultiFormatReader();
     codeReaderRef.current = codeReader;
 
-    // ✅ 한 번만 인식하면 자동 종료됨
+    // 한 번만 인식하면 자동 종료됨
     codeReader.decodeOnceFromVideoDevice(undefined, videoRef.current)
       .then((result) => {
         const text = result.getText();

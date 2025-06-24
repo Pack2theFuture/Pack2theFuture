@@ -9,16 +9,6 @@ export default function Footer() {
         <p className="text-center text-xs mt-1 mb-5 text-gray-600">© PACK TO THE FUTURE</p>
       </div>
 
-      {/* <div className="mb-4 flex justify-center items-center gap-2">
-        <p>CONTACT |</p>
-        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">
-          <img src="/instagram_icon.png" alt="Instagram" className="w-5 h-5" />
-        </a>
-        <a href="mailto:your@email.com">
-          <img src="/gmail_icon.png" alt="Gmail" className="w-5 h-5" />
-        </a>
-      </div> */}
-
       <div className="flex justify-center gap-8 text-xs text-gray-700 mt-10">
         <Link to="/terms">이용약관</Link>
         <Link to="/privacy">개인정보처리방침</Link>

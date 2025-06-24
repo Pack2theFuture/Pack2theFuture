@@ -14,3 +14,8 @@ build/
 # .env
 .env.local
 venv/db.sqlite3
+
+*.env
+
+
+frontend/src/trashpages/

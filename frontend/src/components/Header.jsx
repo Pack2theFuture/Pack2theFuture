@@ -2,7 +2,6 @@ import menu from "../assets/menu.png";
 import packText from "../assets/pack_text.png";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-// import { useState } from "react";
 import SlideMenu from "../components/SlideMenu";
 import { useEffect, useState } from "react";
 
@@ -12,9 +11,7 @@ function Header() {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
-    // 로그인 상태 및 유저 정보 확인 API
     fetch("https://backend-do9t.onrender.com/api/session-check/", {
-    //fetch("http://localhost:8000/api/session-check/", {
       method: "GET",
       credentials: "include"
     })

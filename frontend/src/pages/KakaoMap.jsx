@@ -1,6 +1,5 @@
 import { useEffect, useState, useRef } from "react";
 import BarcodeScanner from "./BarcodeScanner";
-//import Footer from "../components/Footer";
 
 function KakaoMap() {
   const [userInfo, setUserInfo] = useState(null);
@@ -47,30 +46,8 @@ function KakaoMap() {
     return R * c;
   }
 
-  // 출발 API 호출 함수
-  // const handleDepart = async (centerId, collection_amount, start_latitude, start_longitude) => {
-  //   try {
-  //     //const response = await fetch("http://localhost:8000/api/depart/", {
-  //     const response = await fetch("https://backend-do9t.onrender.com/api/depart/", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify({
-  //         center_id: centerId,
-  //         collection_amount,
-  //         start_latitude,
-  //         start_longitute: start_longitude,  // 백엔드 오타 맞추기
-  //       }),
-  //     });
-  //     const data = await response.json();
-  //     console.log("🚀 출발 요청 완료:", data);
-  //   } catch (error) {
-  //     console.error("🚨 출발 요청 실패:", error);
-  //   }
-  // };
-
   useEffect(() => {
     fetch("https://backend-do9t.onrender.com/api/user-info/", {
-    //fetch("http://localhost:8000/api/user-info/", {  
       method: "GET",
       credentials: "include",
     })
@@ -81,16 +58,14 @@ function KakaoMap() {
 
   // 도착 API 호출 함수
   const handleArrive = async (centerId, user_latitude, user_longitude) => {
-    const collection_amount = 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
+    const collection_amount = 1;
     const reward_point = getPointFromDistance(liveDistance || selectedBin?.distance)
     try {
       fetch("https://backend-do9t.onrender.com/api/session-check/", {
-      //fetch("http://localhost:8000/api/session-check/", {
         credentials: "include"
       }).then(res => res.json()).then(console.log);
 
       const response = await fetch("https://backend-do9t.onrender.com/api/arrive/", {
-      //const response = await fetch("http://localhost:8000/api/arrive/", {
         method: "POST",
         credentials: 'include',
         headers: { "Content-Type": "application/json" },
@@ -157,7 +132,6 @@ function KakaoMap() {
           image: markerImage,
           map: mapInstance,
         });
-        //marker.setAnimation(window.kakao.maps.Animation.BOUNCE);
         setUserMarker(marker);
 
         // 1. 서버에 현재 위치 POST 요청해서 bins 데이터 받아오기
@@ -166,7 +140,6 @@ function KakaoMap() {
           longitude: lng,
         };
           fetch("https://backend-do9t.onrender.com/api/location/", {
-          //fetch("http://localhost:8000/api/location/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -175,10 +148,6 @@ function KakaoMap() {
         })
           .then((res) => res.json())
           .then((data) => {
-            // console.log("✅ 전체 응답 객체:", data);
-            // console.log("✅ data.data:", data.data);
-            // console.log("✅ data.data[0]:", data.data?.[0]);
-            // console.log("✅ data.data[0] JSON:", JSON.stringify(data.data?.[0], null, 2));
             const nearbyBins = data.data.filter((bin) => {
               const distance = getDistanceFromLatLonInKm(lat, lng, bin.latitude, bin.longitude);
               return distance <= 2; // 2km 이하만 통과
@@ -197,7 +166,6 @@ function KakaoMap() {
               }
             });
             setBins(updatedBins);
-            // console.log("✅ updatedBins:", updatedBins);
 
             updatedBins.forEach(bin => {
               const binPosition = new window.kakao.maps.LatLng(bin.lat, bin.lng);
@@ -246,7 +214,6 @@ function KakaoMap() {
               });
 
               window.kakao.maps.event.addListener(trashMarker, "mouseover", () => {
-                // console.log("mouseover", bin);
                 infoWindow.open(mapInstance, trashMarker);
               });
 
@@ -272,7 +239,7 @@ function KakaoMap() {
             });
           })
           .catch(error => {
-            // console.error("🚫 수거함 데이터 요청 실패:", error);
+            // console.error("수거함 데이터 요청 실패:", error);
           });
       });
     } else {
@@ -297,16 +264,15 @@ function KakaoMap() {
             },
           }
         );
-        //** 요청실패 체크 로직 추가*/
+        // 요청실패 체크 로직
         if (!response.ok) {
           const text = await response.text();
-          // console.error("🚫 경로 API 요청 실패:", response.status, text);
+          // console.error("경로 API 요청 실패:", response.status, text);
           return;
         }
 
         const data = await response.json();
         if (data.routes && data.routes.length > 0) {
-          // console.log("🔍 sections", data.routes[0].sections);
           const path = [];
           data.routes[0].sections.forEach(section => {
             section.roads.forEach(road => {
@@ -346,12 +312,12 @@ function KakaoMap() {
       if (watchIdRef.current) {
         navigator.geolocation.clearWatch(watchIdRef.current);
       }
-      // console.log("🛰 watchPosition 등록 조건:", map, userMarker, selectedBin);
+      // console.log("watchPosition 등록 조건:", map, userMarker, selectedBin);
       watchIdRef.current = navigator.geolocation.watchPosition(
         (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          // console.log("📍 위치 업데이트 감지:", lat, lng); // ✅ 로그 위치
+          // console.log("위치 업데이트 감지:", lat, lng);
 
           const newPosition = new window.kakao.maps.LatLng(lat, lng);
           if (userMarker) {
@@ -367,18 +333,18 @@ function KakaoMap() {
             // console.log("📏 현재 수거함까지 거리 (m):", dist * 1000);
             setInsideCircle(dist * 1000 <= 100);
 
-            setLiveDistance(dist.toFixed(2) + " km"); // ✅ 실시간 거리 업데이
+            setLiveDistance(dist.toFixed(2) + " km"); //실시간 거리 업데이
             if (dist * 1000 <= 100) {
-              // console.log("✅ 반경 안에 있음!");
+              // console.log("반경 안에 있음!");
               setInsideCircle(true);
             } else {
-              // console.log("❌ 반경 밖에 있음!");
+              // console.log("반경 밖에 있음!");
               setInsideCircle(false);
             }
           }
         },
         (error) => {
-          // console.error("🚫 위치 추적 에러:", error);
+          // console.error("위치 추적 에러:", error);
         },
         {
           enableHighAccuracy: false,
@@ -396,7 +362,7 @@ function KakaoMap() {
       scannedMap[lastScannedBin.id] === true &&
       insideCircle
     ) {
-      // console.log("✅ 반경 진입으로 모달 다시 열림!");
+      // console.log("반경 진입으로 모달 다시 열림!");
       setSelectedBin(lastScannedBin);
     }
   }, [insideCircle, selectedBin, lastScannedBin, scannedMap]);
@@ -425,16 +391,13 @@ function KakaoMap() {
               </button>
             </div>
             <div className="px-4 pt-2 flex items-start gap-4">
-              {/* 왼쪽 : 텍스트 정보 */}
               <div className="flex-1">
-                {/* <p className="text-sm text-gray-500">서울특별시 성동구</p> */}
                 <p className="mt-2">운영시간: {selectedBin.opening_hour || "-"} ~ {selectedBin.closing_hour || "-"}</p>
                 <p>현재 위치로부터의 거리 : {liveDistance || selectedBin.distance || "-"}</p>
                 <p>예상지급포인트: {selectedBin.point || "-"}</p>
               </div>
               <img
                 src={`https://backend-do9t.onrender.com${selectedBin.imageUrl}` || "/default.jpg"}
-                //src={`http://localhost:8000${selectedBin.imageUrl}` || "/default.jpg"}
                 alt="장소 이미지"
                 className="w-32 h-24 rounded-lg object-cover"
               />
@@ -442,24 +405,22 @@ function KakaoMap() {
             {!scanning && (
               <button
                 onClick={() => {
-                  // console.log("버튼 클릭됨", { scannedCode, selectedBin });
-
                   if (isScanned && insideCircle && !rewarded) {
                     navigator.geolocation.getCurrentPosition((pos) => {
                       const { latitude, longitude } = pos.coords;
                       handleArrive(selectedBin.id, latitude, longitude); // 도착 API 호출
                     });
-                    // ✅ 오버레이 띄우기
+                    // 오버레이 띄우기
                     setShowOverlay(true);
                     setTimeout(() => setShowOverlay(false), 3000); // 3초 후 숨김
 
-                    // ✅ 도착 처리
+                    // 도착 처리
                     setRewarded(true);
                     setIsOnTheWay(false);
                     setSelectedBin(null);
                     setScannedCode(null);
 
-                    // ✅ 마커 원상복구
+                    // 마커 원상복구
                     if (userMarker && defaultMarkerImageRef.current) {
                       userMarker.setImage(defaultMarkerImageRef.current);
                     }
@@ -473,19 +434,18 @@ function KakaoMap() {
                       const amount = parseInt(scannedCode) || 1; // 예시: 종이팩 장수 (바코드 or 수동입력)
                       //handleDepart(selectedBin.id, amount, latitude, longitude); // 출발 API 호출
                     });
-                    setScanning(false); // ✅ 바코드 스캐너 닫기
-                    // ✅ 캐릭터 마커 이미지로 변경
+                    setScanning(false); // 바코드 스캐너 닫기
+                    // 캐릭터 마커 이미지로 변경
                     setIsOnTheWay(true); // 상태를 '가는 중'으로 변경
 
                     //마커를 캐릭터로 변경
                     if (userMarker && markerImageRef.current) {
                       userMarker.setImage(markerImageRef.current);
-                      //userMarker.setAnimation(window.kakao.maps.Animation.BOUNCE);
                     }
-                    //handleRoute(); // ✅ 경로 표시만
-                    setSelectedBin(null);  // ✅ 팝업 닫기
+                    //handleRoute(); // 경로 표시만
+                    setSelectedBin(null);  // 팝업 닫기
                   } else {
-                    setScanning(true); // ✅ 바코드 스캐너 열기
+                    setScanning(true); // 바코드 스캐너 열기
                   }
                 }}
                 className={`mt-4 w-full ${rewarded ? "bg-emerald-700 text-white" :
@@ -505,9 +465,9 @@ function KakaoMap() {
                   setScannedCode(code);
                   setScannedMap((prev) => ({
                     ...prev,
-                    [selectedBin.id]: true, // ✅ 해당 수거함만 스캔 완료 표시
+                    [selectedBin.id]: true,
                   }));
-                  setLastScannedBin(selectedBin); // ✅ 마지막 스캔된 수거함 저장
+                  setLastScannedBin(selectedBin);
                 }}
                 onClose={() => setScanning(false)}
               />

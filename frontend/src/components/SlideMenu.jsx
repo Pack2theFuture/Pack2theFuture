@@ -22,7 +22,6 @@ export default function SlideMenu({ isOpen, onClose, userInfo }) {
   const handleLogout = async () => {
     try {
       const res = await fetch("https://backend-do9t.onrender.com/api/logout/", {
-      //const res = await fetch("http://localhost:8000/api/logout/", {
         method: "POST",
         credentials: "include",
       });
@@ -116,49 +115,7 @@ export default function SlideMenu({ isOpen, onClose, userInfo }) {
           }}
         />
       </div>
-          {/* <div className="flex justify-between items-center mb-2 mt-10">
-            <div className="font-bold text-xl mb-2">About</div>
-            <button
-              className="text-left text-gray-700 text-base pr-20"
-              onClick={() => {
-                navigate("/brand");
-                onClose();
-              }}
-            >
-              팩투더퓨처
-            </button>
-          </div>
-
-          <div>
-            <div className="mb-4">
-              <div className="font-bold text-xl mb-2">Notice</div>
-              <div className="flex flex-col text-left text-gray-700 text-base space-y-1 pl-5">
-                <button onClick={() => { navigate("/notice"); onClose(); }}>
-                  공지사항
-                </button>
-                <button onClick={() => { navigate("/faq"); onClose(); }}>
-                  자주 묻는 질문
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-between items-center mb-2">
-            <div className="font-bold text-xl mb-2">Store</div>
-            <a href="https://refeely.com" target="_blank" rel="noopener noreferrer">
-              <button
-                className="text-left text-gray-700 text-base pr-20"
-                onClick={onClose}
-              >
-                re:feely mall
-              </button>
-            </a>
-          </div>
-
-          <div>
-            <div className="font-bold text-xl">Membership</div>
-          </div> */}
-        </div>
+      </div>
 
         {/* 하단 로그아웃 */}
         {userInfo && (
